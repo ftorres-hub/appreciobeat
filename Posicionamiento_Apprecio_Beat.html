@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apprecio Beat - Posicionamiento de mercado y pricing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 14mm; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: #1B1B1B;
+      background: #f6f8fb;
+    }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 8mm auto;
+      background: #FFFFFF;
+      padding: 14mm;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .header {
+      border-bottom: 4px solid #FA345E;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      color: #FA345E;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-size: 29px;
+      line-height: 1.12;
+      margin: 0 0 8px 0;
+      color: #1B1B1B;
+      font-weight: 800;
+    }
+    .subtitle {
+      font-size: 14.2px;
+      line-height: 1.62;
+      color: #4b5563;
+      max-width: 96%;
+    }
+    .section {
+      margin-bottom: 18px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .section h2 {
+      font-size: 18px;
+      line-height: 1.18;
+      margin: 0 0 8px 0;
+      color: #1B1B1B;
+      font-weight: 800;
+    }
+    .section h3 {
+      font-size: 15px;
+      line-height: 1.24;
+      margin: 0 0 6px 0;
+      color: #1B1B1B;
+      font-weight: 800;
+    }
+    .text {
+      font-size: 13.2px;
+      line-height: 1.68;
+      color: #374151;
+    }
+    .text ul { margin: 8px 0 0 0; padding-left: 18px; }
+    .text li { margin-bottom: 6px; }
+    .intro-box, .note-box, .callout, .benchmark-box {
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .intro-box {
+      background: linear-gradient(180deg, #FFF5F7 0%, #FFFAFB 100%);
+      border: 1px solid #FFD4DE;
+    }
+    .note-box {
+      background: #F5F9FF;
+      border: 1px solid #C8DFFF;
+    }
+    .callout {
+      background: #FFF7E8;
+      border: 1px solid #F5D48D;
+    }
+    .benchmark-box {
+      background: #F4FBF9;
+      border: 1px solid #C9EADF;
+    }
+    .intro-box p, .note-box p, .callout p, .benchmark-box p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.68;
+      color: #374151;
+    }
+    .grid-2, .grid-3 { display: grid; gap: 14px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .card {
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      padding: 14px;
+      background: #FFFFFF;
+    }
+    .card.soft { background: #FAFAFA; }
+    .card.global-card { background: #F5F9FF; border-color: #C8DFFF; }
+    .card.latam-card { background: #FFF8ED; border-color: #F7D39B; }
+    .card.app-card { background: #FFF4F7; border-color: #FFD4DE; }
+    .card.green-card { background: #F4FBF9; border-color: #C9EADF; }
+    .card h3 { margin: 0 0 8px 0; font-size: 15px; line-height: 1.28; color: #1B1B1B; }
+    .card p, .card li { margin: 0; font-size: 13px; line-height: 1.62; color: #4b5563; }
+    .card ul { margin: 8px 0 0 0; padding-left: 18px; }
+    .card li { margin-bottom: 6px; color: #374151; }
+    .exec-map-section {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: "Montserrat", Arial, sans-serif;
+      color: #1B1B1B;
+      page-break-inside: avoid;
+    }
+    .exec-map-header { margin-bottom: 18px; }
+    .exec-map-header h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #1B1B1B;
+      letter-spacing: -0.01em;
+    }
+    .exec-map-header p {
+      margin: 0;
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #4f5f6f;
+      max-width: 710px;
+    }
+    .exec-map-card {
+      background: #FFFFFF;
+      border: 1px solid #E9EEF3;
+      border-radius: 18px;
+      padding: 22px 20px 16px;
+    }
+    .exec-map-plot {
+      position: relative;
+      height: 660px;
+      border-radius: 16px;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(27, 27, 27, 0.03) 0, rgba(27, 27, 27, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(27, 27, 27, 0.03) 0, rgba(27, 27, 27, 0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    .axis { position: absolute; z-index: 1; background: #CCD6DF; }
+    .axis-y { left: 50%; top: 36px; bottom: 64px; width: 2px; transform: translateX(-50%); }
+    .axis-x { left: 46px; right: 34px; top: 50%; height: 2px; transform: translateY(-50%); }
+    .x-divider { position: absolute; top: 36px; bottom: 64px; width: 1px; border-left: 1px dashed rgba(27, 27, 27, 0.18); z-index: 1; }
+    .x-divider-custom { border-left-color: rgba(27, 27, 27, 0.38); }
+    .y-grid { position: absolute; left: 46px; right: 34px; height: 1px; background: rgba(27, 27, 27, 0.07); z-index: 1; }
+    .y-axis-title { position: absolute; left: -118px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 11px; font-weight: 800; color: #4f5f6f; letter-spacing: 0.01em; z-index: 3; }
+    .y-level { position: absolute; left: 10px; transform: translateY(-50%); z-index: 3; font-size: 10px; font-weight: 800; letter-spacing: 0.01em; color: #6B7A88; background: rgba(255, 255, 255, 0.94); padding: 4px 7px; border-radius: 6px; white-space: nowrap; }
+    .x-scale { position: absolute; left: 46px; right: 34px; bottom: 14px; height: 30px; z-index: 3; }
+    .x-tick { position: absolute; transform: translateX(-50%); font-size: 10.5px; font-weight: 800; color: #667786; white-space: nowrap; }
+    .x-tick-custom { color: #4f5f6f; }
+    .map-item { position: absolute; z-index: 4; }
+    .range { height: 14px; min-width: 20px; border-radius: 999px; transform: translateY(-50%); }
+    .range-inline { display: flex; align-items: center; justify-content: center; padding: 0 8px; box-sizing: border-box; }
+    .range-inline .range-text { display: block; font-size: 11px; font-weight: 800; line-height: 1; white-space: nowrap; text-align: center; }
+    .custom { width: 18px; height: 18px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.94); }
+    .custom::before, .custom::after { content: ""; position: absolute; background: currentColor; opacity: 0.95; }
+    .custom::before { width: 10px; height: 2px; top: 8px; left: 4px; }
+    .custom::after { width: 2px; height: 10px; top: 4px; left: 8px; }
+    .item-label { position: absolute; display: block; white-space: nowrap; line-height: 1.2; font-size: 11.5px; font-weight: 800; letter-spacing: -0.01em; }
+    .label-left .item-label { right: calc(100% + 10px); left: auto; top: 50%; transform: translateY(-50%); text-align: right; }
+    .global.range, .global.custom { background: linear-gradient(90deg, #ECF9FF 0%, #CBEFFF 100%); border: 1.5px solid #9ED7F0; color: #2F6783; }
+    .latam.range, .latam.custom { background: linear-gradient(90deg, #FFF2CF 0%, #FFD98D 100%); border: 1.5px solid #F0C567; color: #8F620F; }
+    .beat.range { background: linear-gradient(90deg, #FF8B83 0%, #FA345E 100%); border: 1.5px solid #D92E58; color: #8A1734; }
+    .beat-main { height: 18px !important; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.96), 0 10px 24px rgba(250, 52, 94, 0.16); }
+    .beat-main .range-text { color: #FFFFFF; font-size: 11px; font-weight: 800; }
+    .performance.range { background: linear-gradient(90deg, #B2A8E7 0%, #FA345E 100%); border: 1.5px solid #8D7ED8; color: #FFFFFF; }
+    .performance-main { height: 18px !important; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.96), 0 10px 24px rgba(178, 168, 231, 0.22); }
+    .performance-main .range-text { color: #FFFFFF; font-size: 11px; font-weight: 800; }
+    .exec-map-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #EDF2F6; }
+    .legend-item { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: #5A6A77; }
+    .legend-swatch { width: 18px; height: 10px; border-radius: 999px; display: inline-block; }
+    .legend-swatch.global { background: #DDF4FF; border: 1px solid #9ED7F0; }
+    .legend-swatch.latam { background: #FFE29A; border: 1px solid #F0C567; }
+    .legend-swatch.beat { background: #FA345E; border: 1px solid #D92E58; }
+    .legend-swatch.performance { background: #B2A8E7; border: 1px solid #8D7ED8; }
+    .exec-map-note { margin-top: 12px; font-size: 10.5px; line-height: 1.6; color: #6E7C88; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+    th { background: #FA345E; color: #FFFFFF; text-align: left; padding: 9px 10px; font-weight: 700; font-size: 12.2px; }
+    td { border: 1px solid #E5E7EB; padding: 9px 10px; vertical-align: top; line-height: 1.52; color: #374151; background: #FFFFFF; }
+    tr:nth-child(even) td { background: #FAFAFA; }
+    .summary-table td, .summary-table th { font-size: 12.1px; }
+    .tag { display: inline-block; font-size: 10.8px; font-weight: 800; line-height: 1.1; padding: 5px 7px; border-radius: 999px; margin-bottom: 6px; }
+    .tag.global { background: #EEF5FF; color: #1E4270; }
+    .tag.latam { background: #FFF6EA; color: #8A5200; }
+    .tag.app { background: #FFF2F5; color: #FA345E; }
+    .tag.performance { background: #F2F0FF; color: #6F62C5; }
+    .footer { margin-top: 14px; font-size: 11px; color: #9CA3AF; text-align: right; }
+    .highlight { color: #FA345E; font-weight: 800; }
+    @media print {
+      body { background: #FFFFFF; }
+      .page { margin: 0; width: 100%; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="eyebrow">Apprecio Beat · Posicionamiento de mercado</div>
+      <h1>Posicionamiento de mercado y pricing</h1>
+      <div class="subtitle">
+        Este análisis posiciona <strong>Apprecio Beat</strong> dentro del mercado de plataformas de cultura, reconocimiento, engagement y recompensas para colaboradores. La comparación cruza <strong>precio PEPM</strong> con <strong>nivel de activación cultural</strong>, evitando una lectura limitada a precio y separando claramente el software de la bolsa de puntos o presupuesto de recompensas.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="intro-box">
+        <p>
+          Apprecio Beat se posiciona como la evolución natural desde iniciativas transaccionales de puntos hacia un sistema recurrente de cultura, reconocimiento y participación. Su tesis comercial es simple: <strong>Rewards abre la puerta; Apprecio Beat permite quedarse dentro</strong>. Beat Performance extiende esa base cuando el cliente necesita conectar cultura con metas, evidencia, retos, entrenamientos o scorecards.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Metodología</h2>
+      <div class="text">
+        La posición relativa se construye en base a:
+        <ul>
+          <li>propuesta de valor pública de cada plataforma,</li>
+          <li>profundidad funcional en reconocimiento, cultura, engagement, recompensas y activación de comportamientos,</li>
+          <li>modelo comercial visible: self-serve, cotizador, venta enterprise o pricing por módulos,</li>
+          <li>presencia geográfica y foco regional: global, LATAM o local,</li>
+          <li>y una lectura de pricing normalizada a <strong>PEPM comparable</strong> cuando el vendor opera con fee fijo o paquete mensual.</li>
+        </ul>
+      </div>
+      <div style="margin-top:10px;" class="note-box">
+        <p>
+          En esta categoría, el precio público rara vez representa el ticket real de una empresa mediana o grande. Varias soluciones publican valores de entrada, pero venden bundles, add-ons o contratos por cotización. Por eso el mapa separa visualmente los rangos PEPM de la zona <strong>custom</strong> y no mezcla el costo del software con el presupuesto de recompensas.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <section class="exec-map-section">
+        <div class="exec-map-header">
+          <h3>Mapa de posicionamiento por activación cultural y precio PEPM</h3>
+          <p>
+            Comparativo referencial entre plataformas globales, LATAM y Apprecio Beat. El eje X utiliza una escala numérica de referencia para PEPM y separa visualmente los modelos de cotización/custom. El eje Y representa el nivel de activación cultural según profundidad funcional.
+            <br><br>
+            <strong>Los precios de competidores corresponden a valores base o rangos estimados de mercado. Apprecio Beat considera pricing interno referencial de software, sin incluir presupuesto de puntos.</strong>
+          </p>
+        </div>
+
+        <div class="exec-map-card">
+          <div class="exec-map-plot">
+            <div class="y-axis-title">Nivel de activación cultural</div>
+            <div class="axis axis-y"></div>
+            <div class="axis axis-x"></div>
+            <div class="x-divider" style="left: 14%;"></div>
+            <div class="x-divider" style="left: 32.29%;"></div>
+            <div class="x-divider" style="left: 59.71%;"></div>
+            <div class="x-divider" style="left: 78%;"></div>
+            <div class="x-divider x-divider-custom" style="left: 86%;"></div>
+            <div class="y-grid" style="top: 15%;"></div>
+            <div class="y-grid" style="top: 32%;"></div>
+            <div class="y-grid" style="top: 50%;"></div>
+            <div class="y-grid" style="top: 70%;"></div>
+            <div class="y-level" style="top: 15%;">Activación amplia</div>
+            <div class="y-level" style="top: 32%;">Cultura activa</div>
+            <div class="y-level" style="top: 50%;">Reconocimiento estructurado</div>
+            <div class="y-level" style="top: 70%;">Reconocimiento básico</div>
+            <div class="x-scale">
+              <div class="x-tick" style="left: 14%;">US$1</div>
+              <div class="x-tick" style="left: 32.29%;">US$3</div>
+              <div class="x-tick" style="left: 59.71%;">US$6</div>
+              <div class="x-tick" style="left: 78%;">US$8</div>
+              <div class="x-tick x-tick-custom" style="left: 91%;">Cotización / custom</div>
+            </div>
+
+            <div class="map-item global range range-inline" style="left: 32.29%; width: 36.57%; top: 56%;"><span class="range-text">Bonusly</span></div>
+            <div class="map-item global range range-inline" style="left: 36.86%; width: 13.71%; top: 50%;"><span class="range-text">Kudos</span></div>
+            <div class="map-item global range range-inline" style="left: 23.14%; width: 27.43%; top: 42%;"><span class="range-text">Awardco</span></div>
+            <div class="map-item global custom label-left" style="left: 89.5%; top: 21%;"><span class="item-label">Vantage Circle</span></div>
+            <div class="map-item global custom label-left" style="left: 95.5%; top: 15%;"><span class="item-label">Workhuman</span></div>
+            <div class="map-item latam range range-inline" style="left: 27.71%; width: 22.86%; top: 62%;"><span class="range-text">Buk</span></div>
+            <div class="map-item latam custom label-left" style="left: 92.2%; top: 26.2%;"><span class="item-label">Rankmi</span></div>
+            <div class="map-item latam custom label-left" style="left: 94.8%; top: 31.5%;"><span class="item-label">WeFitter</span></div>
+            <div class="map-item latam custom label-left" style="left: 90.8%; top: 38.5%;"><span class="item-label">GOintegro</span></div>
+            <div class="map-item beat range beat-main range-inline" style="left: 37%; width: 18.29%; top: 35%;"><span class="range-text">Apprecio Beat</span></div>
+            <div class="map-item performance range performance-main range-inline" style="left: 48%; width: 20%; top: 28%;"><span class="range-text">Beat Performance</span></div>
+          </div>
+          <div class="exec-map-legend">
+            <div class="legend-item"><span class="legend-swatch global"></span><span>Competidores globales</span></div>
+            <div class="legend-item"><span class="legend-swatch latam"></span><span>Competidores LATAM</span></div>
+            <div class="legend-item"><span class="legend-swatch beat"></span><span>Apprecio Beat</span></div>
+            <div class="legend-item"><span class="legend-swatch performance"></span><span>Beat Performance</span></div>
+          </div>
+          <div class="exec-map-note">
+            El eje Y refleja una evaluación funcional cualitativa sobre reconocimiento, visibilidad, engagement, beneficios, gamificación, comunicación y capacidad de activar comportamientos. Beat Performance suma una capa de ejecución y desempeño, pero no se posiciona como software formal de performance management corporativo.
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="section grid-2">
+      <div class="card latam-card">
+        <h3>Cómo leer el eje Y</h3>
+        <p>
+          El eje Y no mide cantidad total de funcionalidades. Mide qué tan lejos llega cada plataforma en activar cultura y sostener participación. Por eso los players más enterprise o con múltiples capas de engagement quedan arriba, mientras que herramientas más simples de reconocimiento quedan en posiciones medias o bajas.
+        </p>
+      </div>
+
+      <div class="card app-card">
+        <h3>Cómo leer el eje X</h3>
+        <p>
+          El eje X compara precio de software PEPM. No incluye la bolsa de puntos ni el costo facial de recompensas, porque ese presupuesto depende del diseño del programa, frecuencia de asignación, campañas, tamaño de la población y política interna del cliente.
+        </p>
+      </div>
+    </div>
+
+    <div class="section grid-2">
+      <div class="card green-card">
+        <h3>Apprecio Beat</h3>
+        <p>
+          Beat compite en la zona de cultura activa: reconocimiento, puntos, recompensas, campañas, comunicación, encuestas, noticias e interacción recurrente con colaboradores.
+        </p>
+      </div>
+
+      <div class="card soft">
+        <h3>Beat Performance</h3>
+        <p>
+          Performance se posiciona como expansión natural cuando el cliente necesita movilizar resultados: scorecards, retos, entrenamientos, evidencia, ligas y conexión entre desempeño e incentivos.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">Apprecio · Apprecio Beat</div>
+  </div>
+
+  <div class="page">
+    <div class="header">
+      <div class="eyebrow">Apprecio Beat · Benchmark resumido</div>
+      <h1>Competidores y base de lectura</h1>
+      <div class="subtitle">
+        Resumen unificado de competidores incluidos en el mapa, con lectura de precio y activación cultural. Esta tabla deja solo la información necesaria para entender por qué cada marca quedó posicionada en su zona del benchmark.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Tabla resumen de competidores</h2>
+      <table class="summary-table">
+        <tr>
+          <th style="width:13%;">Competidor</th>
+          <th style="width:10%;">Origen</th>
+          <th style="width:15%;">Precio usado</th>
+          <th style="width:20%;">Base del dato de precio</th>
+          <th style="width:16%;">Nivel eje Y</th>
+          <th>Base funcional para activación cultural</th>
+        </tr>
+        <tr>
+          <td>Workhuman</td>
+          <td>Global</td>
+          <td>Custom</td>
+          <td>Venta enterprise / cotización</td>
+          <td>Activación amplia</td>
+          <td>Recognition enterprise, cultura a escala, rewards globales, outcomes de engagement y retención.</td>
+        </tr>
+        <tr>
+          <td>Vantage Circle</td>
+          <td>Global</td>
+          <td>Custom</td>
+          <td>Planes visibles pero sin monto PEPM cerrado comparable</td>
+          <td>Activación amplia</td>
+          <td>Recognition, rewards, wellness, feedback, leaderboard, gamificación e insights para managers.</td>
+        </tr>
+        <tr>
+          <td>Rankmi</td>
+          <td>LATAM</td>
+          <td>Custom</td>
+          <td>Cotización / sin PEPM público visible</td>
+          <td>Activación amplia</td>
+          <td>Suite HR con reconocimiento, clima laboral, bienestar, IA, beneficios y gestión de personas.</td>
+        </tr>
+        <tr>
+          <td>WeFitter</td>
+          <td>LATAM</td>
+          <td>Custom</td>
+          <td>Sin pricing público visible</td>
+          <td>Activación amplia</td>
+          <td>Challenges, gamification, badges, levels, leaderboards y wellbeing.</td>
+        </tr>
+        <tr>
+          <td>Apprecio Beat</td>
+          <td>Apprecio</td>
+          <td>US$4–6 PEPM</td>
+          <td>Pricing interno referencial de software</td>
+          <td>Cultura activa</td>
+          <td>Reconocimiento, cultura visible, participación, puntos, recompensas, comunicación y activación recurrente de colaboradores.</td>
+        </tr>
+        <tr>
+          <td>Beat Performance</td>
+          <td>Apprecio</td>
+          <td>US$6–8 PEPM</td>
+          <td>Pricing interno referencial sujeto a alcance</td>
+          <td>Cultura activa + ejecución</td>
+          <td>Extiende Beat con scorecards, retos, entrenamientos, ligas, evidencia e incentivos conectados a metas o KPIs.</td>
+        </tr>
+        <tr>
+          <td>Awardco</td>
+          <td>Global</td>
+          <td>US$2–4 PEPM</td>
+          <td>Referencia pública de entrada + ajuste comparativo para configuración más completa</td>
+          <td>Cultura activa</td>
+          <td>Recognition, rewards, engagement, flexibilidad por use case y operación deskless/global.</td>
+        </tr>
+        <tr>
+          <td>GOintegro</td>
+          <td>LATAM</td>
+          <td>Custom</td>
+          <td>Request a quote / demo</td>
+          <td>Cultura activa</td>
+          <td>Comunicación interna, reconocimientos, premios, beneficios, bienestar y HR hub.</td>
+        </tr>
+        <tr>
+          <td>Kudos</td>
+          <td>Global</td>
+          <td>~US$4–5 PEPM</td>
+          <td>Rango oficial-referencial</td>
+          <td>Reconocimiento estructurado</td>
+          <td>Recognition, rewards, awards, nominations, analytics, challenges e incentives.</td>
+        </tr>
+        <tr>
+          <td>Bonusly</td>
+          <td>Global</td>
+          <td>~US$3–5 PEPM</td>
+          <td>Precio Team + lectura de configuración comparable</td>
+          <td>Reconocimiento estructurado</td>
+          <td>Peer recognition, rewards, milestones, analytics para managers e integraciones HRIS / SSO.</td>
+        </tr>
+        <tr>
+          <td>Buk</td>
+          <td>LATAM</td>
+          <td>~US$2.5–5 PEPM</td>
+          <td>Rango operativo validado para básica / pro</td>
+          <td>Reconocimiento básico</td>
+          <td>Comunicación interna, reconocimiento laboral y encuestas dentro de una suite HR más amplia.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section grid-3">
+      <div class="card global-card">
+        <span class="tag global">Mercado global</span>
+        <h3>Precio visible vs precio efectivo</h3>
+        <p>
+          Varios players globales muestran precios de entrada bajos o parciales, pero venden bundles, planes avanzados o cotizaciones más completas cuando el cliente requiere reporting, branding, integraciones, seguridad o soporte enterprise.
+        </p>
+      </div>
+
+      <div class="card latam-card">
+        <span class="tag latam">Mercado LATAM</span>
+        <h3>Software vs reward spend</h3>
+        <p>
+          El benchmark refuerza una idea clave: el mercado tiende a separar el fee de software del presupuesto de recompensas. Beat debe mantener esta separación para proteger margen y explicar correctamente el modelo económico.
+        </p>
+      </div>
+
+      <div class="card app-card">
+        <span class="tag app">Implicancia Beat</span>
+        <h3>Pricing defendible</h3>
+        <p>
+          Apprecio Beat queda en una zona defendible si se vende como sistema recurrente de cultura, reconocimiento y recompensas, no como una herramienta puntual de entrega de puntos.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Lectura por país foco</h2>
+      <table>
+        <tr>
+          <th style="width: 16%;">País</th>
+          <th style="width: 34%;">Lectura de mercado</th>
+          <th style="width: 18%;">Visibilidad de precio</th>
+          <th>Implicación para Apprecio Beat</th>
+        </tr>
+        <tr>
+          <td>Chile</td>
+          <td>Conviven suites HR regionales con pricing por cotización y players globales cobrando mayormente en USD.</td>
+          <td>Baja a media</td>
+          <td>Conviene definir tarifa local en CLP con ancla USD y separar claramente software, implementación y bolsa de puntos.</td>
+        </tr>
+        <tr>
+          <td>Colombia</td>
+          <td>Mayor sensibilidad al ticket por empleado y preferencia por propuesta modular.</td>
+          <td>Baja en locales / media en globales</td>
+          <td>Precio de entrada competitivo y narrativa fuerte de recurrencia, adopción y control presupuestario.</td>
+        </tr>
+        <tr>
+          <td>México</td>
+          <td>Mercado mixto, con apertura a SaaS global y presencia de suites HR regionales.</td>
+          <td>Media en globales / baja en regionales</td>
+          <td>Puede venderse en MXN o USD, pero conviene definir mínimo mensual para evitar erosión de margen.</td>
+        </tr>
+        <tr>
+          <td>España</td>
+          <td>Mayor presencia de precios públicos y vendors europeos / globales con lista visible.</td>
+          <td>Media a alta</td>
+          <td>Permite sostener ticket mayor si se defiende la capa de activación, reporting y operación regional.</td>
+        </tr>
+        <tr>
+          <td>Estados Unidos</td>
+          <td>Mercado más transparente y más caro en HR tech, recognition y engagement platforms.</td>
+          <td>Alta en mid-market / media en enterprise</td>
+          <td>Sirve como mercado ancla para definir price ceiling, política de add-ons y mínimos anuales.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Implicancias para la arquitectura de pricing</h2>
+      <div class="grid-2">
+        <div class="card soft">
+          <h3>Qué ayuda a defender Apprecio Beat</h3>
+          <ul>
+            <li>Beat no se vende como entrega de puntos, sino como sistema de cultura, reconocimiento y engagement recurrente.</li>
+            <li>El precio PEPM se justifica mejor cuando se separa del presupuesto de recompensas y se explica la plataforma como infraestructura de activación.</li>
+            <li>La cercanía regional, el soporte y la capacidad de aterrizar campañas locales reducen fricción frente a vendors globales.</li>
+          </ul>
+        </div>
+        <div class="card app-card">
+          <h3>Qué ayuda a defender Beat Performance</h3>
+          <ul>
+            <li>Performance permite capturar oportunidades donde el dolor ya no es solo cultura, sino metas, ejecución, evidencia y resultados.</li>
+            <li>Debe presentarse como expansión de Beat, no como reemplazo de un software formal de evaluación de desempeño.</li>
+            <li>El pricing superior se defiende por scorecards, retos, entrenamientos, ligas y trazabilidad de incentivos por desempeño.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Resumen estratégico integrado</h2>
+      <div class="text">
+        El benchmark entrega una conclusión clara: <span class="highlight">el precio mínimo visible del mercado no es una referencia suficiente</span>. En recognition, cultura y engagement, muchos proveedores publican entry points bajos, pero en la práctica venden módulos, bundles o contratos por cotización.
+        <br><br>
+        Visto así, <strong>Apprecio Beat</strong> queda en una zona competitiva defendible: más robusto que una herramienta básica de reconocimiento, menos pesado que una suite enterprise global y especialmente relevante para LATAM cuando se valora cercanía, activación local, operación de puntos y capacidad de conectar reconocimiento con recompensas reales.
+      </div>
+    </div>
+
+    <div class="footer">Apprecio · Apprecio Beat</div>
+  </div>
+</body>
+</html>

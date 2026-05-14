@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estructura de Descuentos · Apprecio Beat</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #F5F5F5;
+    color: #1B1B1B;
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+
+  /* HEADER */
+  .header {
+    background: #F0F0F0;
+    padding: 32px 44px 28px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  .header-ornament-tl, .header-ornament-tr, .header-ornament-tr2, .header-ornament-br { display: none; }
+  .header-tag {
+    display: inline-block;
+    background: transparent;
+    color: #999;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1B1B1B;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 12px;
+    color: #888;
+    font-weight: 400;
+  }
+
+  /* SECTIONS */
+  .section { padding: 28px 44px 0; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #FA345E;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #FFE6E8;
+  }
+  .separator { height: 1px; background: #F3F3F3; margin: 24px 44px 0; }
+
+  /* EDITIONS */
+  .editions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .edition-card {
+    border-radius: 12px;
+    padding: 22px 24px;
+    border: 1.5px solid;
+    position: relative;
+    overflow: hidden;
+  }
+  .edition-card.teams { background: #FFF5F7; border-color: #FA345E; }
+  .edition-card.performance { background: #F3F1FD; border-color: #B2A8E7; }
+  .edition-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .edition-card.teams .edition-label { color: #FA345E; }
+  .edition-card.performance .edition-label { color: #6C5FBF; }
+  .edition-name { font-size: 17px; font-weight: 800; color: #1B1B1B; margin-bottom: 4px; }
+  .edition-price { font-size: 32px; font-weight: 800; margin-bottom: 2px; }
+  .edition-card.teams .edition-price { color: #FA345E; }
+  .edition-card.performance .edition-price { color: #6C5FBF; }
+  .edition-per { font-size: 12px; font-weight: 500; color: #888; margin-bottom: 12px; }
+  .edition-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .edition-tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; }
+  .edition-card.teams .edition-tag { background: #FFE6E8; color: #B0184A; }
+  .edition-card.performance .edition-tag { background: #EAE7FB; color: #4A3D99; }
+
+  /* DISCOUNT CARDS */
+  .discounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .discount-card {
+    background: #fff;
+    border: 0.5px solid #E8E8E8;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .discount-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .discount-card-title { font-size: 13px; font-weight: 700; color: #1B1B1B; line-height: 1.35; }
+  .discount-badge {
+    font-size: 12px; font-weight: 800;
+    padding: 3px 10px; border-radius: 20px;
+    white-space: nowrap; margin-left: 8px;
+  }
+  .badge-amber { background: #FFF3DC; color: #8A5C0A; }
+  .discount-rows { border-top: 0.5px solid #F0F0F0; padding-top: 8px; }
+  .discount-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    border-bottom: 0.5px solid #F7F7F7;
+  }
+  .discount-row:last-child { border-bottom: none; }
+  .discount-row-label { color: #555; font-weight: 500; }
+  .discount-row-value { font-weight: 700; color: #1B1B1B; }
+  .value-red { background: #FFE6E8; color: #FA345E; padding: 2px 8px; border-radius: 4px; }
+  .value-green { background: #E0F5F1; color: #0F6E56; padding: 2px 8px; border-radius: 4px; }
+  .discount-note { font-size: 11px; color: #999; font-weight: 400; margin-top: 8px; line-height: 1.5; }
+  .applies-to {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 2px 7px; border-radius: 4px; margin-top: 8px;
+  }
+  .applies-contrato { background: #FFE6E8; color: #B0184A; }
+  .applies-puntos { background: #E0F5F1; color: #0F6E56; }
+  .applies-addons { background: #EAE7FB; color: #4A3D99; }
+
+  /* APPROVAL */
+  .approval-section {
+    background: #1B1B1B;
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+  .approval-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    color: #FA345E; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .approval-rows { display: flex; flex-direction: column; gap: 10px; }
+  .approval-row { display: flex; align-items: center; gap: 14px; }
+  .approval-range { font-size: 13px; font-weight: 700; color: #fff; min-width: 150px; }
+  .approval-bar-track {
+    flex: 1; height: 6px; border-radius: 3px; background: #333;
+  }
+  .approval-bar-fill { height: 100%; border-radius: 3px; }
+  .approval-who { font-size: 12px; font-weight: 600; min-width: 230px; text-align: right; }
+  .row-green .approval-bar-fill { background: #45C1AD; width: 30%; }
+  .row-green .approval-who { color: #45C1AD; }
+  .row-amber .approval-bar-fill { background: #FAC775; width: 60%; }
+  .row-amber .approval-who { color: #FAC775; }
+  .row-red .approval-bar-fill { background: #FA345E; width: 100%; }
+  .row-red .approval-who { color: #FA345E; }
+  .approval-note { font-size: 11px; color: #666; margin-top: 14px; line-height: 1.5; }
+
+  /* ADDON BUNDLES */
+  .addon-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .addon-box {
+    text-align: center; padding: 14px;
+    border-radius: 8px; border: 0.5px solid;
+  }
+  .addon-box.zero { background: #fff; border-color: #E8E8E8; }
+  .addon-box.one { background: #EAE7FB; border-color: #B2A8E7; }
+  .addon-box.two { background: #D8D3F7; border-color: #9488D8; }
+  .addon-percent { font-size: 26px; font-weight: 800; }
+  .addon-box.zero .addon-percent { color: #888; }
+  .addon-box.one .addon-percent { color: #6C5FBF; }
+  .addon-box.two .addon-percent { color: #4A3D99; }
+  .addon-label { font-size: 11px; margin-top: 4px; }
+  .addon-box.zero .addon-label { color: #999; }
+  .addon-box.one .addon-label { color: #8878C8; }
+  .addon-box.two .addon-label { color: #6053A8; }
+
+  /* CALCULATOR */
+  .calc-section {
+    background: #FFF5F7;
+    border: 1.5px solid #FFD0D9;
+    border-radius: 12px;
+    padding: 22px 26px;
+  }
+  .calc-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    color: #FA345E; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 4px; }
+  .calc-input-group { display: flex; flex-direction: column; gap: 5px; }
+  .calc-label { font-size: 11px; font-weight: 600; color: #888; }
+  .calc-select, .calc-input {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px; font-weight: 600; color: #1B1B1B;
+    border: 1px solid #E0C0C8; border-radius: 6px;
+    padding: 8px 10px; background: #fff; outline: none;
+    appearance: none;
+  }
+  .calc-select:focus, .calc-input:focus { border-color: #FA345E; }
+  .calc-result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .calc-result-card {
+    background: #fff; border-radius: 8px;
+    padding: 14px 16px; border: 0.5px solid #E8D0D5;
+  }
+  .calc-result-label { font-size: 11px; color: #999; font-weight: 500; margin-bottom: 5px; }
+  .calc-result-value { font-size: 20px; font-weight: 800; color: #FA345E; }
+  .calc-result-sub { font-size: 11px; color: #B2A8E7; font-weight: 600; margin-top: 3px; }
+  .calc-approval-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px; border-radius: 24px;
+    font-size: 12px; font-weight: 700; margin-top: 14px;
+  }
+  .pill-green { background: #E0F5F1; color: #0F6E56; }
+  .pill-amber { background: #FFF3DC; color: #8A5C0A; }
+  .pill-red { background: #FFE6E8; color: #B0184A; }
+
+  /* POINTS */
+  .points-card {
+    background: #F5FDFB; border: 0.5px solid #B2E8DF;
+    border-radius: 10px; padding: 18px 20px;
+  }
+  .no-impact-card {
+    background: #F9F9FB; border: 0.5px dashed #D0CDE8;
+    border-radius: 10px; padding: 18px 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin: 28px 44px 32px;
+    padding: 14px 20px;
+    background: #F8F8F8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-brand { font-size: 14px; font-weight: 800; color: #FA345E; letter-spacing: -0.3px; }
+  .footer-note { font-size: 11px; color: #aaa; font-weight: 400; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div class="header-ornament-tl"></div>
+    <div class="header-ornament-tr"></div>
+    <div class="header-ornament-tr2"></div>
+    <div class="header-ornament-br"></div>
+    <div class="header-tag">Área comercial · uso interno</div>
+    <h1>Estructura de descuentos<br>Apprecio Beat</h1>
+    <p>Guía de referencia rápida para BDMs y KAMs · Pricing SaaS v1</p>
+  </div>
+
+  <!-- EDICIONES -->
+  <div class="section" style="padding-top:30px;">
+    <div class="section-title">Ediciones y precio base</div>
+    <div class="editions-grid">
+      <div class="edition-card teams">
+        <div class="edition-label">Edición base</div>
+        <div class="edition-name">Apprecio Beat</div>
+        <div class="edition-price">USD 4</div>
+        <div class="edition-per">por usuario / mes</div>
+        <div class="edition-tags">
+          <span class="edition-tag">Reconocimientos</span>
+          <span class="edition-tag">eCards</span>
+          <span class="edition-tag">Insignias</span>
+          <span class="edition-tag">Recompensas</span>
+          <span class="edition-tag">Feed social</span>
+          <span class="edition-tag">Encuestas</span>
+          <span class="edition-tag">Spot Rewards</span>
+        </div>
+      </div>
+      <div class="edition-card performance">
+        <div class="edition-label">Edición superior</div>
+        <div class="edition-name">Beat Performance</div>
+        <div class="edition-price">USD 6</div>
+        <div class="edition-per">por usuario / mes</div>
+        <div class="edition-tags">
+          <span class="edition-tag">Todo Apprecio Beat +</span>
+          <span class="edition-tag">Challenges</span>
+          <span class="edition-tag">Rankings</span>
+          <span class="edition-tag">Scorecards</span>
+          <span class="edition-tag">Entrenamientos</span>
+          <span class="edition-tag">Ligas</span>
+          <span class="edition-tag">Centro de evidencia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- DESCUENTOS CONTRATO -->
+  <div class="section">
+    <div class="section-title">Descuentos sobre el contrato base</div>
+    <div class="discounts-grid">
+
+      <div class="discount-card">
+        <div class="discount-card-header">
+          <div class="discount-card-title">Descuento por tier<br><span style="font-weight:400;color:#888;font-size:11px;">Calculado desde usuarios iniciales</span></div>
+        </div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">Tier C — menos de 250 usuarios</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Tier B — 250 a 499 usuarios</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Tier A — 500 a 1,999 usuarios</span>
+            <span class="discount-row-value"><span class="value-red">5%</span></span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Tier A+ — 2,000 o más usuarios</span>
+            <span class="discount-row-value"><span class="value-red">10%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">El tier es preliminar y se define automáticamente. No se pregunta en el formulario. La proyección de usuarios queda como contexto estratégico.</div>
+        <span class="applies-to applies-contrato">↳ aplica sobre contrato</span>
+      </div>
+
+      <div class="discount-card">
+        <div class="discount-card-header">
+          <div class="discount-card-title">Descuento multipaís<br><span style="font-weight:400;color:#888;font-size:11px;">Según países de operación</span></div>
+        </div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">1 país</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">2 a 3 países</span>
+            <span class="discount-row-value"><span class="value-red">5%</span></span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">4 o más países</span>
+            <span class="discount-row-value"><span class="value-red">10%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">Se calcula automáticamente a partir de la respuesta de países en el formulario.</div>
+        <span class="applies-to applies-contrato">↳ aplica sobre contrato</span>
+      </div>
+
+      <div class="discount-card">
+        <div class="discount-card-header">
+          <div class="discount-card-title">Descuento migración legacy<br><span style="font-weight:400;color:#888;font-size:11px;">Clientes en transición desde esquema vigente</span></div>
+        </div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">No implica migración</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Sí implica migración</span>
+            <span class="discount-row-value"><span class="value-red">5%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">Solo aplica si el cliente ya usa Apprecio Y la propuesta implica migrar desde un esquema o solución vigente. No se asume automáticamente.</div>
+        <span class="applies-to applies-contrato">↳ aplica sobre contrato</span>
+      </div>
+
+      <div class="discount-card">
+        <div class="discount-card-header">
+          <div class="discount-card-title">Descuento cross-sell<br><span style="font-weight:400;color:#888;font-size:11px;">Expansión hacia edición superior</span></div>
+        </div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">No es cross-sell</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Sí amplía hacia edición superior o nuevas capacidades</span>
+            <span class="discount-row-value"><span class="value-red">5%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">No se asume automáticamente por ser cliente Apprecio. Se pregunta explícitamente al ejecutivo.</div>
+        <span class="applies-to applies-contrato">↳ aplica sobre contrato</span>
+      </div>
+
+      <div class="discount-card" style="grid-column: 1 / -1; background: #FFFBF0; border-color: #FAD87A;">
+        <div class="discount-card-header">
+          <div class="discount-card-title">Descuento piloto<br><span style="font-weight:400;color:#888;font-size:11px;">Duración máxima 3 meses · Acumulable con otros descuentos</span></div>
+          <span class="discount-badge badge-amber">10%</span>
+        </div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">La propuesta no considera piloto</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">La propuesta sí considera piloto</span>
+            <span class="discount-row-value"><span class="value-red">10%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">⚠️ El piloto no puede extenderse automáticamente más allá de 3 meses. Debe formalizarse como contrato regular al término del piloto. Este descuento sí puede acumularse con los demás descuentos sobre contrato.</div>
+        <span class="applies-to applies-contrato">↳ aplica sobre contrato</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- DESCUENTOS PUNTOS -->
+  <div class="section">
+    <div class="section-title">Descuento sobre puntos (independiente del contrato)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="points-card">
+        <div class="discount-card-title" style="margin-bottom:12px;">Descuento por volumen de puntos<br><span style="font-weight:400;color:#888;font-size:11px;">Multiplicador calculado vs fee mensual base</span></div>
+        <div class="discount-rows">
+          <div class="discount-row">
+            <span class="discount-row-label">Puntos &lt; 6× fee mensual base</span>
+            <span class="discount-row-value">0%</span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Puntos equivalen a 6× fee mensual base</span>
+            <span class="discount-row-value"><span class="value-green">5%</span></span>
+          </div>
+          <div class="discount-row">
+            <span class="discount-row-label">Puntos equivalen a 12× fee mensual base</span>
+            <span class="discount-row-value"><span class="value-green">10%</span></span>
+          </div>
+        </div>
+        <div class="discount-note">El multiplicador se calcula automáticamente comparando el presupuesto mensual en puntos contra el fee mensual base. No se pregunta manualmente.</div>
+        <span class="applies-to applies-puntos">↳ solo sobre puntos</span>
+      </div>
+      <div class="no-impact-card">
+        <div style="font-size:32px;font-weight:800;color:#B2A8E7;">NO</div>
+        <div style="font-size:13px;font-weight:700;color:#888;">Impacta el contrato base</div>
+        <div style="font-size:11px;color:#aaa;line-height:1.5;">Este descuento se calcula de forma independiente y aparece como ítem separado en la salida. No se suma al descuento total del contrato para efectos de aprobación.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- DESCUENTO BUNDLE ADD-ONS -->
+  <div class="section">
+    <div class="section-title">Descuento bundle sobre add-ons</div>
+    <div class="discount-card" style="border-color:#D4C8F5;background:#F6F4FD;">
+      <div class="addon-grid">
+        <div class="addon-box zero">
+          <div class="addon-percent">0%</div>
+          <div class="addon-label">Sin add-ons</div>
+        </div>
+        <div class="addon-box one">
+          <div class="addon-percent">5%</div>
+          <div class="addon-label">1 add-on</div>
+        </div>
+        <div class="addon-box two">
+          <div class="addon-percent">10%</div>
+          <div class="addon-label">2 o más add-ons</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500;">
+        <strong style="color:#6C5FBF;">Ejemplos de add-ons:</strong> SSO · Integraciones adicionales · Reportes avanzados · Soporte premium · Horas extra de CSM · Bolsas adicionales de IA
+      </div>
+      <span class="applies-to applies-addons">↳ solo sobre add-ons, no sobre el producto base</span>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- NIVELES DE APROBACIÓN -->
+  <div class="section">
+    <div class="section-title">Niveles de aprobación comercial</div>
+    <div class="approval-section">
+      <div class="approval-title">Control sobre descuento total del contrato base</div>
+      <div class="approval-rows">
+        <div class="approval-row row-green">
+          <div class="approval-range">Hasta 10%</div>
+          <div class="approval-bar-track"><div class="approval-bar-fill"></div></div>
+          <div class="approval-who">Sin aprobación adicional</div>
+        </div>
+        <div class="approval-row row-amber">
+          <div class="approval-range">&gt;10% hasta 20%</div>
+          <div class="approval-bar-track"><div class="approval-bar-fill"></div></div>
+          <div class="approval-who">Aprobación PM Comercial SaaS</div>
+        </div>
+        <div class="approval-row row-red">
+          <div class="approval-range">Más de 20%</div>
+          <div class="approval-bar-track"><div class="approval-bar-fill"></div></div>
+          <div class="approval-who">Aprobación Director Comercial SaaS</div>
+        </div>
+      </div>
+      <div class="approval-note">⚠️ Este control aplica exclusivamente sobre los descuentos del contrato base (tier + multipaís + migración + cross-sell + piloto). Los descuentos sobre puntos y add-ons se evalúan de forma independiente y no se suman para determinar el nivel de aprobación.</div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- CALCULADORA -->
+  <div class="section">
+    <div class="section-title">Calculadora rápida de pricing</div>
+    <div class="calc-section">
+      <div class="calc-title">Simulador · Apprecio Beat</div>
+      <div class="calc-grid">
+        <div class="calc-input-group">
+          <label class="calc-label">Edición</label>
+          <select class="calc-select" id="calc-edition" onchange="calcPricing()">
+            <option value="4">Apprecio Beat — USD 4</option>
+            <option value="6">Beat Performance — USD 6</option>
+          </select>
+        </div>
+        <div class="calc-input-group">
+          <label class="calc-label">Usuarios iniciales</label>
+          <input class="calc-input" type="number" id="calc-users" value="500" min="1" oninput="calcPricing()" />
+        </div>
+        <div class="calc-input-group">
+          <label class="calc-label">Países de operación</label>
+          <select class="calc-select" id="calc-countries" onchange="calcPricing()">
+            <option value="0">1 país — 0%</option>
+            <option value="5">2 a 3 países — 5%</option>
+            <option value="10">4 o más países — 10%</option>
+          </select>
+        </div>
+        <div class="calc-input-group">
+          <label class="calc-label">Piloto</label>
+          <select class="calc-select" id="calc-pilot" onchange="calcPricing()">
+            <option value="0">No considera piloto</option>
+            <option value="10">Sí considera piloto — 10%</option>
+          </select>
+        </div>
+        <div class="calc-input-group">
+          <label class="calc-label">Migración legacy</label>
+          <select class="calc-select" id="calc-migration" onchange="calcPricing()">
+            <option value="0">No hay migración</option>
+            <option value="5">Sí hay migración — 5%</option>
+          </select>
+        </div>
+        <div class="calc-input-group">
+          <label class="calc-label">Cross-sell</label>
+          <select class="calc-select" id="calc-crosssell" onchange="calcPricing()">
+            <option value="0">No es cross-sell</option>
+            <option value="5">Sí es cross-sell — 5%</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="calc-results" class="calc-result-grid"></div>
+      <div id="calc-approval"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">apprecio beat</div>
+    <div class="footer-note">Uso interno · Área comercial · v1.0 · 2026</div>
+  </div>
+
+</div>
+
+<script>
+function calcPricing() {
+  const price = parseInt(document.getElementById('calc-edition').value);
+  const users = parseInt(document.getElementById('calc-users').value) || 0;
+  const countriesDisc = parseInt(document.getElementById('calc-countries').value);
+  const pilotDisc = parseInt(document.getElementById('calc-pilot').value);
+  const migrationDisc = parseInt(document.getElementById('calc-migration').value);
+  const crosssellDisc = parseInt(document.getElementById('calc-crosssell').value);
+
+  const feeBase = price * users;
+
+  let tierLabel = '', tierDisc = 0;
+  if (users >= 2000) { tierLabel = 'A+'; tierDisc = 10; }
+  else if (users >= 500) { tierLabel = 'A'; tierDisc = 5; }
+  else if (users >= 250) { tierLabel = 'B'; tierDisc = 0; }
+  else { tierLabel = 'C'; tierDisc = 0; }
+
+  const totalDisc = tierDisc + countriesDisc + pilotDisc + migrationDisc + crosssellDisc;
+  const feeConDescuento = feeBase * (1 - totalDisc / 100);
+
+  let approvalText = '', approvalClass = '';
+  if (totalDisc <= 10) { approvalText = '✓ Sin aprobación adicional'; approvalClass = 'pill-green'; }
+  else if (totalDisc <= 20) { approvalText = '⚠ Requiere aprobación — PM Comercial SaaS'; approvalClass = 'pill-amber'; }
+  else { approvalText = '🔴 Requiere aprobación — Director Comercial SaaS'; approvalClass = 'pill-red'; }
+
+  document.getElementById('calc-results').innerHTML = `
+    <div class="calc-result-card">
+      <div class="calc-result-label">Fee mensual base</div>
+      <div class="calc-result-value">USD ${feeBase.toLocaleString('es-MX')}</div>
+      <div class="calc-result-sub">Tier ${tierLabel} · descuento tier ${tierDisc}%</div>
+    </div>
+    <div class="calc-result-card">
+      <div class="calc-result-label">Descuento total contrato</div>
+      <div class="calc-result-value">${totalDisc}%</div>
+      <div class="calc-result-sub">Tier + multipaís + migración + cross-sell + piloto</div>
+    </div>
+    <div class="calc-result-card">
+      <div class="calc-result-label">Fee mensual estimado</div>
+      <div class="calc-result-value">USD ${Math.round(feeConDescuento).toLocaleString('es-MX')}</div>
+      <div class="calc-result-sub">Con todos los descuentos aplicados</div>
+    </div>
+  `;
+
+  document.getElementById('calc-approval').innerHTML = `
+    <span class="calc-approval-pill ${approvalClass}">${approvalText}</span>
+  `;
+}
+calcPricing();
+</script>
+
+</body>
+</html>

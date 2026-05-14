@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funnel Comercial - Apprecio Beat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #1B1B1B;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #FFFFFF;
+      padding: 18mm 16mm;
+    }
+
+    .topbar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #FA345E 0%, #B2A8E7 55%, #45C1AD 100%);
+      margin-bottom: 20px;
+    }
+
+    .header {
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #FFE6E8;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: #146787;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.12;
+      color: #1B1B1B;
+      margin: 0 0 10px 0;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #4A4A4A;
+      margin: 0;
+      max-width: 94%;
+    }
+
+    .strategy-box {
+      margin: 18px 0 22px 0;
+      background: linear-gradient(180deg, #FFF7F8 0%, #FFFFFF 100%);
+      border: 1px solid #FFD2D9;
+      border-left: 6px solid #FA345E;
+      border-radius: 16px;
+      padding: 15px 16px;
+    }
+
+    .strategy-box h2 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1B1B1B;
+    }
+
+    .strategy-box p {
+      margin: 0;
+      font-size: 12.8px;
+      line-height: 1.7;
+      color: #3A3A3A;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .legend-card {
+      border: 1px solid #EAEAEA;
+      border-radius: 14px;
+      padding: 12px;
+      background: #FFFFFF;
+    }
+
+    .legend-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #146787;
+    }
+
+    .legend-card p {
+      margin: 0;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #4A4A4A;
+    }
+
+    .stage {
+      margin-bottom: 17px;
+      border: 1px solid #ECECEC;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #FFFFFF;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .stage-head {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(90deg, #FFE6E8 0%, #FFFFFF 100%);
+      border-bottom: 1px solid #F0D3D8;
+    }
+
+    .stage-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: #1B1B1B;
+    }
+
+    .stage-tag {
+      flex-shrink: 0;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #FA345E;
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .stage-body {
+      padding: 16px;
+    }
+
+    .note {
+      margin: 0 0 13px 0;
+      padding: 11px 13px;
+      background: #F8F6FF;
+      border-left: 5px solid #B2A8E7;
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #454545;
+    }
+
+    .block {
+      margin-bottom: 13px;
+    }
+
+    .block:last-child {
+      margin-bottom: 0;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 7px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #146787;
+    }
+
+    .text {
+      font-size: 12.8px;
+      line-height: 1.68;
+      color: #2F2F2F;
+      margin: 0;
+    }
+
+    ul {
+      margin: 5px 0 0 0;
+      padding-left: 18px;
+    }
+
+    li {
+      font-size: 12.8px;
+      line-height: 1.65;
+      color: #2F2F2F;
+      margin-bottom: 5px;
+    }
+
+    .participants {
+      display: inline-block;
+      padding: 9px 12px;
+      background: #F7F8FA;
+      border: 1px solid #E6E6E6;
+      border-radius: 12px;
+      font-size: 12.8px;
+      font-weight: 700;
+      color: #1B1B1B;
+    }
+
+    .gate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .gate {
+      background: #FCFCFC;
+      border: 1px solid #ECECEC;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .gate strong {
+      display: block;
+      font-size: 11.5px;
+      color: #FA345E;
+      margin-bottom: 4px;
+    }
+
+    .gate span {
+      display: block;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: #4A4A4A;
+    }
+
+    .performance .stage-head {
+      background: linear-gradient(90deg, #EAF9F6 0%, #FFFFFF 100%);
+      border-bottom: 1px solid #C8F0E8;
+    }
+
+    .performance .stage-tag {
+      background: #45C1AD;
+    }
+
+    .lost-stage .stage-head {
+      background: linear-gradient(90deg, #F4F4F4 0%, #FFFFFF 100%);
+      border-bottom: 1px solid #E5E5E5;
+    }
+
+    .lost-stage .stage-tag {
+      background: #1B1B1B;
+      color: #FFFFFF;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid #E8E8E8;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #777777;
+      text-align: center;
+    }
+
+    @media print {
+      body {
+        background: #FFFFFF;
+      }
+
+      .page {
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 14mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar"></div>
+
+    <div class="header">
+      <div class="eyebrow">Apprecio Beat · Funnel comercial SaaS</div>
+      <h1 class="title">Funnel Apprecio Beat</h1>
+      <p class="subtitle">
+        Estructura de etapas para gestionar oportunidades de Apprecio Beat, desde la detección temprana de señales en clientes actuales o prospectos hasta el cierre, legalización e inicio de implementación. El funnel ordena la oportunidad según madurez, urgencia, sponsor, edición recomendada y nivel de esfuerzo comercial requerido.
+      </p>
+    </div>
+
+    <div class="strategy-box">
+      <h2>Tesis comercial del funnel</h2>
+      <p>
+        <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong> El objetivo no es vender una plataforma aislada, sino convertir señales transaccionales, iniciativas de reconocimiento o necesidades de engagement en un programa recurrente de cultura, puntos, recompensas y medición. Cuando el dolor incluye ejecución, KPIs, entrenamientos, retos o ligas, la oportunidad debe evaluarse como <strong>Beat Performance</strong>.
+      </p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-card">
+        <h3>Beat base</h3>
+        <p>Cultura visible, reconocimiento, puntos, recompensas, comunicación, participación y engagement.</p>
+      </div>
+      <div class="legend-card">
+        <h3>Beat Performance</h3>
+        <p>Desempeño, scorecards, retos, entrenamientos, evidencia, rankings y metas conectadas a incentivos.</p>
+      </div>
+      <div class="legend-card">
+        <h3>Control comercial</h3>
+        <p>HubSpot centraliza etapa, AQS, edición recomendada, decision date, próxima acción y responsables.</p>
+      </div>
+    </div>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 0 · SEÑAL BEAT / INSIGHT REWARDS</h2>
+        <div class="stage-tag">5%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Detectar señales tempranas de que un cliente o prospecto podría evolucionar hacia Apprecio Beat. La señal puede venir desde reuniones de Rewards, uso transaccional de puntos, campañas internas, necesidad de reconocimiento, baja participación o intención de ordenar beneficios e incentivos.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Diio y n8n analizan reuniones y detectan señales de cultura, engagement, reconocimiento, recompensas o desempeño.</li>
+            <li>Se registra una oportunidad preliminar con tipo sugerido: <strong>Beat base</strong> o <strong>Beat Performance</strong>.</li>
+            <li>Se calcula un AQS preliminar y se define si corresponde activar contacto comercial o mantener nurture.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Gate de salida</span>
+          <p class="text">Existe dolor identificable, cuenta con fit mínimo y hay un próximo paso posible con KAM o BDM.</p>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 1 · EXPLORACIÓN APPRECIO BEAT</h2>
+        <div class="stage-tag">15%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Entender el problema principal del cliente y confirmar si la oportunidad corresponde a cultura y reconocimiento, puntos y recompensas, engagement interno o desempeño operativo. Esta etapa busca aumentar claridad del dolor, identificar sponsor, validar urgencia y definir la edición recomendada.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Reunión exploratoria con foco en dolor, población objetivo, presupuesto, sponsor y timing.</li>
+            <li>Validación de si Beat se presenta como continuidad natural de Rewards o como nueva iniciativa SaaS.</li>
+            <li>Actualización del AQS preliminar con evidencia de Fit, Intent, Viabilidad y Patrocinio.</li>
+            <li>Identificación de edición sugerida: <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Gate de salida</span>
+          <p class="text">Dolor validado, sponsor o champion identificado, AQS suficiente para avanzar y decision date tentativa.</p>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM y Product Manager</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 2 · PROPUESTA COMERCIAL BEAT</h2>
+        <div class="stage-tag">30%</div>
+      </div>
+      <div class="stage-body">
+        <p class="note">
+          Esta etapa se activa cuando el cliente solicita una propuesta, muestra interés concreto o el equipo comercial valida que existe una oportunidad real para convertir el dolor en un programa recurrente.
+        </p>
+
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Construir una propuesta clara de Apprecio Beat, incluyendo edición recomendada, población objetivo, módulos principales, modelo de puntos, alcance de implementación, pricing y siguiente paso comercial. La propuesta debe evitar prometer personalizaciones no validadas y debe conectar el valor del programa con resultados observables.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>El comercial completa el formulario de solicitud de propuesta personalizada.</li>
+            <li>Producto valida alcance, edición, módulos incluidos y add-ons solicitados.</li>
+            <li>Se define pricing, alcance de puntos y condiciones comerciales.</li>
+            <li>Se agenda reunión de presentación con sponsor o buyer persona relevante.</li>
+          </ul>
+        </div>
+
+        <div class="gate-grid">
+          <div class="gate">
+            <strong>Beat base</strong>
+            <span>Propuesta centrada en reconocimiento, puntos, recompensas, comunicación y participación.</span>
+          </div>
+          <div class="gate">
+            <strong>Beat Performance</strong>
+            <span>Propuesta centrada en metas, scorecards, entrenamientos, evidencia, ligas e incentivos por desempeño.</span>
+          </div>
+        </div>
+
+        <div class="block" style="margin-top: 13px;">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM y Product Manager</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 3 · DEMO GUIADA / VALIDACIÓN VISUAL</h2>
+        <div class="stage-tag">40%</div>
+      </div>
+      <div class="stage-body">
+        <p class="note">
+          Estado opcional, pero recomendado cuando el sponsor necesita ver el flujo antes de decidir, cuando aparece un buyer persona senior o cuando la oportunidad requiere validar una hipótesis de valor con evidencia visual.
+        </p>
+
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Ejecutar una demo guiada por hipótesis, no un recorrido completo del producto. La demo debe enfocarse en el dolor principal: cultura visible, reconocimiento, puntos y recompensas, participación, o performance. Una reunión debe tener una hipótesis dominante y una demo principal.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Comercial solicita demo a Producto con contexto, dolor principal y buyer persona.</li>
+            <li>Producto selecciona la narrativa: Beat base o Beat Performance.</li>
+            <li>Se presenta demo de 12 minutos con apertura, momento WOW, flujo principal, gobernanza, prueba concreta y cierre.</li>
+            <li>Se registra feedback, objeciones, próximos pasos y nivel de sponsor.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Gate de salida</span>
+          <p class="text">El cliente confirma interés, valida el flujo, solicita ajuste de alcance o avanza a negociación.</p>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM, Product Manager y CX si aplica</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 4 · NEGOCIACIÓN Y ALCANCE FINAL</h2>
+        <div class="stage-tag">70%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Cerrar condiciones comerciales, alcance funcional, pricing, presupuesto de puntos, cronograma preliminar e información mínima requerida para implementación. La venta aún no está formalizada, pero la oportunidad ya tiene intención concreta de avance.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Aprobación interna de pricing, descuentos o condiciones especiales.</li>
+            <li>Validación del sponsor sobre alcance, edición y modelo económico.</li>
+            <li>Definición de módulos incluidos, add-ons y responsabilidades operativas.</li>
+            <li>Confirmación del presupuesto de puntos separado de la suscripción SaaS.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Estado</span>
+          <p class="text">
+            La oportunidad está en negociación activa, pero todavía depende de aprobación final, contrato, orden de compra o validación interna del cliente.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM, Product Manager y Director Comercial en cuentas estratégicas</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 5 · LEGAL, SEGURIDAD Y FORMALIZACIÓN</h2>
+        <div class="stage-tag">80%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Formalizar la venta y resolver los requisitos contractuales, legales, de protección de datos, ciberseguridad, facturación y documentación necesarios para activar implementación sin ambigüedades.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Envío de documentación legal, seguridad, ciberseguridad o ISO cuando aplique.</li>
+            <li>Generación, revisión y firma de contrato.</li>
+            <li>Emisión de orden de compra o confirmación de forma de pago.</li>
+            <li>Confirmación de condiciones comerciales finales, incluyendo suscripción y presupuesto de puntos.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM, Product Manager, Legal, Finanzas y Seguridad si aplica</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage performance">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 6 · CONCRETADO / HANDOFF A IMPLEMENTACIÓN</h2>
+        <div class="stage-tag">100%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Objetivo</span>
+          <p class="text">
+            Convertir la oportunidad en venta efectiva e iniciar el traspaso formal a implementación. Esta etapa debe asegurar que el equipo de implementación reciba alcance, edición contratada, módulos, sponsor, objetivos, población, presupuesto de puntos, cronograma y riesgos identificados.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Hitos</span>
+          <ul>
+            <li>Contrato firmado, orden de compra emitida o pago confirmado según modelo comercial.</li>
+            <li>Correo automático de handoff a CSM / implementación con información inicial requerida.</li>
+            <li>Creación o actualización de empresa en sistemas internos.</li>
+            <li>Plan preliminar de kickoff, configuración, comunicación interna, lanzamiento y medición temprana.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Participantes</span><br />
+          <span class="participants">KAM / BDM, Product Manager, CSM / CAM y Program Operations si aplica</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage lost-stage">
+      <div class="stage-head">
+        <h2 class="stage-title">ETAPA 7 · NEGOCIO PERDIDO / NURTURE</h2>
+        <div class="stage-tag">0%</div>
+      </div>
+      <div class="stage-body">
+        <div class="block">
+          <span class="label">Definición</span>
+          <p class="text">
+            El cliente decide no avanzar, posterga la decisión o la oportunidad no alcanza suficiente madurez comercial. La oportunidad debe cerrarse con motivo claro y, cuando corresponda, quedar en nurture para reactivación futura.
+          </p>
+        </div>
+
+        <div class="block">
+          <span class="label">Puede ocurrir por</span>
+          <ul>
+            <li>Pricing, presupuesto insuficiente o falta de claridad sobre bolsa de puntos.</li>
+            <li>Reorganización interna, bajo sponsor o ausencia de decision date.</li>
+            <li>Necesidad real todavía inmadura o solo transaccional.</li>
+            <li>El cliente elige otra solución o decide mantener Rewards sin evolucionar a Beat.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="label">Acción esperada</span>
+          <p class="text">
+            Registrar motivo de pérdida, aprendizaje comercial, posibilidad de recontacto y trigger futuro de reactivación.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Apprecio · Apprecio Beat · Funnel comercial SaaS orientado a cultura, reconocimiento, engagement, puntos, recompensas y performance.
+    </div>
+  </div>
+</body>
+</html>

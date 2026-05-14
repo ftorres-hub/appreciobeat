@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing Apprecio Beat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #F5F6FA;
+      color: #1B1B1B;
+      font-family: 'Montserrat', Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 16mm 14mm;
+      background: #FFFFFF;
+    }
+    .topbar {
+      height: 10px;
+      width: 100%;
+      background: linear-gradient(90deg, #FA345E 0%, #B2A8E7 100%);
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #146787;
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 30px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: #1B1B1B;
+    }
+    .subtitle {
+      max-width: 92%;
+      margin: 0 0 18px 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #4A4A4A;
+    }
+    .thesis {
+      background: #FFF6F7;
+      border: 1px solid #FFD5DD;
+      border-left: 6px solid #FA345E;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 18px 0 22px 0;
+    }
+    .thesis p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #333333;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+    .plan {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 510px;
+      border: 1px solid #E8E8E8;
+      border-radius: 22px;
+      padding: 18px;
+      background: #FFFFFF;
+      box-shadow: 0 8px 22px rgba(27,27,27,0.05);
+    }
+    .plan.featured {
+      border: 2px solid #FA345E;
+      box-shadow: 0 14px 30px rgba(250,52,94,0.14);
+      transform: translateY(-6px);
+    }
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FA345E;
+      color: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .icon.gray { background: #F2F4F7; color: #1B1B1B; }
+    .icon.red { background: #FFE6E8; color: #FA345E; }
+    .icon.purple { background: #F3F0FF; color: #4A1B4D; }
+    .plan h2 {
+      margin: 0 0 4px 0;
+      font-size: 19px;
+      font-weight: 800;
+      color: #1B1B1B;
+    }
+    .plan .label {
+      margin: 0 0 9px 0;
+      font-size: 12px;
+      font-weight: 800;
+      color: #146787;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .plan .desc {
+      min-height: 72px;
+      margin: 0 0 14px 0;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #4A4A4A;
+    }
+    .price {
+      margin: 6px 0 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .price strong {
+      font-size: 31px;
+      line-height: 1;
+      font-weight: 800;
+      color: #1B1B1B;
+    }
+    .price span {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6A6A6A;
+    }
+    .price-note {
+      margin: 0 0 16px 0;
+      min-height: 32px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: #777777;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.45px;
+    }
+    .plan ul {
+      margin: 0 0 18px 0;
+      padding: 0;
+      list-style: none;
+      flex: 1;
+    }
+    .plan li {
+      position: relative;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      font-size: 11.8px;
+      line-height: 1.55;
+      color: #3F3F3F;
+    }
+    .plan li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 800;
+      color: #FA345E;
+    }
+    .button {
+      width: 100%;
+      border-radius: 999px;
+      padding: 12px 14px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #FFFFFF;
+      background: #1B1B1B;
+    }
+    .button.red { background: #FA345E; }
+    .button.purple { background: #4A1B4D; }
+    .section-title {
+      margin: 28px 0 10px 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FA345E;
+    }
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .box {
+      border: 1px solid #E9E9E9;
+      border-radius: 16px;
+      padding: 14px;
+      background: #FAFAFA;
+    }
+    .box.pink { background: #FFF6F7; border-color: #FFD5DD; }
+    .box.purple { background: #F7F5FF; border-color: #DCD8F5; }
+    .box.green { background: #F5FFFD; border-color: #CDEFE8; }
+    .box.blue { background: #F4FAFD; border-color: #CBE4EE; }
+    .box h3 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      font-weight: 800;
+      color: #146787;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .box p,
+    .box li {
+      font-size: 12.3px;
+      line-height: 1.65;
+      color: #3F3F3F;
+      margin: 0;
+    }
+    .box ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+    .box li { margin-bottom: 5px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 12.2px;
+    }
+    th {
+      background: #FA345E;
+      color: #FFFFFF;
+      text-align: left;
+      padding: 9px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    td {
+      border: 1px solid #E6E6E6;
+      padding: 9px 10px;
+      vertical-align: top;
+      line-height: 1.55;
+      color: #3F3F3F;
+    }
+    tr:nth-child(even) td { background: #FAFAFA; }
+    .closing {
+      margin-top: 18px;
+      background: #1B1B1B;
+      color: #FFFFFF;
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+    .closing h2 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .closing p {
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #E8E8E8;
+    }
+    .footer {
+      margin-top: 16px;
+      text-align: right;
+      color: #8A8A8A;
+      font-size: 10.5px;
+    }
+    @media print {
+      body { background: #FFFFFF; }
+      .page { margin: 0; width: 100%; min-height: auto; }
+      .plan, .box, .closing { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar"></div>
+
+    <div class="eyebrow">Apprecio Beat · Pricing & Packaging</div>
+    <h1>Planes de Apprecio Beat</h1>
+    <p class="subtitle">
+      Arquitectura comercial para pasar desde un uso transaccional de puntos hacia una plataforma recurrente de cultura, reconocimiento, engagement y desempeño. El pricing distingue entre <strong>fee de software SaaS</strong> y <strong>presupuesto de puntos/recompensas</strong>.
+    </p>
+
+    <div class="thesis">
+      <p><strong>Principio comercial:</strong> Rewards abre la puerta; <strong>Apprecio Beat</strong> permite quedarse dentro. Rewards resuelve la entrega de puntos y canjes. Beat transforma ese punto de contacto en un sistema continuo de reconocimiento, participación, cultura visible y medición. Cuando el dolor incluye metas, KPIs, evidencia o incentivos por resultado, la conversación debe evolucionar hacia <strong>Beat Performance</strong>.</p>
+    </div>
+
+    <section class="pricing-grid">
+      <article class="plan">
+        <div class="icon gray">🎁</div>
+        <h2>Rewards</h2>
+        <p class="label">Entrada transaccional</p>
+        <p class="desc">Solución gratuita para empresas que necesitan comprar, asignar y redimir puntos sin implementar una plataforma SaaS de cultura o desempeño.</p>
+        <div class="price"><strong>Gratis</strong></div>
+        <p class="price-note">Sin fee de software · sujeto a recarga o bolsa de puntos</p>
+        <ul>
+          <li>Catálogo de premios y plataforma de canjes.</li>
+          <li>Billetera digital y saldo de puntos para usuarios.</li>
+          <li>Distribución puntual de puntos para campañas, fechas especiales o incentivos aislados.</li>
+          <li>Uso ideal para aguinaldos, cumpleaños, comisiones, campañas tácticas o beneficios one-shot.</li>
+          <li>No incluye gestión continua de cultura, reconocimiento, engagement ni performance.</li>
+        </ul>
+        <a class="button" href="#">Usar Rewards</a>
+      </article>
+
+      <article class="plan featured">
+        <div class="badge">Plan base SaaS</div>
+        <div class="icon red">💓</div>
+        <h2>Apprecio Beat</h2>
+        <p class="label">Cultura, reconocimiento & engagement</p>
+        <p class="desc">Edición base para instalar un sistema recurrente de reconocimiento, participación, puntos y recompensas dentro de la organización.</p>
+        <div class="price"><strong>US$4</strong><span>PEPM</span></div>
+        <p class="price-note">Precio base de software · no incluye bolsa de puntos</p>
+        <ul>
+          <li>Todo lo necesario para conectar reconocimiento con puntos y recompensas.</li>
+          <li>Reconocimiento entre pares, líder a colaborador, insignias, nominaciones y campañas.</li>
+          <li>Feed social, comunicaciones, notificaciones y activación de cultura visible.</li>
+          <li>Encuestas, participación, medición temprana y dashboards de adopción.</li>
+          <li>Gobernanza de puntos, reglas de asignación y trazabilidad básica.</li>
+          <li>Ideal para clientes que buscan pasar de incentivos aislados a un programa recurrente.</li>
+        </ul>
+        <a class="button red" href="#">Cotizar Apprecio Beat</a>
+      </article>
+
+      <article class="plan">
+        <div class="icon purple">⚡</div>
+        <h2>Beat Performance</h2>
+        <p class="label">KPIs, retos & desempeño</p>
+        <p class="desc">Edición superior para empresas que quieren conectar cultura y recompensas con metas, scorecards, entrenamientos, evidencia e incentivos por resultado.</p>
+        <div class="price"><strong>US$6</strong><span>PEPM</span></div>
+        <p class="price-note">Precio base de software · equipos de alto desempeño</p>
+        <ul>
+          <li>Incluye las capacidades de Apprecio Beat.</li>
+          <li>Scorecards, retos, ligas, rankings y seguimiento de metas.</li>
+          <li>Entrenamientos, centro de evidencia y validación de cumplimiento.</li>
+          <li>Incentivos conectados a KPIs, desempeño comercial u operacional.</li>
+          <li>Alertas, tableros y lectura de avance para líderes o administradores.</li>
+          <li>Ideal cuando el cliente necesita visibilidad, control y movilización de resultados.</li>
+        </ul>
+        <a class="button purple" href="#">Cotizar Performance</a>
+      </article>
+    </section>
+
+    <h2 class="section-title">Reglas comerciales de pricing</h2>
+    <div class="rules-grid">
+      <div class="box pink">
+        <h3>Separación obligatoria</h3>
+        <p>El fee PEPM corresponde al software. La bolsa de puntos, presupuesto de recompensas, gift cards, premios o experiencias se cotiza y administra por separado.</p>
+      </div>
+      <div class="box purple">
+        <h3>Cuándo vender Beat</h3>
+        <p>Usar Apprecio Beat cuando el cliente hable de cultura, reconocimiento, engagement, participación, clima, beneficios, comunicación interna o necesidad de permanencia.</p>
+      </div>
+      <div class="box green">
+        <h3>Cuándo subir a Performance</h3>
+        <p>Usar Beat Performance cuando aparezcan metas, KPIs, cumplimiento, evidencia, entrenamientos, retos, rankings, fuerza de venta, equipos operativos o incentivos por resultados.</p>
+      </div>
+      <div class="box blue">
+        <h3>Cuándo mantener Rewards</h3>
+        <p>Mantener Rewards cuando el cliente solo quiere comprar y distribuir puntos de forma puntual, sin necesidad de programa, cultura, reportes o gestión recurrente.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Comparación rápida de planes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%;">Dimensión</th>
+          <th>Rewards</th>
+          <th>Apprecio Beat</th>
+          <th>Beat Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rol comercial</strong></td>
+          <td>Entrada transaccional</td>
+          <td>Base SaaS recurrente</td>
+          <td>Expansión hacia desempeño</td>
+        </tr>
+        <tr>
+          <td><strong>Problema que resuelve</strong></td>
+          <td>Entrega y redención de puntos</td>
+          <td>Cultura visible, reconocimiento y engagement</td>
+          <td>Metas, KPIs, evidencia e incentivos por resultado</td>
+        </tr>
+        <tr>
+          <td><strong>Modelo económico</strong></td>
+          <td>Sin fee de software</td>
+          <td>Fee SaaS PEPM + puntos separados</td>
+          <td>Fee SaaS PEPM superior + puntos separados</td>
+        </tr>
+        <tr>
+          <td><strong>Mejor fit</strong></td>
+          <td>Campañas puntuales o beneficios transaccionales</td>
+          <td>RRHH, Cultura, Comunicaciones, Engagement</td>
+          <td>Comercial, Operaciones, RRHH, L&D, equipos con metas</td>
+        </tr>
+        <tr>
+          <td><strong>Prueba de valor</strong></td>
+          <td>Canje y uso de puntos</td>
+          <td>Adopción D+14, reconocimiento, participación</td>
+          <td>Cumplimiento, ranking, evidencia, mejora de KPI</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-title">Guardrails y add-ons</h2>
+    <div class="rules-grid">
+      <div class="box">
+        <h3>Guardrails comerciales</h3>
+        <ul>
+          <li>Definir mínimos mensuales o anuales para proteger rentabilidad.</li>
+          <li>Aplicar descuentos solo con aprobación y justificación por Tier, volumen o contrato anual.</li>
+          <li>No mezclar puntos con software en una sola tarifa sin desglose.</li>
+          <li>Activación inicial, setup o acompañamiento pueden cotizarse según alcance.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Add-ons posibles</h3>
+        <ul>
+          <li>Packs de IA o interacciones adicionales.</li>
+          <li>SSO, SCIM, API o integraciones avanzadas.</li>
+          <li>Managed Services / administración del programa por Apprecio.</li>
+          <li>Reportes ejecutivos, QBRs o dashboards personalizados.</li>
+          <li>Diseño de campañas, comunicaciones o activaciones especiales.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="closing">
+      <h2>Mensaje para el equipo comercial</h2>
+      <p>El objetivo no es vender “más features”, sino ubicar correctamente el dolor. Si el cliente solo necesita puntos, Rewards es suficiente. Si necesita permanencia, cultura y participación, corresponde Apprecio Beat. Si necesita movilizar desempeño y resultados, corresponde Beat Performance.</p>
+    </div>
+
+    <div class="footer">Apprecio · Apprecio Beat · Pricing & Packaging</div>
+  </main>
+</body>
+</html>

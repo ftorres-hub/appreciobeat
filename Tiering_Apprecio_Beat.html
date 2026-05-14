@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiering Apprecio Beat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f7f7f8; font-family: 'Montserrat', sans-serif; color: #1B1B1B; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 210mm; min-height: 297mm; margin: 0 auto 10mm auto; background: #FFFFFF; padding: 18mm 15mm; page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .title-block { background: linear-gradient(135deg, #FA345E 0%, #B2A8E7 100%); color: #FFFFFF; border-radius: 22px; padding: 28px 30px; margin-bottom: 22px; }
+    .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; opacity: .95; }
+    h1 { margin: 0; font-size: 30px; font-weight: 800; line-height: 1.15; }
+    .subtitle { margin: 10px 0 0 0; font-size: 14px; line-height: 1.65; max-width: 95%; }
+    .intro-note { background: #FFE6E8; border-left: 6px solid #FA345E; border-radius: 16px; padding: 16px 18px; margin-bottom: 22px; font-size: 13.5px; line-height: 1.65; }
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+    .principle { border: 1px solid #ececec; border-radius: 16px; padding: 14px; background: #FFFFFF; }
+    .principle h3 { margin: 0 0 8px 0; font-size: 14px; color: #146787; }
+    .principle p { margin: 0; font-size: 12.5px; line-height: 1.6; color: #4A4A4A; }
+    .edition-card { border: 1px solid #ececec; border-radius: 20px; padding: 22px; margin-bottom: 28px; background: #FFFFFF; box-shadow: 0 8px 24px rgba(27, 27, 27, 0.05); break-inside: avoid; page-break-inside: avoid; }
+    .edition-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+    .edition-name { font-size: 22px; font-weight: 800; color: #1B1B1B; margin: 0; }
+    .edition-tag { display: inline-block; padding: 8px 12px; border-radius: 999px; background: #FFE6E8; color: #FA345E; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .edition-desc { margin: -6px 0 18px 0; font-size: 13.5px; line-height: 1.65; color: #4A4A4A; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+    .info-box { background: #fafafa; border: 1px solid #efefef; border-radius: 14px; padding: 16px; }
+    .soft-pink { background: #FFF6F7; }
+    .soft-purple { background: #F7F5FF; }
+    .soft-green { background: #F5FFF7; }
+    .soft-blue { background: #F4FAFD; }
+    .soft-yellow { background: #FFFDF2; }
+    .box-title { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0; color: #146787; }
+    p { margin: 0 0 10px 0; font-size: 13.5px; }
+    ul { margin: 8px 0 0 18px; padding: 0; }
+    li { margin-bottom: 7px; font-size: 13px; line-height: 1.55; }
+    .tiers-title { margin: 20px 0 14px 0; font-size: 18px; font-weight: 800; color: #FA345E; }
+    .tiers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .tier-card { border-radius: 16px; padding: 18px; border: 1px solid #ededed; background: #FFFFFF; break-inside: avoid; page-break-inside: avoid; }
+    .tier-a-plus { border-top: 6px solid #FA345E; background: #FFF7F8; }
+    .tier-a { border-top: 6px solid #B2A8E7; background: #FAF8FF; }
+    .tier-b { border-top: 6px solid #45C1AD; background: #F5FFFD; }
+    .tier-c { border-top: 6px solid #97E89F; background: #FBFFF8; }
+    .tier-name { margin: 0 0 10px 0; font-size: 18px; font-weight: 800; color: #1B1B1B; }
+    .tier-meta { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px; }
+    .meta-item { background: rgba(255,255,255,0.82); border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(0,0,0,0.05); font-size: 12.7px; line-height: 1.55; }
+    .define-block { margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,0.88); border: 1px dashed rgba(27,27,27,0.12); }
+    .define-title { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; color: #146787; }
+    .rule-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12.5px; }
+    .rule-table th { background: #FA345E; color: #fff; padding: 10px; text-align: left; font-size: 12px; }
+    .rule-table td { border: 1px solid #ececec; padding: 10px; vertical-align: top; line-height: 1.55; }
+    .rule-table tr:nth-child(even) td { background: #FAFAFA; }
+    .footer-note { margin-top: 24px; padding: 16px 18px; border-radius: 16px; background: #1B1B1B; color: #FFFFFF; font-size: 12px; line-height: 1.6; }
+    .highlight { color: #FA345E; font-weight: 800; }
+    @media print { body { background: #FFFFFF; } .page { margin: 0; width: 100%; min-height: auto; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="title-block">
+      <div class="eyebrow">Apprecio Beat · GTM Comercial</div>
+      <h1>Tiering de cuentas</h1>
+      <p class="subtitle">Criterios para clasificar oportunidades de Apprecio Beat y Beat Performance según escala, complejidad, potencial estratégico y capacidad real de expansión.</p>
+    </div>
+
+    <div class="intro-note">
+      <strong>Regla general:</strong> el <strong>Tier</strong> se define por <strong>escala, complejidad operativa y potencial estratégico</strong>. No depende del AQS. El <strong>AQS</strong> mide madurez y prioridad comercial de una oportunidad; el <strong>Tier</strong> define el tipo de cuenta, el tratamiento esperado y el nivel de recursos internos que podría justificar.
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <h3>1. Beat no es solo puntos</h3>
+        <p>Apprecio Beat ordena cultura, reconocimiento, participación y recompensas en un sistema recurrente.</p>
+      </div>
+      <div class="principle">
+        <h3>2. Performance exige más madurez</h3>
+        <p>Beat Performance aplica cuando existen metas, KPIs, evidencia, retos, entrenamientos o equipos críticos de desempeño.</p>
+      </div>
+      <div class="principle">
+        <h3>3. Rewards abre la puerta</h3>
+        <p>Rewards puede detectar señales transaccionales; Beat permite convertirlas en relación SaaS continua.</p>
+      </div>
+    </div>
+
+    <section class="edition-card">
+      <div class="edition-header">
+        <h2 class="edition-name">Apprecio Beat</h2>
+        <span class="edition-tag">Cultura · Reconocimiento · Engagement</span>
+      </div>
+      <p class="edition-desc">Edición base para empresas que necesitan activar cultura visible, reconocimiento recurrente, participación, comunicación interna y recompensas a través de puntos. Es la entrada natural cuando el dolor dominante está en clima, cohesión, reconocimiento, beneficios o engagement.</p>
+
+      <div class="grid-2">
+        <div class="info-box soft-pink">
+          <div class="box-title">Dolor principal</div>
+          <p>Reconocimiento disperso, baja visibilidad cultural, iniciativas aisladas, beneficios poco valorados o participación débil.</p>
+        </div>
+        <div class="info-box soft-purple">
+          <div class="box-title">Objetivo del cliente</div>
+          <p>Unificar reconocimiento, puntos, recompensas, comunicación y campañas internas en una experiencia simple y medible.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="info-box">
+          <div class="box-title">Cliente ideal</div>
+          <p>Empresas medianas o grandes que quieren profesionalizar cultura y reconocimiento sin partir por una implementación compleja de performance.</p>
+        </div>
+        <div class="info-box soft-green">
+          <div class="box-title">Firmografía mínima</div>
+          <ul>
+            <li>Ideal desde 150 colaboradores.</li>
+            <li>RRHH, cultura o comunicaciones con sponsor funcional.</li>
+            <li>Necesidad de ordenar acciones recurrentes, no solo campañas aisladas.</li>
+          </ul>
+        </div>
+        <div class="info-box soft-blue">
+          <div class="box-title">Tecnografía deseable</div>
+          <ul>
+            <li>Base de colaboradores ordenada.</li>
+            <li>Google Sheets, HRIS simple o nómina exportable.</li>
+            <li>SSO deseable, no obligatorio para partir.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-box soft-pink">
+          <div class="box-title">Triggers comerciales</div>
+          <ul>
+            <li>Cliente usa Rewards para fechas puntuales y quiere recurrencia.</li>
+            <li>Necesidad de reconocer valores, hitos, logros o comportamientos.</li>
+            <li>Clima laboral, engagement o pertenencia en agenda de RRHH.</li>
+            <li>Beneficios o puntos gestionados de forma manual o poco visible.</li>
+          </ul>
+        </div>
+        <div class="info-box soft-yellow">
+          <div class="box-title">Anti-ICP</div>
+          <ul>
+            <li>Solo busca compra puntual de puntos sin intención de programa.</li>
+            <li>No existe sponsor funcional interno.</li>
+            <li>Menos de 150 colaboradores sin potencial de crecimiento o recurrencia.</li>
+            <li>Necesita únicamente catálogo de gift cards, sin cultura ni engagement.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="tiers-title">Tiering — Apprecio Beat</h3>
+      <div class="tiers-grid">
+        <div class="tier-card tier-a-plus">
+          <h4 class="tier-name">Tier A+ · 2.000+ colaboradores</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> empresa estratégica, multisede o multipaís, con necesidad de activar cultura a escala.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> RRHH, Comunicaciones, Cultura, Beneficios y líderes de unidades operativas.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> gestión 1:1, PM/Solution Lead involucrado y potencial revisión directiva.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Alta escala y dispersión organizacional.</li>
+              <li>Necesidad de gobernanza y reporting ejecutivo.</li>
+              <li>Alto potencial de expansión a Beat Performance.</li>
+              <li>Impacto reputacional o estratégico para Apprecio.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-a">
+          <h4 class="tier-name">Tier A · 500–1.999 colaboradores</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> organización madura, con intención real de ordenar reconocimiento, engagement y beneficios.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> RRHH, Cultura, Comunicaciones o Compensaciones.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> gestión 1:1, demo guiada y propuesta con alcance específico.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Escala media-alta.</li>
+              <li>Programa con varias audiencias o áreas.</li>
+              <li>Presupuesto recurrente probable.</li>
+              <li>Posibilidad de ampliar módulos o países.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-b">
+          <h4 class="tier-name">Tier B · 250–499 colaboradores</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> empresa con cultura fragmentada o iniciativas manuales, pero con sponsor e intención clara.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> principalmente RRHH o Cultura, con apoyo de líderes internos.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> gestión eficiente, propuesta estándar adaptada y foco en quick wins.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Complejidad moderada.</li>
+              <li>Necesidad concreta de ordenar reconocimiento o incentivos.</li>
+              <li>Implementación simple, con potencial de expansión gradual.</li>
+              <li>Ticket medio y foco en eficiencia comercial.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-c">
+          <h4 class="tier-name">Tier C · 150–249 colaboradores</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> cuenta que califica por intención y dolor, pero tiene menor escala y presupuesto.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> una sola área funcional, normalmente RRHH.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> nurture, educación o propuesta muy acotada si el AQS justifica avance.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Escala mínima viable.</li>
+              <li>Baja complejidad operativa.</li>
+              <li>Necesidad clara, pero menor potencial económico.</li>
+              <li>Implementación simple y controlada.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="page">
+    <section class="edition-card">
+      <div class="edition-header">
+        <h2 class="edition-name">Beat Performance</h2>
+        <span class="edition-tag">KPIs · Retos · Evidencia · Desempeño</span>
+      </div>
+      <p class="edition-desc">Edición superior para empresas que no solo quieren activar cultura, sino conectar acciones, metas, evidencia y recompensas con desempeño. Aplica cuando el dolor dominante está en seguimiento de KPIs, ligas, retos, entrenamientos, cumplimiento o incentivos por resultado.</p>
+
+      <div class="grid-2">
+        <div class="info-box soft-pink">
+          <div class="box-title">Dolor principal</div>
+          <p>Metas poco visibles, incentivos desconectados, baja adherencia a entrenamientos, evidencia dispersa o seguimiento manual del desempeño.</p>
+        </div>
+        <div class="info-box soft-purple">
+          <div class="box-title">Objetivo del cliente</div>
+          <p>Movilizar resultados con scorecards, retos, entrenamientos, centro de evidencia, ligas e incentivos conectados a puntos.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="info-box">
+          <div class="box-title">Cliente ideal</div>
+          <p>Empresas con equipos críticos de venta, operación, atención, distribución o terreno, donde el desempeño se puede medir y reforzar.</p>
+        </div>
+        <div class="info-box soft-green">
+          <div class="box-title">Firmografía mínima</div>
+          <ul>
+            <li>Ideal desde 150 colaboradores o participantes.</li>
+            <li>Equipos con metas recurrentes o comportamientos medibles.</li>
+            <li>Al menos un área dueña del resultado.</li>
+          </ul>
+        </div>
+        <div class="info-box soft-blue">
+          <div class="box-title">Tecnografía deseable</div>
+          <ul>
+            <li>KPIs definidos o intención concreta de definirlos.</li>
+            <li>CRM, BI, planillas o fuente de datos accesible.</li>
+            <li>Capacidad de cargar evidencia o validar cumplimiento.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-box soft-pink">
+          <div class="box-title">Triggers comerciales</div>
+          <ul>
+            <li>Necesidad de incentivar fuerza de venta, canal, tiendas o equipos operativos.</li>
+            <li>Solicitud de scorecards, ligas, retos, entrenamientos o rankings.</li>
+            <li>Dolor por baja visibilidad de cumplimiento o resultados.</li>
+            <li>Necesidad de convertir performance en puntos y recompensas.</li>
+          </ul>
+        </div>
+        <div class="info-box soft-yellow">
+          <div class="box-title">Anti-ICP</div>
+          <ul>
+            <li>No existen KPIs ni voluntad de definir una lógica mínima.</li>
+            <li>Datos inaccesibles o imposibles de validar.</li>
+            <li>Se busca solo reconocimiento cultural, sin componente de desempeño.</li>
+            <li>No hay sponsor comercial, operacional o de personas con poder de empuje.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="tiers-title">Tiering — Beat Performance</h3>
+      <div class="tiers-grid">
+        <div class="tier-card tier-a-plus">
+          <h4 class="tier-name">Tier A+ · 1.000+ participantes</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> empresa multicanal, multisede o multipaís con presión relevante por KPIs y alta complejidad operativa.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> Comercial, Operaciones, RRHH, Trade, Canal o Distribución.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> 1:1 senior, scoping funcional, revisión de datos y posible participación de Dirección.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Alta escala y varias audiencias de desempeño.</li>
+              <li>Necesidad de integraciones, evidencia o automatización.</li>
+              <li>Potencial de contrato estratégico y expansión funcional.</li>
+              <li>Impacto directo en resultados comerciales u operativos.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-a">
+          <h4 class="tier-name">Tier A · 500–999 participantes</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> empresa con KPIs claros, equipos críticos y necesidad de seguimiento más profesionalizado.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> Comercial u Operaciones, con RRHH como habilitador.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> demo Performance, validación técnica básica y propuesta con reglas de medición.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Escala media-alta.</li>
+              <li>KPIs o metas ya existentes.</li>
+              <li>Necesidad real de automatización y control.</li>
+              <li>Potencial de crecimiento por módulos y audiencias.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-b">
+          <h4 class="tier-name">Tier B · 250–499 participantes</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> cuenta con un área crítica y un caso de uso claro, pero menor complejidad o presupuesto.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> una unidad comercial, operacional o de canal.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> piloto o alcance acotado, con quick win y reglas simples de medición.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Un caso de uso dominante.</li>
+              <li>Datos manejables vía planillas o cargas periódicas.</li>
+              <li>Complejidad media-baja.</li>
+              <li>Escalamiento gradual si el piloto demuestra impacto.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-card tier-c">
+          <h4 class="tier-name">Tier C · 150–249 participantes</h4>
+          <div class="tier-meta">
+            <div class="meta-item"><strong>Perfil:</strong> oportunidad con intención real, pero baja escala o madurez inicial en KPIs.</div>
+            <div class="meta-item"><strong>Áreas involucradas:</strong> una sola área con sponsor directo.</div>
+            <div class="meta-item"><strong>Tratamiento:</strong> nurture, educación o mini-piloto si el dolor es muy concreto.</div>
+          </div>
+          <div class="define-block">
+            <div class="define-title">Se define por</div>
+            <ul>
+              <li>Escala mínima.</li>
+              <li>Pocos KPIs o lógica de medición simple.</li>
+              <li>Necesidad puntual y presupuesto acotado.</li>
+              <li>Implementación simple, sin alta personalización.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="edition-card">
+      <div class="edition-header">
+        <h2 class="edition-name">Reglas de lectura comercial</h2>
+        <span class="edition-tag">Tier ≠ AQS</span>
+      </div>
+      <table class="rule-table">
+        <thead>
+          <tr>
+            <th style="width:22%">Concepto</th>
+            <th>Cómo se interpreta</th>
+            <th style="width:30%">Uso comercial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tier</strong></td>
+            <td>Clasifica el tipo de cuenta por escala, complejidad y potencial estratégico.</td>
+            <td>Define nivel de atención, seniority, esfuerzo y tratamiento.</td>
+          </tr>
+          <tr>
+            <td><strong>AQS</strong></td>
+            <td>Mide madurez y prioridad real de una oportunidad específica.</td>
+            <td>Define si se trabaja activa, se madura o queda en nurture.</td>
+          </tr>
+          <tr>
+            <td><strong>Apprecio Beat</strong></td>
+            <td>Se activa cuando el dolor principal es cultura, reconocimiento, engagement, beneficios o recompensas.</td>
+            <td>Demo base, propuesta Beat y foco en adopción cultural D+14.</td>
+          </tr>
+          <tr>
+            <td><strong>Beat Performance</strong></td>
+            <td>Se activa cuando el dolor principal es desempeño, metas, KPIs, evidencia, retos o incentivos por resultado.</td>
+            <td>Demo Performance, validación de datos y propuesta con reglas de medición.</td>
+          </tr>
+          <tr>
+            <td><strong>Rewards transaccional</strong></td>
+            <td>Puede ser una señal de entrada, pero no equivale automáticamente a oportunidad Beat.</td>
+            <td>Evaluar si existe recurrencia, sponsor y necesidad de programa continuo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="footer-note">
+      <strong>Resumen:</strong> Apprecio Beat debe priorizar cuentas con necesidad recurrente de cultura, reconocimiento y recompensas. Beat Performance debe reservarse para oportunidades donde exista un caso claro de desempeño medible. El Tier ordena el potencial de la cuenta; el AQS decide la prioridad de la oportunidad.
+    </div>
+  </div>
+</body>
+</html>

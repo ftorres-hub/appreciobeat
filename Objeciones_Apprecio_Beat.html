@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Objeciones Comerciales - Apprecio Beat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #F5F6FA;
+      font-family: 'Montserrat', sans-serif;
+      color: #1B1B1B;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #FFFFFF;
+      padding: 18mm 16mm;
+    }
+
+    .topbar {
+      height: 10px;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #FA345E 0%, #B2A8E7 100%);
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #146787;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: #1B1B1B;
+    }
+
+    .subtitle {
+      margin: 0 0 18px 0;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #4A4A4A;
+      max-width: 96%;
+    }
+
+    .intro {
+      background: #FFF6F7;
+      border: 1px solid #FFD3DD;
+      border-left: 6px solid #FA345E;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      font-size: 12.8px;
+      line-height: 1.7;
+      color: #2F2F2F;
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0 22px 0;
+    }
+
+    .principle {
+      background: #FAFBFF;
+      border: 1px solid #E7E7EF;
+      border-radius: 14px;
+      padding: 13px;
+    }
+
+    .principle h3 {
+      margin: 0 0 7px 0;
+      font-size: 12.5px;
+      line-height: 1.35;
+      font-weight: 800;
+      color: #146787;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 11.8px;
+      line-height: 1.55;
+      color: #4A4A4A;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FA345E;
+      margin: 26px 0 10px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #FFE6E8;
+    }
+
+    .section-note {
+      margin: 0 0 12px 0;
+      font-size: 12.8px;
+      line-height: 1.7;
+      color: #4A4A4A;
+    }
+
+    .category {
+      margin-bottom: 18px;
+      border: 1px solid #E9E9E9;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #FFFFFF;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .category-title {
+      background: linear-gradient(90deg, #FFF1F4 0%, #FFFFFF 100%);
+      padding: 12px 14px;
+      font-weight: 800;
+      font-size: 13.5px;
+      color: #1B1B1B;
+      border-bottom: 1px solid #F0D5DB;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #FA345E;
+      color: #FFFFFF;
+      padding: 9px 10px;
+      font-size: 11.5px;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #EFEFEF;
+      font-size: 11.8px;
+      line-height: 1.55;
+      vertical-align: top;
+      color: #333333;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) td {
+      background: #FCFCFC;
+    }
+
+    td:first-child {
+      font-weight: 800;
+      color: #146787;
+      width: 16%;
+    }
+
+    td:nth-child(2) {
+      width: 30%;
+      font-weight: 600;
+      color: #1B1B1B;
+    }
+
+    td:nth-child(4) {
+      width: 19%;
+      color: #5A5A5A;
+      font-weight: 600;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #FFE6E8;
+      color: #B4234A;
+      font-size: 10.5px;
+      font-weight: 800;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .closing-box {
+      margin-top: 22px;
+      background: #1B1B1B;
+      color: #FFFFFF;
+      border-radius: 16px;
+      padding: 16px 18px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .closing-box h2 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .closing-box p {
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #E8E8E8;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid #E8E8E8;
+      font-size: 10.5px;
+      color: #777777;
+      text-align: center;
+    }
+
+    @media print {
+      body {
+        background: #FFFFFF;
+      }
+
+      .page {
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 14mm;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <div class="topbar"></div>
+
+  <div class="eyebrow">Apprecio Beat · Playbook comercial</div>
+  <h1>Objeciones comerciales</h1>
+  <p class="subtitle">
+    Guía para responder fricciones frecuentes en conversaciones de venta, expansión o migración hacia Apprecio Beat. El objetivo no es “ganar” la objeción, sino entender qué riesgo está viendo el cliente, responder con una lógica clara y llevar la conversación a una prueba concreta de valor.
+  </p>
+
+  <div class="intro">
+    <strong>Principio de posicionamiento:</strong> Apprecio Beat no es una app adicional ni una campaña aislada. Es una plataforma para convertir reconocimiento, puntos, recompensas, participación y desempeño en un sistema continuo. Apprecio Beat activa cultura y engagement; Beat Performance agrega scorecards, retos, entrenamientos, evidencias y ligas cuando el dolor principal está conectado a ejecución o resultados.
+  </div>
+
+  <div class="principle-grid">
+    <div class="principle">
+      <h3>1. Diagnosticar antes de responder</h3>
+      <p>Identificar si la objeción es de adopción, operación, presupuesto, tecnología, cultura o timing. La respuesta debe atacar la causa, no solo la frase.</p>
+    </div>
+    <div class="principle">
+      <h3>2. Conectar con una prueba</h3>
+      <p>Cada respuesta debe terminar en evidencia: demo, piloto, reporte D+14, recorrido de puntos, dashboard, caso de uso o checklist de implementación.</p>
+    </div>
+    <div class="principle">
+      <h3>3. Separar Beat de Performance</h3>
+      <p>Si el cliente busca cultura y participación, partir por Beat. Si busca KPIs, cumplimiento o ejecución, mostrar Beat Performance como capa superior.</p>
+    </div>
+  </div>
+
+  <div class="section-title">Clientes nuevos</div>
+  <p class="section-note">
+    Objeciones frecuentes cuando el cliente aún no opera un programa estructurado de reconocimiento, recompensas o desempeño con Apprecio Beat.
+  </p>
+
+  <div class="category">
+    <div class="category-title">Adopción y cambio</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Adopción</td>
+        <td>“Es otra app más, la gente no la va a usar.”</td>
+        <td>La adopción no depende solo de tener una app, sino de activar hitos visibles, líderes, notificaciones, puntos y recompensas desde el inicio. Beat se lanza con una primera campaña simple para generar uso temprano.</td>
+        <td>Demo + reporte D+14</td>
+      </tr>
+      <tr>
+        <td>Acceso</td>
+        <td>“¿La gente se tiene que registrar dos veces?”</td>
+        <td>El acceso se define según el contexto del cliente: login corporativo, base precargada o flujo guiado. La clave es reducir fricción de entrada y dejar claro el recorrido desde el primer uso hasta la recompensa.</td>
+        <td>Demo de login</td>
+      </tr>
+      <tr>
+        <td>Segmentación</td>
+        <td>“No todos los equipos necesitan lo mismo.”</td>
+        <td>Beat permite ordenar experiencias por área, rol, campaña o tipo de usuario. No todos deben ver lo mismo ni participar de la misma forma; el programa se estructura según audiencias.</td>
+        <td>Demo segmentación</td>
+      </tr>
+      <tr>
+        <td>Cultura</td>
+        <td>“La gente no está acostumbrada a reconocer o participar.”</td>
+        <td>Por eso el punto de partida debe ser simple: reconocimientos guiados, campañas de baja fricción y visibilidad social. La cultura se activa con comportamientos concretos, no con discursos.</td>
+        <td>Quick win cultural</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Operación y carga interna</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Operación</td>
+        <td>“No queremos más carga operativa.”</td>
+        <td>Beat busca centralizar lo que hoy suele estar disperso en correos, planillas, formularios o campañas manuales. Se configuran reglas, flujos y reportes para reducir gestión repetitiva.</td>
+        <td>Demo administración</td>
+      </tr>
+      <tr>
+        <td>Liderazgo</td>
+        <td>“Esto le suma trabajo a los líderes.”</td>
+        <td>El rol del líder no es administrar el programa, sino activar momentos clave. Recordatorios, plantillas y flujos guiados reducen la carga y hacen más fácil reconocer a tiempo.</td>
+        <td>Demo líder</td>
+      </tr>
+      <tr>
+        <td>Madurez</td>
+        <td>“No estamos listos para algo así.”</td>
+        <td>No es necesario partir con todo. Se puede iniciar con Apprecio Beat base para cultura, reconocimiento y puntos, y evolucionar hacia Beat Performance cuando existan KPIs o procesos más maduros.</td>
+        <td>Roadmap por fases</td>
+      </tr>
+      <tr>
+        <td>Control</td>
+        <td>“Nos preocupa perder control del presupuesto.”</td>
+        <td>El modelo separa la suscripción del software del presupuesto de puntos. Las reglas de asignación, límites, aprobaciones y trazabilidad permiten controlar el uso sin frenar la experiencia.</td>
+        <td>Flujo de puntos</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Datos, KPIs e implementación</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Datos</td>
+        <td>“No tenemos datos listos.”</td>
+        <td>Para Beat base se puede partir con una base mínima de usuarios, áreas y reglas de participación. Los datos más avanzados son necesarios cuando se activa Beat Performance.</td>
+        <td>Checklist inicial</td>
+      </tr>
+      <tr>
+        <td>KPIs</td>
+        <td>“No tenemos KPIs definidos.”</td>
+        <td>Entonces no conviene vender Performance de inmediato. Se parte por cultura, reconocimiento y participación; luego se estructura una capa de desempeño cuando el cliente tenga indicadores accionables.</td>
+        <td>Mapa Beat vs Performance</td>
+      </tr>
+      <tr>
+        <td>Comprensión</td>
+        <td>“¿Cómo sabemos que las personas entienden o participan?”</td>
+        <td>Beat permite medir actividad, participación, reconocimientos, redenciones, campañas y comportamiento. No se evalúa solo visualización, sino señales reales de uso.</td>
+        <td>Dashboard engagement</td>
+      </tr>
+      <tr>
+        <td>Implementación</td>
+        <td>“Tendríamos que rehacer todo.”</td>
+        <td>No se parte desde cero. Se toma lo que el cliente ya usa —beneficios, campañas, reconocimientos o incentivos— y se ordena dentro de un sistema más trazable y escalable.</td>
+        <td>Mapa de transición</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Valor, retorno y presupuesto</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Valor</td>
+        <td>“¿Dónde está el retorno?”</td>
+        <td>El retorno se observa en adopción, participación, recurrencia, visibilidad cultural y mejor uso de incentivos. En Performance, además, se puede conectar con cumplimiento de metas y resultados operativos.</td>
+        <td>Dashboard + D+14</td>
+      </tr>
+      <tr>
+        <td>Impacto</td>
+        <td>“¿Cómo vemos impacto rápido?”</td>
+        <td>La primera medición debe enfocarse en señales tempranas: usuarios activos, reconocimientos enviados, puntos asignados, campañas completadas y canjes o recompensas activadas.</td>
+        <td>Reporte D+14 / D+30</td>
+      </tr>
+      <tr>
+        <td>Incentivo</td>
+        <td>“No queremos que todo sea por dinero.”</td>
+        <td>Beat no reduce la motivación a dinero. Combina reconocimiento, visibilidad, experiencia, puntos y recompensas. Los puntos hacen tangible el valor, pero no reemplazan la cultura.</td>
+        <td>Demo tipos de valor</td>
+      </tr>
+      <tr>
+        <td>Prioridad</td>
+        <td>“No es prioridad ahora.”</td>
+        <td>La pregunta es qué costo tiene seguir gestionando cultura, beneficios o incentivos de forma dispersa. Si no hay urgencia, se puede partir por una activación acotada para validar valor.</td>
+        <td>Piloto / campaña inicial</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Tecnología, seguridad e integraciones</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Stack</td>
+        <td>“Ya tenemos muchas herramientas.”</td>
+        <td>Beat no busca sumar ruido, sino ordenar lo que suele estar disperso: reconocimientos, campañas, beneficios, puntos, recompensas y medición en un solo sistema.</td>
+        <td>Mapa actual vs Beat</td>
+      </tr>
+      <tr>
+        <td>Seguridad</td>
+        <td>“Otra integración es un riesgo.”</td>
+        <td>La profundidad técnica se define según el caso. Beat puede partir con cargas simples y evolucionar a integraciones más robustas cuando el cliente lo requiera.</td>
+        <td>Checklist seguridad</td>
+      </tr>
+      <tr>
+        <td>TI</td>
+        <td>“TI no va a priorizar esto.”</td>
+        <td>Se puede diseñar una primera fase de baja dependencia técnica. TI entra cuando se requieran SSO, integraciones HRIS, automatización avanzada o Performance conectado a sistemas internos.</td>
+        <td>Plan faseado</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section-title">Expansión desde Rewards hacia Apprecio Beat</div>
+  <p class="section-note">
+    Objeciones frecuentes en clientes que ya compran puntos, usan Apprecio Rewards o realizan campañas transaccionales, pero aún no tienen un programa continuo de cultura, reconocimiento o desempeño.
+  </p>
+
+  <div class="category">
+    <div class="category-title">Valor del cambio</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Continuidad</td>
+        <td>“Rewards ya nos sirve para entregar puntos.”</td>
+        <td>Rewards resuelve la entrega de valor; Beat permite convertir ese valor en un programa continuo con reglas, participación, reconocimiento, medición y recurrencia.</td>
+        <td>Comparativo Rewards vs Beat</td>
+      </tr>
+      <tr>
+        <td>Uso</td>
+        <td>“Solo necesitamos campañas puntuales.”</td>
+        <td>Si el uso es realmente puntual, Rewards puede ser suficiente. Beat tiene sentido cuando el cliente quiere sostener participación, cultura o incentivos en el tiempo.</td>
+        <td>Árbol de decisión</td>
+      </tr>
+      <tr>
+        <td>Recurrencia</td>
+        <td>“No sabemos si lo usaremos todos los meses.”</td>
+        <td>La recurrencia se diseña con un calendario simple: hitos, reconocimientos, campañas, fechas internas y medición. Beat ayuda a transformar acciones aisladas en rituales de participación.</td>
+        <td>Calendario 90 días</td>
+      </tr>
+      <tr>
+        <td>Presupuesto</td>
+        <td>“Ya tenemos presupuesto de puntos, no de plataforma.”</td>
+        <td>El presupuesto de puntos genera valor para el usuario; la plataforma permite administrar, activar y medir ese valor. Son presupuestos distintos con funciones distintas.</td>
+        <td>Modelo económico</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Operación comercial y narrativa</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Explicación</td>
+        <td>“No entiendo la diferencia entre comprar puntos y contratar Beat.”</td>
+        <td>Comprar puntos entrega valor. Contratar Beat crea el sistema para decidir por qué se entregan, a quién, cuándo, bajo qué reglas y con qué impacto medible.</td>
+        <td>Mapa de valor</td>
+      </tr>
+      <tr>
+        <td>Proceso</td>
+        <td>“Esto suena más largo que una compra normal.”</td>
+        <td>La venta Beat requiere definir reglas mínimas, audiencias, comunicación y activación. No es solo una compra; es una implementación ligera de programa.</td>
+        <td>Checklist kickoff</td>
+      </tr>
+      <tr>
+        <td>Decisor</td>
+        <td>“Esto lo ve otra área.”</td>
+        <td>Es una buena señal: Beat suele involucrar Personas, Cultura, Comercial, Operaciones o Marketing Interno. La próxima reunión debe incorporar al sponsor funcional correcto.</td>
+        <td>Mapa de buyer personas</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section-title">Migración o evolución hacia Beat Performance</div>
+  <p class="section-note">
+    Objeciones cuando el cliente ya entiende Beat o ya opera una solución base, pero se evalúa una capa superior de desempeño, KPIs, retos, entrenamientos o evidencia operativa.
+  </p>
+
+  <div class="category">
+    <div class="category-title">Valor del upgrade</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Valor</td>
+        <td>“No veo qué cambia realmente.”</td>
+        <td>Beat activa cultura y participación. Beat Performance agrega gestión de ejecución: scorecards, retos, entrenamientos, centro de evidencia y ligas conectadas a objetivos.</td>
+        <td>Comparativo Beat vs Performance</td>
+      </tr>
+      <tr>
+        <td>Comparación</td>
+        <td>“Esto es lo mismo con más módulos.”</td>
+        <td>No es solo más funcionalidad. Cambia la lógica: de reconocer y participar a movilizar comportamiento contra metas, evidencias y desempeño medible.</td>
+        <td>Demo Performance</td>
+      </tr>
+      <tr>
+        <td>Decisión</td>
+        <td>“No quiero cambiar solo por cambiar.”</td>
+        <td>La evolución solo se justifica si existe un dolor de desempeño: baja visibilidad, metas poco accionables, desvíos tardíos o incentivos desconectados de resultados.</td>
+        <td>Diagnóstico de brechas</td>
+      </tr>
+      <tr>
+        <td>Timing</td>
+        <td>“Quizás más adelante.”</td>
+        <td>Si hoy no existen KPIs o sponsor operativo, conviene madurar Beat base. Si ya hay metas activas, Performance puede partir con un piloto acotado por equipo.</td>
+        <td>Piloto 30 días</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Adopción y continuidad</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Adopción</td>
+        <td>“Nos costó que usaran la plataforma base.”</td>
+        <td>Entonces Performance no debe venderse como una capa masiva inmediata. Debe partir por un equipo con dolor claro, líderes involucrados y una meta simple.</td>
+        <td>Diseño de piloto</td>
+      </tr>
+      <tr>
+        <td>Lanzamiento</td>
+        <td>“No queremos relanzar todo.”</td>
+        <td>No es necesario relanzar todo. Puede comunicarse como una nueva dinámica o campaña de desempeño dentro del ecosistema Beat ya conocido.</td>
+        <td>Plan comunicación</td>
+      </tr>
+      <tr>
+        <td>Usuarios</td>
+        <td>“No todos necesitan ver scorecards o rankings.”</td>
+        <td>Correcto. Performance se segmenta por rol, equipo, campaña o KPI. No todos los usuarios tienen que entrar en la misma dinámica.</td>
+        <td>Demo segmentación Performance</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="category">
+    <div class="category-title">Datos, operación e IA</div>
+    <table>
+      <tr><th>Tipo</th><th>Objeción</th><th>Respuesta sugerida</th><th>Prueba</th></tr>
+      <tr>
+        <td>Datos</td>
+        <td>“¿Qué pasa si los datos no están perfectos?”</td>
+        <td>Performance puede partir con indicadores simples y fuentes controladas. Lo importante es que el KPI sea entendible, actualizable y confiable para una primera dinámica.</td>
+        <td>Scorecard mínimo</td>
+      </tr>
+      <tr>
+        <td>Operación</td>
+        <td>“Se ve más complejo.”</td>
+        <td>Tiene más capacidad, pero debe implementarse con un alcance acotado. La complejidad se controla con reglas, frecuencia de actualización y responsables claros.</td>
+        <td>Gantt piloto</td>
+      </tr>
+      <tr>
+        <td>IA</td>
+        <td>“No necesitamos IA.”</td>
+        <td>La IA no debe ser el argumento principal. El valor central es activar acciones más rápido, detectar patrones y reducir trabajo manual cuando el programa escala.</td>
+        <td>Demo IA opcional</td>
+      </tr>
+      <tr>
+        <td>Control</td>
+        <td>“Podemos perder control sobre incentivos por desempeño.”</td>
+        <td>Performance debe operar con reglas explícitas: criterios, evidencias, validaciones, topes y trazabilidad. El sistema no reemplaza la gobernanza; la hace visible.</td>
+        <td>Flujo de validación</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="closing-box">
+    <h2>Regla final para el ejecutivo</h2>
+    <p>
+      Si la objeción habla de cultura, reconocimiento, participación o beneficios, responder desde Apprecio Beat. Si habla de metas, KPIs, evidencia, cumplimiento, rankings o resultados, responder desde Beat Performance. Si habla solo de compra de puntos, explicar la diferencia entre Rewards como transacción y Beat como sistema recurrente.
+    </p>
+  </div>
+
+  <div class="footer">
+    Apprecio Beat · Guía de objeciones comerciales · Clientes nuevos, expansión desde Rewards y evolución a Beat Performance
+  </div>
+</div>
+</body>
+</html>
