@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apprecio Beat · Portal Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1B; min-height: 100vh; }
+
+/* ── TOPBAR ── */
+.iso { background: #FA345E; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.iso-sm { width: 28px; height: 28px; border-radius: 5px; }
+.iso-inner { background: #fff; border-radius: 2px; position: relative; }
+.iso-sm .iso-inner { width: 14px; height: 14px; }
+.iso-inner::after { content: ''; display: block; background: #FA345E; border-radius: 1px; position: absolute; }
+.iso-sm .iso-inner::after { width: 6px; height: 6px; top: 4px; left: 4px; }
+.brand { font-weight: 800; color: #1B1B1B; letter-spacing: -0.5px; }
+.brand-sm { font-size: 14px; }
+.brand span { color: #FA345E; }
+
+.topbar { background: #fff; border-bottom: 0.5px solid #E8E8E8; padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-pill { font-size: 10px; font-weight: 700; background: #F0F0F0; color: #888; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.5px; text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.topbar-count { font-size: 12px; color: #999; font-weight: 500; }
+.topbar-logout { font-size: 11px; font-weight: 600; color: #CCC; cursor: pointer; background: none; border: none; font-family: 'Montserrat', sans-serif; transition: color 0.15s; }
+.topbar-logout:hover { color: #FA345E; }
+.feedback-btn-top { font-size: 11px; font-weight: 700; color: #FA345E; cursor: pointer; background: none; border: 1px solid #FA345E; border-radius: 5px; padding: 5px 12px; font-family: 'Montserrat', sans-serif; transition: all 0.15s; }
+.feedback-btn-top:hover { background: #FA345E; color: #fff; }
+.back-home-btn { font-size: 11px; font-weight: 600; color: #888; cursor: pointer; background: none; border: none; font-family: 'Montserrat', sans-serif; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
+.back-home-btn:hover { color: #1B1B1B; }
+.back-home-btn svg { width: 12px; height: 12px; }
+
+/* ── BODY ── */
+.portal-body { max-width: 980px; margin: 0 auto; padding: 40px 24px 60px; }
+.portal-hero { margin-bottom: 36px; }
+.portal-hero h1 { font-size: 22px; font-weight: 800; color: #1B1B1B; }
+
+/* ── LANDING — 3 tarjetas ── */
+#landing-view { display: block; }
+.landing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.sec-card { border-radius: 12px; padding: 28px 24px 22px; cursor: pointer; transition: opacity 0.15s, transform 0.12s; }
+.sec-card:hover { opacity: 0.92; transform: translateY(-2px); }
+.sec-card.s-red  { background: #FA345E; }
+.sec-card.s-lav  { background: #B2A8E7; }
+.sec-card.s-teal { background: #45C1AD; }
+.sec-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.sec-count { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+.sec-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.25; }
+.sec-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+.sec-item { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 7px; }
+.sec-item-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.6); flex-shrink: 0; }
+.sec-cta { font-size: 11px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 5px; }
+.sec-cta svg { width: 12px; height: 12px; transition: transform 0.12s; }
+.sec-card:hover .sec-cta svg { transform: translateX(3px); }
+
+/* ── SECCIÓN INTERNA ── */
+#section-view { display: none; }
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #888; cursor: pointer; background: none; border: none; font-family: 'Montserrat', sans-serif; margin-bottom: 24px; padding: 0; transition: color 0.15s; }
+.back-btn:hover { color: #1B1B1B; }
+.back-btn svg { width: 14px; height: 14px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 0.5px solid #E8E8E8; }
+.section-header-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.section-header h2 { font-size: 18px; font-weight: 800; color: #1B1B1B; }
+
+/* ── CARDS INTERNAS ── */
+.cards-grid   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cards-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.doc-card { background: #fff; border: 0.5px solid #E8E8E8; border-radius: 10px; padding: 18px 18px 14px; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, transform 0.12s; }
+.doc-card:hover { transform: translateY(-1px); }
+.sec-recursos .doc-card:hover { border-color: #FFBFCC; }
+.sec-proceso  .doc-card:hover { border-color: #D4C8F5; }
+.sec-genera   .doc-card:hover { border-color: #9FE1CB; }
+
+.card-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; flex-shrink: 0; }
+.sec-recursos .card-icon { background: #FFE6E8; }
+.sec-proceso  .card-icon { background: #EAE7FB; }
+.sec-genera   .card-icon { background: #E0F5F1; }
+
+.card-cat { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+.sec-recursos .card-cat { color: #FA345E; }
+.sec-proceso  .card-cat { color: #6C5FBF; }
+.sec-genera   .card-cat { color: #0F6E56; }
+
+.card-title { font-size: 13px; font-weight: 700; color: #1B1B1B; line-height: 1.3; margin-bottom: 6px; }
+.card-desc  { font-size: 11px; color: #AAA; line-height: 1.55; flex: 1; margin-bottom: 14px; }
+.card-link  { font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.sec-recursos .card-link { color: #FA345E; }
+.sec-proceso  .card-link { color: #6C5FBF; }
+.sec-genera   .card-link { color: #0F6E56; }
+.card-link svg { width: 11px; height: 11px; transition: transform 0.12s; }
+.doc-card:hover .card-link svg { transform: translateX(3px); }
+
+.online-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; background: #E0F5F1; color: #0F6E56; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; align-self: flex-start; }
+.online-dot { width: 4px; height: 4px; border-radius: 50%; background: #0F6E56; }
+
+/* ── FEEDBACK STRIP ── */
+.feedback-strip { margin-top: 40px; background: #fff; border: 0.5px solid #E8E8E8; border-radius: 12px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.feedback-strip-text h3 { font-size: 14px; font-weight: 700; color: #1B1B1B; margin-bottom: 4px; }
+.feedback-strip-text p { font-size: 12px; color: #999; }
+.feedback-strip-btn { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: #FA345E; border: none; border-radius: 8px; padding: 11px 22px; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+.feedback-strip-btn:hover { background: #D42A4E; }
+
+/* ── MODAL FEEDBACK ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: #fff; border-radius: 14px; width: 100%; max-width: 640px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+.modal-header { padding: 20px 24px 16px; border-bottom: 0.5px solid #E8E8E8; display: flex; align-items: center; justify-content: space-between; }
+.modal-header h3 { font-size: 14px; font-weight: 700; color: #1B1B1B; }
+.modal-close { background: none; border: none; cursor: pointer; color: #CCC; font-size: 20px; font-family: 'Montserrat', sans-serif; line-height: 1; transition: color 0.15s; }
+.modal-close:hover { color: #1B1B1B; }
+.modal-body { flex: 1; overflow: hidden; }
+.modal-body iframe { width: 100%; height: 520px; border: none; }
+
+/* ── FOOTER ── */
+.portal-footer { border-top: 0.5px solid #E8E8E8; padding-top: 20px; margin-top: 36px; display: flex; justify-content: space-between; align-items: center; }
+.portal-footer-brand { font-size: 12px; font-weight: 700; color: #CCC; }
+.portal-footer-brand span { color: #FA345E; }
+.portal-footer-note { font-size: 11px; color: #CCC; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="iso iso-sm"><div class="iso-inner"></div></div>
+    <div class="brand brand-sm">apprecio <span>beat</span></div>
+    <div class="topbar-pill">Portal comercial</div>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-count">12 recursos disponibles</span>
+    <button class="feedback-btn-top" onclick="openModal()">Comentarios y dudas</button>
+    <button class="back-home-btn" onclick="window.location.href='index.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los productos
+    </button>
+  </div>
+</div>
+
+<div class="portal-body">
+  <div class="portal-hero">
+    <h1>Recursos comerciales · Apprecio Beat</h1>
+  </div>
+
+  <!-- LANDING -->
+  <div id="landing-view">
+    <div class="landing-grid">
+
+      <div class="sec-card s-red" onclick="openSection('recursos')">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sec-count">7 recursos</div>
+        <div class="sec-title">Recursos comerciales</div>
+        <div class="sec-items">
+          <div class="sec-item"><span class="sec-item-dot"></span>Posicionamiento</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Landing</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Objeciones</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Pricing</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Descuentos</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Tiering</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>AQS</div>
+        </div>
+        <div class="sec-cta">Ver recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+
+      <div class="sec-card s-lav" onclick="openSection('proceso')">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+        </div>
+        <div class="sec-count">2 recursos</div>
+        <div class="sec-title">Proceso comercial</div>
+        <div class="sec-items">
+          <div class="sec-item"><span class="sec-item-dot"></span>Funnel comercial</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Demos guiadas</div>
+        </div>
+        <div class="sec-cta">Ver recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+
+      <div class="sec-card s-teal" onclick="openSection('genera')">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="sec-count">3 herramientas</div>
+        <div class="sec-title">Genera tu propuesta y pricing</div>
+        <div class="sec-items">
+          <div class="sec-item"><span class="sec-item-dot"></span>Propuesta con reunión · Diio</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Propuesta con datos básicos</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Cotización y descuentos</div>
+        </div>
+        <div class="sec-cta">Abrir herramientas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECCIÓN INTERNA -->
+  <div id="section-view">
+    <button class="back-btn" onclick="goBack()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver al inicio
+    </button>
+
+    <div class="section-header">
+      <div class="section-header-dot" id="section-dot"></div>
+      <h2 id="section-title"></h2>
+    </div>
+
+    <!-- RECURSOS COMERCIALES -->
+    <div id="sec-recursos" class="sec-recursos" style="display:none">
+      <div class="cards-grid">
+        <a class="doc-card" href="Posicionamiento_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="card-cat">Estrategia</div>
+          <div class="card-title">Posicionamiento Apprecio Beat</div>
+          <div class="card-desc">Tesis comercial, diferenciadores clave y narrativa frente a competidores.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="Landing_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <div class="card-cat">Producto</div>
+          <div class="card-title">Landing Apprecio Beat</div>
+          <div class="card-desc">Vista general del producto, propuesta de valor y módulos principales.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="Objeciones_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+          <div class="card-cat">Estrategia</div>
+          <div class="card-title">Manejo de objeciones</div>
+          <div class="card-desc">Respuestas preparadas para las objeciones más frecuentes con clientes.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="Pricing_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <div class="card-cat">Pricing</div>
+          <div class="card-title">Pricing Apprecio Beat</div>
+          <div class="card-desc">Estructura de precios por edición y calculadora de fee base.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="descuentos - Appreciobeat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div>
+          <div class="card-cat">Pricing</div>
+          <div class="card-title">Estructura de descuentos</div>
+          <div class="card-desc">Descuentos aplicables, reglas de acumulación y niveles de aprobación.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="Tiering_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><rect x="2" y="18" width="4" height="4"/><rect x="10" y="12" width="4" height="10"/><rect x="18" y="6" width="4" height="16"/></svg></div>
+          <div class="card-cat">Pricing</div>
+          <div class="card-title">Tiering Apprecio Beat</div>
+          <div class="card-desc">Tiers por volumen de usuarios y criterios de clasificación.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="AQS_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FA345E" stroke-width="1.8" width="16" height="16"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div class="card-cat">Calificación</div>
+          <div class="card-title">AQS Apprecio Beat</div>
+          <div class="card-desc">Scoring de cuentas para priorizar oportunidades en la base existente.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- PROCESO -->
+    <div id="sec-proceso" class="sec-proceso" style="display:none">
+      <div class="cards-grid-2">
+        <a class="doc-card" href="Funnel_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></div>
+          <div class="card-cat">Proceso</div>
+          <div class="card-title">Funnel comercial</div>
+          <div class="card-desc">Etapas del proceso de venta, acciones por fase y criterios de avance.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="doc-card" href="Demos_Guiadas_Apprecio_Beat.html" target="_blank">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div class="card-cat">Proceso</div>
+          <div class="card-title">Demos guiadas</div>
+          <div class="card-desc">Guía paso a paso para conducir demostraciones efectivas con prospectos.</div>
+          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- GENERA -->
+    <div id="sec-genera" class="sec-genera" style="display:none">
+      <div class="cards-grid">
+        <a class="doc-card" href="https://propuestasauto.netlify.app/" target="_blank">
+          <div class="online-badge"><span class="online-dot"></span>En línea</div>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.8" width="16" height="16"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+          <div class="card-cat">Propuesta</div>
+          <div class="card-title">Propuesta con reunión · Diio</div>
+          <div class="card-desc">Generador automático a partir de los datos levantados en reunión inicial.</div>
+          <div class="card-link">Abrir herramienta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+        <a class="doc-card" href="https://propuestasauto.netlify.app/generadorpropuestas.html" target="_blank">
+          <div class="online-badge"><span class="online-dot"></span>En línea</div>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.8" width="16" height="16"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 12h6"/></svg></div>
+          <div class="card-cat">Propuesta</div>
+          <div class="card-title">Propuesta con datos básicos</div>
+          <div class="card-desc">Generador simplificado para una primera estimación rápida sin reunión previa.</div>
+          <div class="card-link">Abrir herramienta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+        <a class="doc-card" href="https://propuestasauto.netlify.app/cotizacionsaas.html" target="_blank">
+          <div class="online-badge"><span class="online-dot"></span>En línea</div>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.8" width="16" height="16"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <div class="card-cat">Pricing</div>
+          <div class="card-title">Cotización y descuentos</div>
+          <div class="card-desc">Calculadora automática de cotización SaaS con descuentos y aprobaciones.</div>
+          <div class="card-link">Abrir herramienta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK STRIP -->
+  <div class="feedback-strip">
+    <div class="feedback-strip-text">
+      <h3>¿Tienes comentarios, dudas o sugerencias?</h3>
+      <p>Déjanos tu mensaje y lo revisamos a la brevedad.</p>
+    </div>
+    <button class="feedback-strip-btn" onclick="openModal()">Dejar un comentario</button>
+  </div>
+
+  <div class="portal-footer">
+    <div class="portal-footer-brand">apprecio <span>beat</span></div>
+    <div class="portal-footer-note">Portal comercial · Uso interno · v2.0 · 2026</div>
+  </div>
+</div>
+
+<!-- MODAL FEEDBACK -->
+<div class="modal-overlay" id="feedback-modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Comentarios y dudas</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesy3i8524N7J9e_2YKYSlaoy6zViwjxeKphJG-v8Wr2Fvh-Q/viewform?embedded=true" loading="lazy">Cargando…</iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const sections = {
+    recursos: { title: 'Recursos comerciales',          dot: '#FA345E' },
+    proceso:  { title: 'Proceso comercial',             dot: '#B2A8E7' },
+    genera:   { title: 'Genera tu propuesta y pricing', dot: '#45C1AD' }
+  };
+
+  function openSection(id) {
+    document.getElementById('landing-view').style.display = 'none';
+    document.getElementById('section-view').style.display = 'block';
+    ['recursos','proceso','genera'].forEach(s => {
+      document.getElementById('sec-' + s).style.display = s === id ? 'block' : 'none';
+    });
+    document.getElementById('section-title').textContent = sections[id].title;
+    document.getElementById('section-dot').style.background = sections[id].dot;
+    window.scrollTo(0, 0);
+  }
+
+  function goBack() {
+    document.getElementById('section-view').style.display = 'none';
+    document.getElementById('landing-view').style.display = 'block';
+  }
+
+  function openModal() {
+    document.getElementById('feedback-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('feedback-modal').classList.remove('open');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('feedback-modal')) closeModal();
+  }
+</script>
+</body>
+</html>

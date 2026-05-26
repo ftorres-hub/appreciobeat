@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apprecio · Portal Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1B; min-height: 100vh; }
+
+/* ── LOGIN ── */
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.login-box { background: #fff; border-radius: 12px; padding: 48px 44px 40px; width: 100%; max-width: 380px; border: 0.5px solid #E0E0E0; }
+.login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+.iso { background: #FA345E; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.iso-lg { width: 36px; height: 36px; border-radius: 6px; }
+.iso-sm { width: 28px; height: 28px; border-radius: 5px; }
+.iso-inner { background: #fff; border-radius: 2px; position: relative; }
+.iso-lg .iso-inner { width: 18px; height: 18px; }
+.iso-sm .iso-inner { width: 14px; height: 14px; }
+.iso-inner::after { content: ''; display: block; background: #FA345E; border-radius: 1px; position: absolute; }
+.iso-lg .iso-inner::after { width: 8px; height: 8px; top: 5px; left: 5px; }
+.iso-sm .iso-inner::after { width: 6px; height: 6px; top: 4px; left: 4px; }
+.brand { font-weight: 800; color: #1B1B1B; letter-spacing: -0.5px; }
+.brand-lg { font-size: 18px; }
+.brand-sm { font-size: 14px; }
+.brand span { color: #FA345E; }
+.login-title { font-size: 15px; font-weight: 700; color: #1B1B1B; margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: #999; margin-bottom: 28px; }
+.login-label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.login-input { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 8px; color: #1B1B1B; border: 1.5px solid #E0E0E0; border-radius: 8px; padding: 14px 16px; width: 100%; outline: none; text-align: center; transition: border-color 0.15s; background: #FAFAFA; }
+.login-input:focus { border-color: #FA345E; background: #fff; }
+.login-input.error { border-color: #FA345E; background: #FFF5F7; animation: shake 0.3s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+.login-btn { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; background: #FA345E; border: none; border-radius: 8px; padding: 14px; width: 100%; cursor: pointer; margin-top: 14px; transition: background 0.15s; }
+.login-btn:hover { background: #D42A4E; }
+.login-error { font-size: 11px; color: #FA345E; font-weight: 600; text-align: center; margin-top: 10px; min-height: 16px; }
+.login-footer { font-size: 11px; color: #CCC; text-align: center; margin-top: 24px; }
+
+/* ── TOPBAR ── */
+#portal-screen { display: none; }
+.topbar { background: #fff; border-bottom: 0.5px solid #E8E8E8; padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-pill { font-size: 10px; font-weight: 700; background: #F0F0F0; color: #888; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.5px; text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.topbar-logout { font-size: 11px; font-weight: 600; color: #CCC; cursor: pointer; background: none; border: none; font-family: 'Montserrat', sans-serif; transition: color 0.15s; }
+.topbar-logout:hover { color: #FA345E; }
+.feedback-btn-top { font-size: 11px; font-weight: 700; color: #FA345E; cursor: pointer; background: none; border: 1px solid #FA345E; border-radius: 5px; padding: 5px 12px; font-family: 'Montserrat', sans-serif; transition: all 0.15s; }
+.feedback-btn-top:hover { background: #FA345E; color: #fff; }
+
+/* ── BODY ── */
+.portal-body { max-width: 980px; margin: 0 auto; padding: 40px 24px 60px; }
+.portal-hero { margin-bottom: 36px; }
+.portal-hero h1 { font-size: 22px; font-weight: 800; color: #1B1B1B; }
+.portal-hero p { font-size: 13px; color: #999; margin-top: 6px; }
+
+/* ── PRODUCT GRID ── */
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.prod-card { border-radius: 14px; padding: 32px 26px 26px; cursor: pointer; transition: opacity 0.15s, transform 0.15s; position: relative; overflow: hidden; text-decoration: none; display: block; }
+.prod-card:hover { opacity: 0.93; transform: translateY(-3px); }
+.prod-card.p-beat   { background: #FA345E; }
+.prod-card.p-rewards { background: #1B1B1B; }
+.prod-card.p-gc     { background: #2D2D7A; }
+
+/* decorative circle */
+.prod-card::after { content: ''; position: absolute; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.06); bottom: -40px; right: -30px; }
+
+.prod-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+.prod-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+.prod-name { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.15; }
+.prod-desc { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 22px; min-height: 56px; }
+.prod-cta { font-size: 11px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 5px; }
+.prod-cta svg { width: 12px; height: 12px; transition: transform 0.12s; }
+.prod-card:hover .prod-cta svg { transform: translateX(3px); }
+
+.coming-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); padding: 4px 10px; border-radius: 4px; margin-bottom: 22px; }
+.coming-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+
+/* ── FEEDBACK STRIP ── */
+.feedback-strip { margin-top: 40px; background: #fff; border: 0.5px solid #E8E8E8; border-radius: 12px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.feedback-strip-text h3 { font-size: 14px; font-weight: 700; color: #1B1B1B; margin-bottom: 4px; }
+.feedback-strip-text p { font-size: 12px; color: #999; }
+.feedback-strip-btn { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: #fff; background: #FA345E; border: none; border-radius: 8px; padding: 11px 22px; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+.feedback-strip-btn:hover { background: #D42A4E; }
+
+/* ── MODAL FEEDBACK ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: #fff; border-radius: 14px; width: 100%; max-width: 640px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+.modal-header { padding: 20px 24px 16px; border-bottom: 0.5px solid #E8E8E8; display: flex; align-items: center; justify-content: space-between; }
+.modal-header h3 { font-size: 14px; font-weight: 700; color: #1B1B1B; }
+.modal-close { background: none; border: none; cursor: pointer; color: #CCC; font-size: 20px; font-family: 'Montserrat', sans-serif; line-height: 1; transition: color 0.15s; }
+.modal-close:hover { color: #1B1B1B; }
+.modal-body { flex: 1; overflow: hidden; }
+.modal-body iframe { width: 100%; height: 520px; border: none; }
+
+/* ── FOOTER ── */
+.portal-footer { border-top: 0.5px solid #E8E8E8; padding-top: 20px; margin-top: 36px; display: flex; justify-content: space-between; align-items: center; }
+.portal-footer-brand { font-size: 12px; font-weight: 700; color: #CCC; }
+.portal-footer-brand span { color: #FA345E; }
+.portal-footer-note { font-size: 11px; color: #CCC; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="iso iso-lg"><div class="iso-inner"></div></div>
+      <div class="brand brand-lg">apprecio</div>
+    </div>
+    <div class="login-title">Portal comercial</div>
+    <div class="login-sub">Ingresa el PIN de acceso para continuar</div>
+    <label class="login-label">PIN de acceso</label>
+    <input class="login-input" type="password" id="pin-input" maxlength="6" placeholder="· · · ·" autocomplete="off" onkeydown="if(event.key==='Enter') checkPin()" />
+    <button class="login-btn" onclick="checkPin()">Entrar</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="login-footer">Uso interno · Área comercial Apprecio</div>
+  </div>
+</div>
+
+<!-- PORTAL -->
+<div id="portal-screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="iso iso-sm"><div class="iso-inner"></div></div>
+      <div class="brand brand-sm">apprecio</div>
+      <div class="topbar-pill">Portal comercial</div>
+    </div>
+    <div class="topbar-right">
+      <button class="feedback-btn-top" onclick="openModal()">Comentarios y dudas</button>
+      <button class="topbar-logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+    <div class="portal-hero">
+      <h1>Portal comercial · Apprecio</h1>
+      <p>Selecciona el producto para acceder a sus recursos.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- APPRECIO BEAT -->
+      <a class="prod-card p-beat" href="beat.html">
+        <div class="prod-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="22" height="22"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="prod-label">Colaboradores</div>
+        <div class="prod-name">Apprecio Beat</div>
+        <div class="prod-desc">Recursos comerciales, demos, pricing y generadores de propuesta para la plataforma de colaboradores.</div>
+        <div class="prod-cta">Abrir portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <!-- REWARDS -->
+      <div class="prod-card p-rewards" style="cursor:default;">
+        <div class="prod-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="22" height="22"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="prod-label">Fidelización</div>
+        <div class="prod-name">Rewards</div>
+        <div class="coming-badge"><span class="coming-dot"></span>Próximamente</div>
+        <div class="prod-desc" style="opacity:0.5;">Los recursos de este producto estarán disponibles pronto.</div>
+      </div>
+
+      <!-- GIFT CARDS -->
+      <a class="prod-card p-gc" href="https://ecamus-apprecio.github.io/pedidos-gc/" target="_blank">
+        <div class="prod-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="22" height="22"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <div class="prod-label">Gift Cards</div>
+        <div class="prod-name">Gift Cards</div>
+        <div class="prod-desc">Accede al formulario de pedidos de gift cards.</div>
+        <div class="prod-cta">Ir a pedidos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+      </a>
+
+    </div>
+
+    <!-- FEEDBACK STRIP -->
+    <div class="feedback-strip">
+      <div class="feedback-strip-text">
+        <h3>¿Tienes comentarios, dudas o sugerencias?</h3>
+        <p>Déjanos tu mensaje y lo revisamos a la brevedad.</p>
+      </div>
+      <button class="feedback-strip-btn" onclick="openModal()">Dejar un comentario</button>
+    </div>
+
+    <div class="portal-footer">
+      <div class="portal-footer-brand">apprecio</div>
+      <div class="portal-footer-note">Portal comercial · Uso interno · v1.0 · 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FEEDBACK -->
+<div class="modal-overlay" id="feedback-modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Comentarios y dudas</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesy3i8524N7J9e_2YKYSlaoy6zViwjxeKphJG-v8Wr2Fvh-Q/viewform?embedded=true" loading="lazy">Cargando…</iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PIN = '2606';
+
+  function checkPin() {
+    const input = document.getElementById('pin-input');
+    const err = document.getElementById('login-error');
+    if (input.value === PIN) {
+      sessionStorage.setItem('appr_auth', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('portal-screen').style.display = 'block';
+    } else {
+      input.classList.add('error');
+      err.textContent = 'PIN incorrecto. Inténtalo de nuevo.';
+      input.value = '';
+      setTimeout(() => input.classList.remove('error'), 400);
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('appr_auth');
+    document.getElementById('portal-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pin-input').value = '';
+  }
+
+  function openModal() {
+    document.getElementById('feedback-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('feedback-modal').classList.remove('open');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('feedback-modal')) closeModal();
+  }
+
+  if (sessionStorage.getItem('appr_auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('portal-screen').style.display = 'block';
+  }
+</script>
+</body>
+</html>
