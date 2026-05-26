@@ -1,567 +1,539 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apprecio Beat - Posicionamiento de mercado y pricing</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    @page { size: A4 portrait; margin: 14mm; }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-      color: #1B1B1B;
-      background: #f6f8fb;
-    }
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .page {
-      width: 210mm;
-      min-height: 297mm;
-      margin: 0 auto 8mm auto;
-      background: #FFFFFF;
-      padding: 14mm;
-      page-break-after: always;
-      break-after: page;
-    }
-    .page:last-child { page-break-after: auto; break-after: auto; }
-    .header {
-      border-bottom: 4px solid #FA345E;
-      padding-bottom: 14px;
-      margin-bottom: 18px;
-    }
-    .eyebrow {
-      color: #FA345E;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    h1 {
-      font-size: 29px;
-      line-height: 1.12;
-      margin: 0 0 8px 0;
-      color: #1B1B1B;
-      font-weight: 800;
-    }
-    .subtitle {
-      font-size: 14.2px;
-      line-height: 1.62;
-      color: #4b5563;
-      max-width: 96%;
-    }
-    .section {
-      margin-bottom: 18px;
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-    .section h2 {
-      font-size: 18px;
-      line-height: 1.18;
-      margin: 0 0 8px 0;
-      color: #1B1B1B;
-      font-weight: 800;
-    }
-    .section h3 {
-      font-size: 15px;
-      line-height: 1.24;
-      margin: 0 0 6px 0;
-      color: #1B1B1B;
-      font-weight: 800;
-    }
-    .text {
-      font-size: 13.2px;
-      line-height: 1.68;
-      color: #374151;
-    }
-    .text ul { margin: 8px 0 0 0; padding-left: 18px; }
-    .text li { margin-bottom: 6px; }
-    .intro-box, .note-box, .callout, .benchmark-box {
-      border-radius: 16px;
-      padding: 14px 16px;
-    }
-    .intro-box {
-      background: linear-gradient(180deg, #FFF5F7 0%, #FFFAFB 100%);
-      border: 1px solid #FFD4DE;
-    }
-    .note-box {
-      background: #F5F9FF;
-      border: 1px solid #C8DFFF;
-    }
-    .callout {
-      background: #FFF7E8;
-      border: 1px solid #F5D48D;
-    }
-    .benchmark-box {
-      background: #F4FBF9;
-      border: 1px solid #C9EADF;
-    }
-    .intro-box p, .note-box p, .callout p, .benchmark-box p {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.68;
-      color: #374151;
-    }
-    .grid-2, .grid-3 { display: grid; gap: 14px; }
-    .grid-2 { grid-template-columns: 1fr 1fr; }
-    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-    .card {
-      border: 1px solid #E5E7EB;
-      border-radius: 16px;
-      padding: 14px;
-      background: #FFFFFF;
-    }
-    .card.soft { background: #FAFAFA; }
-    .card.global-card { background: #F5F9FF; border-color: #C8DFFF; }
-    .card.latam-card { background: #FFF8ED; border-color: #F7D39B; }
-    .card.app-card { background: #FFF4F7; border-color: #FFD4DE; }
-    .card.green-card { background: #F4FBF9; border-color: #C9EADF; }
-    .card h3 { margin: 0 0 8px 0; font-size: 15px; line-height: 1.28; color: #1B1B1B; }
-    .card p, .card li { margin: 0; font-size: 13px; line-height: 1.62; color: #4b5563; }
-    .card ul { margin: 8px 0 0 0; padding-left: 18px; }
-    .card li { margin-bottom: 6px; color: #374151; }
-    .exec-map-section {
-      width: 100%;
-      max-width: 760px;
-      margin: 0 auto;
-      font-family: "Montserrat", Arial, sans-serif;
-      color: #1B1B1B;
-      page-break-inside: avoid;
-    }
-    .exec-map-header { margin-bottom: 18px; }
-    .exec-map-header h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-      line-height: 1.2;
-      font-weight: 800;
-      color: #1B1B1B;
-      letter-spacing: -0.01em;
-    }
-    .exec-map-header p {
-      margin: 0;
-      font-size: 11.5px;
-      line-height: 1.65;
-      color: #4f5f6f;
-      max-width: 710px;
-    }
-    .exec-map-card {
-      background: #FFFFFF;
-      border: 1px solid #E9EEF3;
-      border-radius: 18px;
-      padding: 22px 20px 16px;
-    }
-    .exec-map-plot {
-      position: relative;
-      height: 660px;
-      border-radius: 16px;
-      overflow: hidden;
-      background:
-        linear-gradient(to right, rgba(27, 27, 27, 0.03) 0, rgba(27, 27, 27, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(27, 27, 27, 0.03) 0, rgba(27, 27, 27, 0.03) 1px, transparent 1px);
-      background-size: 64px 64px;
-    }
-    .axis { position: absolute; z-index: 1; background: #CCD6DF; }
-    .axis-y { left: 50%; top: 36px; bottom: 64px; width: 2px; transform: translateX(-50%); }
-    .axis-x { left: 46px; right: 34px; top: 50%; height: 2px; transform: translateY(-50%); }
-    .x-divider { position: absolute; top: 36px; bottom: 64px; width: 1px; border-left: 1px dashed rgba(27, 27, 27, 0.18); z-index: 1; }
-    .x-divider-custom { border-left-color: rgba(27, 27, 27, 0.38); }
-    .y-grid { position: absolute; left: 46px; right: 34px; height: 1px; background: rgba(27, 27, 27, 0.07); z-index: 1; }
-    .y-axis-title { position: absolute; left: -118px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 11px; font-weight: 800; color: #4f5f6f; letter-spacing: 0.01em; z-index: 3; }
-    .y-level { position: absolute; left: 10px; transform: translateY(-50%); z-index: 3; font-size: 10px; font-weight: 800; letter-spacing: 0.01em; color: #6B7A88; background: rgba(255, 255, 255, 0.94); padding: 4px 7px; border-radius: 6px; white-space: nowrap; }
-    .x-scale { position: absolute; left: 46px; right: 34px; bottom: 14px; height: 30px; z-index: 3; }
-    .x-tick { position: absolute; transform: translateX(-50%); font-size: 10.5px; font-weight: 800; color: #667786; white-space: nowrap; }
-    .x-tick-custom { color: #4f5f6f; }
-    .map-item { position: absolute; z-index: 4; }
-    .range { height: 14px; min-width: 20px; border-radius: 999px; transform: translateY(-50%); }
-    .range-inline { display: flex; align-items: center; justify-content: center; padding: 0 8px; box-sizing: border-box; }
-    .range-inline .range-text { display: block; font-size: 11px; font-weight: 800; line-height: 1; white-space: nowrap; text-align: center; }
-    .custom { width: 18px; height: 18px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.94); }
-    .custom::before, .custom::after { content: ""; position: absolute; background: currentColor; opacity: 0.95; }
-    .custom::before { width: 10px; height: 2px; top: 8px; left: 4px; }
-    .custom::after { width: 2px; height: 10px; top: 4px; left: 8px; }
-    .item-label { position: absolute; display: block; white-space: nowrap; line-height: 1.2; font-size: 11.5px; font-weight: 800; letter-spacing: -0.01em; }
-    .label-left .item-label { right: calc(100% + 10px); left: auto; top: 50%; transform: translateY(-50%); text-align: right; }
-    .global.range, .global.custom { background: linear-gradient(90deg, #ECF9FF 0%, #CBEFFF 100%); border: 1.5px solid #9ED7F0; color: #2F6783; }
-    .latam.range, .latam.custom { background: linear-gradient(90deg, #FFF2CF 0%, #FFD98D 100%); border: 1.5px solid #F0C567; color: #8F620F; }
-    .beat.range { background: linear-gradient(90deg, #FF8B83 0%, #FA345E 100%); border: 1.5px solid #D92E58; color: #8A1734; }
-    .beat-main { height: 18px !important; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.96), 0 10px 24px rgba(250, 52, 94, 0.16); }
-    .beat-main .range-text { color: #FFFFFF; font-size: 11px; font-weight: 800; }
-    .performance.range { background: linear-gradient(90deg, #B2A8E7 0%, #FA345E 100%); border: 1.5px solid #8D7ED8; color: #FFFFFF; }
-    .performance-main { height: 18px !important; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.96), 0 10px 24px rgba(178, 168, 231, 0.22); }
-    .performance-main .range-text { color: #FFFFFF; font-size: 11px; font-weight: 800; }
-    .exec-map-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #EDF2F6; }
-    .legend-item { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: #5A6A77; }
-    .legend-swatch { width: 18px; height: 10px; border-radius: 999px; display: inline-block; }
-    .legend-swatch.global { background: #DDF4FF; border: 1px solid #9ED7F0; }
-    .legend-swatch.latam { background: #FFE29A; border: 1px solid #F0C567; }
-    .legend-swatch.beat { background: #FA345E; border: 1px solid #D92E58; }
-    .legend-swatch.performance { background: #B2A8E7; border: 1px solid #8D7ED8; }
-    .exec-map-note { margin-top: 12px; font-size: 10.5px; line-height: 1.6; color: #6E7C88; }
-    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
-    th { background: #FA345E; color: #FFFFFF; text-align: left; padding: 9px 10px; font-weight: 700; font-size: 12.2px; }
-    td { border: 1px solid #E5E7EB; padding: 9px 10px; vertical-align: top; line-height: 1.52; color: #374151; background: #FFFFFF; }
-    tr:nth-child(even) td { background: #FAFAFA; }
-    .summary-table td, .summary-table th { font-size: 12.1px; }
-    .tag { display: inline-block; font-size: 10.8px; font-weight: 800; line-height: 1.1; padding: 5px 7px; border-radius: 999px; margin-bottom: 6px; }
-    .tag.global { background: #EEF5FF; color: #1E4270; }
-    .tag.latam { background: #FFF6EA; color: #8A5200; }
-    .tag.app { background: #FFF2F5; color: #FA345E; }
-    .tag.performance { background: #F2F0FF; color: #6F62C5; }
-    .footer { margin-top: 14px; font-size: 11px; color: #9CA3AF; text-align: right; }
-    .highlight { color: #FA345E; font-weight: 800; }
-    @media print {
-      body { background: #FFFFFF; }
-      .page { margin: 0; width: 100%; min-height: auto; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apprecio Beat — Benchmark competitivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 0; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{
+  font-family:'Montserrat',sans-serif;
+  background:#f0f2f5;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* ── PÁGINA ── */
+.page{
+  width:210mm;
+  min-height:297mm;
+  margin:0 auto 10mm auto;
+  background:#FFFFFF;
+  display:flex;
+  flex-direction:column;
+  page-break-after:always;
+  break-after:page;
+  overflow:hidden;
+}
+.page:last-child{ page-break-after:auto; break-after:auto; }
+
+/* ── HEADER ── */
+.pg-header{
+  background:#FA345E;
+  padding:18px 20px 16px;
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.pg-header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.pg-tag{
+  font-size:9px; font-weight:700; letter-spacing:1.8px;
+  text-transform:uppercase; color:rgba(255,255,255,0.75);
+  margin-bottom:5px;
+}
+.pg-title{
+  font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.1;
+}
+.pg-sub{
+  font-size:10.5px; color:rgba(255,255,255,0.82);
+  margin-top:5px; line-height:1.55; max-width:80%;
+}
+.pg-badge{
+  background:rgba(255,255,255,0.15);
+  border:1.5px solid rgba(255,255,255,0.3);
+  border-radius:12px; padding:10px 16px;
+  text-align:center; white-space:nowrap; flex-shrink:0;
+}
+.pg-badge .val{ font-size:20px; font-weight:900; color:#FFFFFF; display:block; }
+.pg-badge .lbl{ font-size:9px; font-weight:600; color:rgba(255,255,255,0.75); }
+
+/* ornamentos header */
+.orn{
+  position:absolute; z-index:1;
+  opacity:0.12;
+}
+.orn-1{ width:48px; height:48px; background:#FFFFFF; top:-14px; right:180px; border-radius:4px; }
+.orn-2{ width:24px; height:24px; background:#FFFFFF; top:34px; right:158px; border-radius:3px; }
+.orn-3{ width:32px; height:32px; background:#FFFFFF; bottom:-10px; right:90px; border-radius:3px; }
+.orn-4{ width:16px; height:64px; background:#FFFFFF; top:0; right:64px; border-radius:2px; }
+
+/* ── CONTENIDO ── */
+.pg-body{
+  flex:1;
+  padding:16px 20px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* ── NOTA ── */
+.nota{
+  background:#FFE6E8;
+  border-left:3px solid #FA345E;
+  border-radius:0 8px 8px 0;
+  padding:8px 12px;
+  font-size:10px; line-height:1.65; color:#1B1B1B;
+}
+.nota strong{ color:#FA345E; }
+
+/* ── MAPA IMAGE ── */
+.mapa-wrap{
+  border:1px solid #EEE;
+  border-radius:12px;
+  overflow:hidden;
+  background:#FAFAFA;
+}
+.mapa-wrap img{
+  width:100%;
+  display:block;
+}
+.mapa-caption{
+  padding:6px 12px;
+  font-size:9.5px; color:#6B7A88; font-weight:500;
+  border-top:1px solid #EEE;
+  background:#FAFAFA;
+}
+
+/* ── TABLA ── */
+.tbl-label{
+  font-size:11px; font-weight:800; color:#1B1B1B;
+  margin-bottom:5px;
+  display:flex; align-items:center; gap:8px;
+}
+.tbl-label::before{
+  content:'';
+  display:inline-block;
+  width:3px; height:14px;
+  background:#B2A8E7;
+  border-radius:2px;
+}
+table{ width:100%; border-collapse:collapse; font-size:10px; }
+th{
+  background:#B2A8E7;
+  color:#1B1B1B; text-align:left;
+  padding:7px 10px; font-weight:800; font-size:9.5px;
+  letter-spacing:0.3px;
+}
+th:first-child{ border-radius:8px 0 0 0; }
+th:last-child{ border-radius:0 8px 0 0; }
+td{
+  border-bottom:1px solid #F0F0F0;
+  padding:7px 10px; vertical-align:top;
+  line-height:1.5; color:#374151;
+  background:#FFFFFF;
+}
+tr:nth-child(even) td{ background:#FAFAFA; }
+.tr-beat td{ background:#FFE6E8 !important; font-weight:600; }
+.tr-indirect td{ color:#9AAAB8; font-style:italic; }
+
+/* ── TAGS ── */
+.tag{ display:inline-block; font-size:8.5px; font-weight:800; padding:2px 7px; border-radius:20px; white-space:nowrap; }
+.tag-alta  { background:#FFE6E8; color:#FA345E; }
+.tag-media { background:#EDE9FC; color:#6B5CC4; }
+.tag-baja  { background:#F0F0F0; color:#6B7A88; }
+.tag-ind   { background:#F0F0F0; color:#9AAAB8; font-style:italic; }
+
+/* ── CARDS PAÍS ── */
+.country-grid{ display:grid; gap:10px; }
+.country-grid.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+.country-grid.cols-1{ grid-template-columns:1fr; }
+.c-card{
+  border:1px solid #EEE;
+  border-radius:12px;
+  padding:12px 14px;
+  background:#FFFFFF;
+  position:relative;
+  overflow:hidden;
+}
+.c-card::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+}
+.c-card.mx::before{ background:linear-gradient(90deg,#97E89F,#45C1AD); }
+.c-card.co::before{ background:linear-gradient(90deg,#FA345E,#B2A8E7); }
+.c-card.cl::before{ background:linear-gradient(90deg,#45C1AD,#B2A8E7); }
+.c-card.es::before{ background:linear-gradient(90deg,#FA345E,#B2A8E7); }
+.c-flag{ font-size:16px; margin-bottom:4px; }
+.c-name{ font-size:11px; font-weight:800; color:#1B1B1B; margin-bottom:5px; }
+.c-body{ font-size:10px; line-height:1.65; color:#4b5563; }
+.c-body strong{ color:#1B1B1B; }
+
+/* ── FOOTER ── */
+.pg-footer{
+  padding:8px 20px;
+  border-top:1px solid #F0F0F0;
+  display:flex; justify-content:space-between;
+  font-size:9px; color:#B0BEC8; font-weight:500;
+  flex-shrink:0;
+}
+.pg-footer span:first-child{ color:#FA345E; font-weight:700; }
+
+/* ── PÁG 3 — PRICING ── */
+.section-block{ display:flex; flex-direction:column; gap:8px; }
+.section-lbl{
+  font-size:10px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; color:#FA345E;
+  padding-bottom:5px;
+  border-bottom:2px solid #FFE6E8;
+}
+.price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.price-card{
+  border:1px solid #EEE; border-radius:12px;
+  padding:12px 14px; background:#FFFFFF;
+}
+.price-card.highlight{
+  background:#FFE6E8; border-color:#FA345E;
+}
+.pc-eyebrow{
+  font-size:8.5px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; color:#B2A8E7; margin-bottom:4px;
+}
+.price-card.highlight .pc-eyebrow{ color:#FA345E; }
+.pc-title{ font-size:12px; font-weight:900; color:#1B1B1B; margin-bottom:6px; }
+.pc-body{ font-size:10px; line-height:1.65; color:#4b5563; }
+.pc-body strong{ color:#1B1B1B; }
+.pc-body ul{ padding-left:13px; margin-top:5px; }
+.pc-body li{ margin-bottom:4px; }
+
+.verdict{
+  border-radius:12px;
+  background:#FFE6E8;
+  border:1px solid #FA345E;
+  padding:14px 16px;
+}
+.verdict-title{
+  font-size:12px; font-weight:900; color:#FA345E;
+  margin-bottom:6px;
+}
+.verdict-body{ font-size:10.5px; line-height:1.7; color:#1B1B1B; }
+.verdict-body strong{ color:#FA345E; }
+
+.risk-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+.risk-card{ border-radius:10px; padding:10px 12px; }
+.risk-card.green{ background:#F0FFF8; border:1px solid #97E89F; }
+.risk-card.yellow{ background:#FFFBF0; border:1px solid #F5D58D; }
+.risk-card.red{ background:#FFE6E8; border:1px solid #FA345E; }
+.risk-lbl{
+  font-size:8.5px; font-weight:800; letter-spacing:0.7px;
+  text-transform:uppercase; margin-bottom:3px;
+}
+.risk-card.green .risk-lbl{ color:#1A6B4A; }
+.risk-card.yellow .risk-lbl{ color:#8A6200; }
+.risk-card.red .risk-lbl{ color:#FA345E; }
+.risk-title{ font-size:10.5px; font-weight:800; color:#1B1B1B; margin-bottom:4px; }
+.risk-body{ font-size:9.5px; line-height:1.6; color:#4b5563; }
+
+@media print{
+  body{ background:#fff; }
+  .page{ margin:0; width:100%; }
+}
+</style>
 </head>
 <body>
-  <div class="page">
-    <div class="header">
-      <div class="eyebrow">Apprecio Beat · Posicionamiento de mercado</div>
-      <h1>Posicionamiento de mercado y pricing</h1>
-      <div class="subtitle">
-        Este análisis posiciona <strong>Apprecio Beat</strong> dentro del mercado de plataformas de cultura, reconocimiento, engagement y recompensas para colaboradores. La comparación cruza <strong>precio PEPM</strong> con <strong>nivel de activación cultural</strong>, evitando una lectura limitada a precio y separando claramente el software de la bolsa de puntos o presupuesto de recompensas.
+
+
+<!-- ═══════════════════════════════════
+     PÁGINA 1 — LATAM
+═══════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <div class="orn orn-1"></div>
+    <div class="orn orn-2"></div>
+    <div class="orn orn-3"></div>
+    <div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · Benchmark competitivo</div>
+        <div class="pg-title">Posicionamiento en Latinoamérica</div>
+        <div class="pg-sub">Mercados prioritarios 2026: México, Colombia y Chile. Competidores directos en reconocimiento, cultura y engagement de colaboradores.</div>
+      </div>
+      <div class="pg-badge">
+        <span class="val">US$4–6</span>
+        <span class="lbl">Apprecio Beat PEPM</span>
       </div>
     </div>
-
-    <div class="section">
-      <div class="intro-box">
-        <p>
-          Apprecio Beat se posiciona como la evolución natural desde iniciativas transaccionales de puntos hacia un sistema recurrente de cultura, reconocimiento y participación. Su tesis comercial es simple: <strong>Rewards abre la puerta; Apprecio Beat permite quedarse dentro</strong>. Beat Performance extiende esa base cuando el cliente necesita conectar cultura con metas, evidencia, retos, entrenamientos o scorecards.
-        </p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Metodología</h2>
-      <div class="text">
-        La posición relativa se construye en base a:
-        <ul>
-          <li>propuesta de valor pública de cada plataforma,</li>
-          <li>profundidad funcional en reconocimiento, cultura, engagement, recompensas y activación de comportamientos,</li>
-          <li>modelo comercial visible: self-serve, cotizador, venta enterprise o pricing por módulos,</li>
-          <li>presencia geográfica y foco regional: global, LATAM o local,</li>
-          <li>y una lectura de pricing normalizada a <strong>PEPM comparable</strong> cuando el vendor opera con fee fijo o paquete mensual.</li>
-        </ul>
-      </div>
-      <div style="margin-top:10px;" class="note-box">
-        <p>
-          En esta categoría, el precio público rara vez representa el ticket real de una empresa mediana o grande. Varias soluciones publican valores de entrada, pero venden bundles, add-ons o contratos por cotización. Por eso el mapa separa visualmente los rangos PEPM de la zona <strong>custom</strong> y no mezcla el costo del software con el presupuesto de recompensas.
-        </p>
-      </div>
-    </div>
-
-    <div class="section">
-      <section class="exec-map-section">
-        <div class="exec-map-header">
-          <h3>Mapa de posicionamiento por activación cultural y precio PEPM</h3>
-          <p>
-            Comparativo referencial entre plataformas globales, LATAM y Apprecio Beat. El eje X utiliza una escala numérica de referencia para PEPM y separa visualmente los modelos de cotización/custom. El eje Y representa el nivel de activación cultural según profundidad funcional.
-            <br><br>
-            <strong>Los precios de competidores corresponden a valores base o rangos estimados de mercado. Apprecio Beat considera pricing interno referencial de software, sin incluir presupuesto de puntos.</strong>
-          </p>
-        </div>
-
-        <div class="exec-map-card">
-          <div class="exec-map-plot">
-            <div class="y-axis-title">Nivel de activación cultural</div>
-            <div class="axis axis-y"></div>
-            <div class="axis axis-x"></div>
-            <div class="x-divider" style="left: 14%;"></div>
-            <div class="x-divider" style="left: 32.29%;"></div>
-            <div class="x-divider" style="left: 59.71%;"></div>
-            <div class="x-divider" style="left: 78%;"></div>
-            <div class="x-divider x-divider-custom" style="left: 86%;"></div>
-            <div class="y-grid" style="top: 15%;"></div>
-            <div class="y-grid" style="top: 32%;"></div>
-            <div class="y-grid" style="top: 50%;"></div>
-            <div class="y-grid" style="top: 70%;"></div>
-            <div class="y-level" style="top: 15%;">Activación amplia</div>
-            <div class="y-level" style="top: 32%;">Cultura activa</div>
-            <div class="y-level" style="top: 50%;">Reconocimiento estructurado</div>
-            <div class="y-level" style="top: 70%;">Reconocimiento básico</div>
-            <div class="x-scale">
-              <div class="x-tick" style="left: 14%;">US$1</div>
-              <div class="x-tick" style="left: 32.29%;">US$3</div>
-              <div class="x-tick" style="left: 59.71%;">US$6</div>
-              <div class="x-tick" style="left: 78%;">US$8</div>
-              <div class="x-tick x-tick-custom" style="left: 91%;">Cotización / custom</div>
-            </div>
-
-            <div class="map-item global range range-inline" style="left: 32.29%; width: 36.57%; top: 56%;"><span class="range-text">Bonusly</span></div>
-            <div class="map-item global range range-inline" style="left: 36.86%; width: 13.71%; top: 50%;"><span class="range-text">Kudos</span></div>
-            <div class="map-item global range range-inline" style="left: 23.14%; width: 27.43%; top: 42%;"><span class="range-text">Awardco</span></div>
-            <div class="map-item global custom label-left" style="left: 89.5%; top: 21%;"><span class="item-label">Vantage Circle</span></div>
-            <div class="map-item global custom label-left" style="left: 95.5%; top: 15%;"><span class="item-label">Workhuman</span></div>
-            <div class="map-item latam range range-inline" style="left: 27.71%; width: 22.86%; top: 62%;"><span class="range-text">Buk</span></div>
-            <div class="map-item latam custom label-left" style="left: 92.2%; top: 26.2%;"><span class="item-label">Rankmi</span></div>
-            <div class="map-item latam custom label-left" style="left: 94.8%; top: 31.5%;"><span class="item-label">WeFitter</span></div>
-            <div class="map-item latam custom label-left" style="left: 90.8%; top: 38.5%;"><span class="item-label">GOintegro</span></div>
-            <div class="map-item beat range beat-main range-inline" style="left: 37%; width: 18.29%; top: 35%;"><span class="range-text">Apprecio Beat</span></div>
-            <div class="map-item performance range performance-main range-inline" style="left: 48%; width: 20%; top: 28%;"><span class="range-text">Beat Performance</span></div>
-          </div>
-          <div class="exec-map-legend">
-            <div class="legend-item"><span class="legend-swatch global"></span><span>Competidores globales</span></div>
-            <div class="legend-item"><span class="legend-swatch latam"></span><span>Competidores LATAM</span></div>
-            <div class="legend-item"><span class="legend-swatch beat"></span><span>Apprecio Beat</span></div>
-            <div class="legend-item"><span class="legend-swatch performance"></span><span>Beat Performance</span></div>
-          </div>
-          <div class="exec-map-note">
-            El eje Y refleja una evaluación funcional cualitativa sobre reconocimiento, visibilidad, engagement, beneficios, gamificación, comunicación y capacidad de activar comportamientos. Beat Performance suma una capa de ejecución y desempeño, pero no se posiciona como software formal de performance management corporativo.
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="section grid-2">
-      <div class="card latam-card">
-        <h3>Cómo leer el eje Y</h3>
-        <p>
-          El eje Y no mide cantidad total de funcionalidades. Mide qué tan lejos llega cada plataforma en activar cultura y sostener participación. Por eso los players más enterprise o con múltiples capas de engagement quedan arriba, mientras que herramientas más simples de reconocimiento quedan en posiciones medias o bajas.
-        </p>
-      </div>
-
-      <div class="card app-card">
-        <h3>Cómo leer el eje X</h3>
-        <p>
-          El eje X compara precio de software PEPM. No incluye la bolsa de puntos ni el costo facial de recompensas, porque ese presupuesto depende del diseño del programa, frecuencia de asignación, campañas, tamaño de la población y política interna del cliente.
-        </p>
-      </div>
-    </div>
-
-    <div class="section grid-2">
-      <div class="card green-card">
-        <h3>Apprecio Beat</h3>
-        <p>
-          Beat compite en la zona de cultura activa: reconocimiento, puntos, recompensas, campañas, comunicación, encuestas, noticias e interacción recurrente con colaboradores.
-        </p>
-      </div>
-
-      <div class="card soft">
-        <h3>Beat Performance</h3>
-        <p>
-          Performance se posiciona como expansión natural cuando el cliente necesita movilizar resultados: scorecards, retos, entrenamientos, evidencia, ligas y conexión entre desempeño e incentivos.
-        </p>
-      </div>
-    </div>
-
-    <div class="footer">Apprecio · Apprecio Beat</div>
   </div>
 
-  <div class="page">
-    <div class="header">
-      <div class="eyebrow">Apprecio Beat · Benchmark resumido</div>
-      <h1>Competidores y base de lectura</h1>
-      <div class="subtitle">
-        Resumen unificado de competidores incluidos en el mapa, con lectura de precio y activación cultural. Esta tabla deja solo la información necesaria para entender por qué cada marca quedó posicionada en su zona del benchmark.
-      </div>
+  <div class="pg-body">
+
+    <div class="nota">
+      <strong>Metodología:</strong> Cada competidor se posiciona en el centro de su rango de precio PEPM de software. No incluye presupuesto de recompensas — ese costo es variable y lo define el cliente.
     </div>
 
-    <div class="section">
-      <h2>Tabla resumen de competidores</h2>
-      <table class="summary-table">
-        <tr>
-          <th style="width:13%;">Competidor</th>
-          <th style="width:10%;">Origen</th>
-          <th style="width:15%;">Precio usado</th>
-          <th style="width:20%;">Base del dato de precio</th>
-          <th style="width:16%;">Nivel eje Y</th>
-          <th>Base funcional para activación cultural</th>
-        </tr>
-        <tr>
-          <td>Workhuman</td>
-          <td>Global</td>
-          <td>Custom</td>
-          <td>Venta enterprise / cotización</td>
-          <td>Activación amplia</td>
-          <td>Recognition enterprise, cultura a escala, rewards globales, outcomes de engagement y retención.</td>
-        </tr>
-        <tr>
-          <td>Vantage Circle</td>
-          <td>Global</td>
-          <td>Custom</td>
-          <td>Planes visibles pero sin monto PEPM cerrado comparable</td>
-          <td>Activación amplia</td>
-          <td>Recognition, rewards, wellness, feedback, leaderboard, gamificación e insights para managers.</td>
-        </tr>
-        <tr>
-          <td>Rankmi</td>
-          <td>LATAM</td>
-          <td>Custom</td>
-          <td>Cotización / sin PEPM público visible</td>
-          <td>Activación amplia</td>
-          <td>Suite HR con reconocimiento, clima laboral, bienestar, IA, beneficios y gestión de personas.</td>
-        </tr>
-        <tr>
-          <td>WeFitter</td>
-          <td>LATAM</td>
-          <td>Custom</td>
-          <td>Sin pricing público visible</td>
-          <td>Activación amplia</td>
-          <td>Challenges, gamification, badges, levels, leaderboards y wellbeing.</td>
-        </tr>
-        <tr>
-          <td>Apprecio Beat</td>
-          <td>Apprecio</td>
-          <td>US$4–6 PEPM</td>
-          <td>Pricing interno referencial de software</td>
-          <td>Cultura activa</td>
-          <td>Reconocimiento, cultura visible, participación, puntos, recompensas, comunicación y activación recurrente de colaboradores.</td>
-        </tr>
-        <tr>
-          <td>Beat Performance</td>
-          <td>Apprecio</td>
-          <td>US$6–8 PEPM</td>
-          <td>Pricing interno referencial sujeto a alcance</td>
-          <td>Cultura activa + ejecución</td>
-          <td>Extiende Beat con scorecards, retos, entrenamientos, ligas, evidencia e incentivos conectados a metas o KPIs.</td>
-        </tr>
-        <tr>
-          <td>Awardco</td>
-          <td>Global</td>
-          <td>US$2–4 PEPM</td>
-          <td>Referencia pública de entrada + ajuste comparativo para configuración más completa</td>
-          <td>Cultura activa</td>
-          <td>Recognition, rewards, engagement, flexibilidad por use case y operación deskless/global.</td>
-        </tr>
-        <tr>
-          <td>GOintegro</td>
-          <td>LATAM</td>
-          <td>Custom</td>
-          <td>Request a quote / demo</td>
-          <td>Cultura activa</td>
-          <td>Comunicación interna, reconocimientos, premios, beneficios, bienestar y HR hub.</td>
-        </tr>
-        <tr>
-          <td>Kudos</td>
-          <td>Global</td>
-          <td>~US$4–5 PEPM</td>
-          <td>Rango oficial-referencial</td>
-          <td>Reconocimiento estructurado</td>
-          <td>Recognition, rewards, awards, nominations, analytics, challenges e incentives.</td>
-        </tr>
-        <tr>
-          <td>Bonusly</td>
-          <td>Global</td>
-          <td>~US$3–5 PEPM</td>
-          <td>Precio Team + lectura de configuración comparable</td>
-          <td>Reconocimiento estructurado</td>
-          <td>Peer recognition, rewards, milestones, analytics para managers e integraciones HRIS / SSO.</td>
-        </tr>
-        <tr>
-          <td>Buk</td>
-          <td>LATAM</td>
-          <td>~US$2.5–5 PEPM</td>
-          <td>Rango operativo validado para básica / pro</td>
-          <td>Reconocimiento básico</td>
-          <td>Comunicación interna, reconocimiento laboral y encuestas dentro de una suite HR más amplia.</td>
-        </tr>
-      </table>
+    <!-- MAPA -->
+    <div class="mapa-wrap">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAH3AxUDASIAAhEBAxEB/8QAHAABAQACAwEBAAAAAAAAAAAAAAIBAwUGBwQI/8QAQRAAAQMBBAcFBwQCAQQCAgMAAAECAwQFERNRBhIhMTOR0TJxcpKxByIjQVOhwRQ0YYEVQhYIJFJiQ4IXVnSU0v/EABoBAQADAQEBAAAAAAAAAAAAAAABAgMEBQb/xAAyEQEAAQMCBQEHBAICAwAAAAAAAQIDEQQhBRIxQVFhBnGBkaGx8BMUFdEiUoLSweHx/9oADAMBAAIRAxEAPwD9lgAAAAAAAA4GyrfqqvSutsOpsh9EkFKypjlfO17pWue9nZbejexf2lXbuQ4lmm1Wtns0gWxI00afKjG1n6z4+or9RJlh1LsO9UXt62rt1fkB3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdLo5rbd7RprSk0SteGhmoYqJJ3z0io1zZZHK9USdXalz03Irt+w4tliaQf8AEotAFsVyUkcjYFtTHjwFpGyI5Lma2JiKxNXV1br9utcekADD2o7erk7lVDU1iLM9us+5ES731/k3Gtn7iTwt/IGcJub/ADr1GE3N/nXqWAIwm5v869RhNzf516lgCMJub/OvUYTc3+depYAjCbm/zr1GE3N/nXqWAIwm5v8AOvUYTc3+depYA1NjRXvRXPuRUu99cisJub/OvUM4knenoWBGE3N/nXqMJub/ADr1LAEYTc3+deowm5v869SwBGE3N/nXqMJub/OvUsARhNzf516jCbm/zr1LAEYTc3+depLI0VX3ufsdcnvrkbSI+1J4vwgDCbm/zr1GE3N/nXqWAIwm5v8AOvUYTc3+depYAjCbm/zr1GE3N/nXqWAIwm5v869RhNzf516lgCMJub/OvUYTc3+depYA0xxoqOvc/Y5U7al4Tc3+deoh3O8S+pYEYTc3+deowm5v869SwBGE3N/nXqMJub/OvUsARhNzf516jCbm/wA69SwBGE3N/nXqMJub/OvUsARhNzf516kxRo5l6ufvX/dczaRDw/7X1AYTc3+deowm5v8AOvUsARhNzf516jCbm/zr1LAEYTc3+deowm5v869SwBGE3N/nXqMJub/OvUsARhNzf516jCbm/wA69SwBpijR0bVVz71T/wA1Lwm5v869RBwW9xYEYTc3+deowm5v869SwBGE3N/nXqMJub/OvUsARhNzf516jCbm/wA69SwBGE3N/nXqMJub/OvUsAa1ibcvvP8AOvUxHGixtVXPvVEXtqbV3KTDwmeFAMYTc3+deowm5v8AOvUsARhNzf516jCbm/zr1LAEYTc3+deowm5v869SwBGE3N/nXqMJub/OvUsARhNzf516kyRokblRz70Rf91NpMvCf4VAlIm3J7z/ADr1M4Tc3+depTeyncZAjCbm/wA69RhNzf516lgCMJub/OvUYTc3+depYAjCbm/zr1GE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" alt="Mapa de posicionamiento LATAM"/>
+      <div class="mapa-caption">Eje X: precio PEPM software (USD) · Eje Y: profundidad funcional en reconocimiento y engagement · Cada punto representa el centro del rango de precio</div>
     </div>
 
-    <div class="section grid-3">
-      <div class="card global-card">
-        <span class="tag global">Mercado global</span>
-        <h3>Precio visible vs precio efectivo</h3>
-        <p>
-          Varios players globales muestran precios de entrada bajos o parciales, pero venden bundles, planes avanzados o cotizaciones más completas cuando el cliente requiere reporting, branding, integraciones, seguridad o soporte enterprise.
-        </p>
-      </div>
-
-      <div class="card latam-card">
-        <span class="tag latam">Mercado LATAM</span>
-        <h3>Software vs reward spend</h3>
-        <p>
-          El benchmark refuerza una idea clave: el mercado tiende a separar el fee de software del presupuesto de recompensas. Beat debe mantener esta separación para proteger margen y explicar correctamente el modelo económico.
-        </p>
-      </div>
-
-      <div class="card app-card">
-        <span class="tag app">Implicancia Beat</span>
-        <h3>Pricing defendible</h3>
-        <p>
-          Apprecio Beat queda en una zona defendible si se vende como sistema recurrente de cultura, reconocimiento y recompensas, no como una herramienta puntual de entrega de puntos.
-        </p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Lectura por país foco</h2>
+    <!-- TABLA -->
+    <div>
+      <div class="tbl-label">Competidores directos — funcionalidad y posicionamiento</div>
       <table>
         <tr>
-          <th style="width: 16%;">País</th>
-          <th style="width: 34%;">Lectura de mercado</th>
-          <th style="width: 18%;">Visibilidad de precio</th>
-          <th>Implicación para Apprecio Beat</th>
+          <th style="width:16%;">Plataforma</th>
+          <th style="width:10%;">Origen</th>
+          <th style="width:14%;">Competitividad</th>
+          <th>Foco principal</th>
         </tr>
-        <tr>
-          <td>Chile</td>
-          <td>Conviven suites HR regionales con pricing por cotización y players globales cobrando mayormente en USD.</td>
-          <td>Baja a media</td>
-          <td>Conviene definir tarifa local en CLP con ancla USD y separar claramente software, implementación y bolsa de puntos.</td>
-        </tr>
-        <tr>
-          <td>Colombia</td>
-          <td>Mayor sensibilidad al ticket por empleado y preferencia por propuesta modular.</td>
-          <td>Baja en locales / media en globales</td>
-          <td>Precio de entrada competitivo y narrativa fuerte de recurrencia, adopción y control presupuestario.</td>
-        </tr>
-        <tr>
-          <td>México</td>
-          <td>Mercado mixto, con apertura a SaaS global y presencia de suites HR regionales.</td>
-          <td>Media en globales / baja en regionales</td>
-          <td>Puede venderse en MXN o USD, pero conviene definir mínimo mensual para evitar erosión de margen.</td>
-        </tr>
-        <tr>
-          <td>España</td>
-          <td>Mayor presencia de precios públicos y vendors europeos / globales con lista visible.</td>
-          <td>Media a alta</td>
-          <td>Permite sostener ticket mayor si se defiende la capa de activación, reporting y operación regional.</td>
-        </tr>
-        <tr>
-          <td>Estados Unidos</td>
-          <td>Mercado más transparente y más caro en HR tech, recognition y engagement platforms.</td>
-          <td>Alta en mid-market / media en enterprise</td>
-          <td>Sirve como mercado ancla para definir price ceiling, política de add-ons y mínimos anuales.</td>
-        </tr>
+        <tr><td>GOintegro</td><td>Argentina</td><td><span class="tag tag-alta">Alta</span></td><td>Engagement, comunicación interna, reconocimientos y beneficios regionales. Competidor más directo.</td></tr>
+        <tr><td>Betterfly</td><td>Chile</td><td><span class="tag tag-alta">Alta</span></td><td>Gamificación, bienestar y propósito social. Captura presupuesto de engagement con empaque de seguros.</td></tr>
+        <tr><td>SAWA</td><td>Chile</td><td><span class="tag tag-alta">Alta</span></td><td>Motor de incentivos y gamificación para fuerzas de venta y operaciones. Precio similar a Apprecio Beat, funcionalidad acotada a equipos comerciales.</td></tr>
+        <tr><td>Buk</td><td>Chile</td><td><span class="tag tag-media">Media-alta</span></td><td>Suite HR con módulo de beneficios. Compite cuando el cliente evalúa no sumar una plataforma adicional a su HRIS.</td></tr>
+        <tr><td>Bonda</td><td>Argentina</td><td><span class="tag tag-media">Media-alta</span></td><td>Beneficios, reconocimientos y gift cards para colaboradores.</td></tr>
+        <tr><td>Maslow</td><td>LATAM</td><td><span class="tag tag-media">Media-alta</span></td><td>Beneficios, incentivos y reconocimientos. Cobertura en +7 países de la región.</td></tr>
+        <tr><td>Sparks</td><td>Colombia</td><td><span class="tag tag-media">Media — directo CO</span></td><td>Bienestar financiero y reconocimiento. Precio bajo subsidiado por modelo fintech.</td></tr>
+        <tr><td>Mis Méritos</td><td>LATAM</td><td><span class="tag tag-media">Media</span></td><td>Reconocimiento y recompensas para colaboradores. Plataforma emergente de reconocimiento puro.</td></tr>
+        <tr><td>StarMeUp</td><td>Argentina</td><td><span class="tag tag-baja">Media-baja</span></td><td>Cultura por valores y reconocimiento peer-to-peer. Orientado a grandes empresas de tecnología.</td></tr>
+        <tr class="tr-beat"><td>Apprecio Beat</td><td>Apprecio</td><td>—</td><td>Reconocimiento, cultura, recompensas, campañas, encuestas e IA para administradores. Ecosistema Apprecio.</td></tr>
       </table>
     </div>
 
-    <div class="section">
-      <h2>Implicancias para la arquitectura de pricing</h2>
-      <div class="grid-2">
-        <div class="card soft">
-          <h3>Qué ayuda a defender Apprecio Beat</h3>
-          <ul>
-            <li>Beat no se vende como entrega de puntos, sino como sistema de cultura, reconocimiento y engagement recurrente.</li>
-            <li>El precio PEPM se justifica mejor cuando se separa del presupuesto de recompensas y se explica la plataforma como infraestructura de activación.</li>
-            <li>La cercanía regional, el soporte y la capacidad de aterrizar campañas locales reducen fricción frente a vendors globales.</li>
-          </ul>
-        </div>
-        <div class="card app-card">
-          <h3>Qué ayuda a defender Beat Performance</h3>
-          <ul>
-            <li>Performance permite capturar oportunidades donde el dolor ya no es solo cultura, sino metas, ejecución, evidencia y resultados.</li>
-            <li>Debe presentarse como expansión de Beat, no como reemplazo de un software formal de evaluación de desempeño.</li>
-            <li>El pricing superior se defiende por scorecards, retos, entrenamientos, ligas y trazabilidad de incentivos por desempeño.</li>
-          </ul>
-        </div>
+    <!-- PAÍSES -->
+    <div class="country-grid cols-3">
+      <div class="c-card mx">
+        <div class="c-flag">🇲🇽</div>
+        <div class="c-name">México — Mayor escala</div>
+        <div class="c-body">Alta apertura a plataformas regionales. La rotación operativa es el dolor principal — reconocimiento conectado a retención tiene tracción directa. <strong>Mercado de mayor volumen para Apprecio.</strong></div>
+      </div>
+      <div class="c-card co">
+        <div class="c-flag">🇨🇴</div>
+        <div class="c-name">Colombia — En crecimiento</div>
+        <div class="c-body">Alta sensibilidad al precio. Sparks compite desde bienestar financiero. El mercado de reconocimiento puro no está saturado. <strong>Oportunidad si Apprecio Beat se posiciona como cultura</strong>, no como catálogo de premios.</div>
+      </div>
+      <div class="c-card cl">
+        <div class="c-flag">🇨🇱</div>
+        <div class="c-name">Chile — Mercado de origen</div>
+        <div class="c-body">Hub HR tech regional. Alta preferencia por vendors locales. <strong>Mercado natural para consolidar propuesta</strong> y construir casos de éxito exportables a la región.</div>
       </div>
     </div>
 
-    <div class="section">
-      <h2>Resumen estratégico integrado</h2>
-      <div class="text">
-        El benchmark entrega una conclusión clara: <span class="highlight">el precio mínimo visible del mercado no es una referencia suficiente</span>. En recognition, cultura y engagement, muchos proveedores publican entry points bajos, pero en la práctica venden módulos, bundles o contratos por cotización.
-        <br><br>
-        Visto así, <strong>Apprecio Beat</strong> queda en una zona competitiva defendible: más robusto que una herramienta básica de reconocimiento, menos pesado que una suite enterprise global y especialmente relevante para LATAM cuando se valora cercanía, activación local, operación de puntos y capacidad de conectar reconocimiento con recompensas reales.
-      </div>
-    </div>
-
-    <div class="footer">Apprecio · Apprecio Beat</div>
   </div>
+
+  <div class="pg-footer">
+    <span>Apprecio Beat · LATAM</span>
+    <span>PEPM = precio de software únicamente, sin presupuesto de recompensas</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     PÁGINA 2 — EUROPA
+═══════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <div class="orn orn-1"></div>
+    <div class="orn orn-2"></div>
+    <div class="orn orn-3"></div>
+    <div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · Benchmark competitivo</div>
+        <div class="pg-title">Posicionamiento en Europa</div>
+        <div class="pg-sub">Foco en España como mercado prioritario de entrada. Objetivo: validar si el pricing de Apprecio Beat es competitivo en el mercado europeo.</div>
+      </div>
+      <div class="pg-badge">
+        <span class="val">US$4–6</span>
+        <span class="lbl">Apprecio Beat PEPM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-body">
+
+    <div class="nota">
+      <strong>Metodología:</strong> Cada competidor se posiciona en el centro de su rango de precio PEPM de software. Precios originales en GBP/EUR normalizados a USD. No incluye presupuesto de recompensas.
+    </div>
+
+    <!-- MAPA -->
+    <div class="mapa-wrap">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAH7AxUDASIAAhEBAxEB/8QAHAABAQACAwEBAAAAAAAAAAAAAAIBAwUGBwQI/8QAQRAAAQMBBAcFBwQCAQMEAwEAAAECAwQFERKRBiExM1Jy0RNBUVPBByIycYGSsRQ0QmEVIxYIYqEXJEOCVZTh8P/EABoBAQACAwEAAAAAAAAAAAAAAAABAgMEBQb/xAAzEQEAAQIEBAQFAwQDAQAAAAAAAQIRAwQhMQUSQVEiYXGRBhSBofATscEVMuHxJFLR0v/aAAwDAQACEQMRAD8A/ZYAAAAAAAAOGsvSKktDSCrsWOkr4ZqaBs6vqIFjZI1znNvbi95dbF1qiJ4Kpx7dN6Bz2z/4200sl0/6dtrLGz9Mr1fgT+faYVdqx4MPffdrA7SAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOjUVswSe1GonbQW42CazYaNkz7Gq2RrK2aVVRXrGjUS5zVxKuHXtOFjp6z/ANP4PZ1/h7SS0WOZRulWlf8ApkhbKi9v292D4ExXX4sWq689TAGHoq7Hq35XGpqPWVze1fciIuxP7/o3Gtn7iTlb6gZwP85+SdBgf5z8k6FgCMD/ADn5J0GB/nPyToWAIwP85+SdBgf5z8k6FgCMD/OfknQYH+c/JOhYAjA/zn5J0JiR7o2uWV96pfsTobSKfcM5UAYH+c/JOgwP85+SdCwBGB/nPyToMD/OfknQsARgf5z8k6DA/wA5+SdCwBGB/nPyToMD/OfknQsAante3DdK/Wt2xOhWB/nPyToJf4cyFgRgf5z8k6DA/wA5+SdCwBGB/nPyToMD/OfknQsARgf5z8k6DA/zn5J0LAEYH+c/JOgwP85+SdCwBqRr1kc3tX3IidydCsD/ADn5J0Dd8/5J6lgRgf5z8k6DA/zn5J0LAEYH+c/JOgwP85+SdCwBGB/nPyToMD/OfknQsARgf5z8k6DA/wA5+SdCwBqiR7omuWV96tRdidCsD/OfknQU+4j5U/BYEYH+c/JOgwP85+SdCwBGB/nPyToMD/OfknQsARgf5z8k6DA/zn5J0LAEYH+c/JOhL2varbpX61u2J0NpEu1nN6KAwP8AOfknQYH+c/JOhYAjA/zn5J0GB/nPyToWAIwP85+SdBgf5z8k6FgCMD/OfknQYH+c/JOhYAjA/wA5+SdCWter3N7V+q7uTobSGb1/0AYH+c/JOgwP85+SdCwBGB/nPyToMD/OfknQsARgf5z8k6DA/wA5+SdCwBGB/nPyToMD/OfknQsAQrH+c/JOhMTXuja5ZX3qiLsTobV2EQbiPlT8AMD/ADn5J0GB/nPyToWAIwP85+SdBgf5z8k6FgCMD/OfknQYH+c/JOhYAjA/zn5J0GB/nPyToWANT2vRWokz9a3bE6FYH+c/JOgk+KPm9FLAjA/zn5J0GB/nPyToWAIwP85+SdBgf5z8k6FgCMD/ADn5J0GB/nPyToWAIwP85+SdBgf5z8k6FgCI1dje1XK6666+4shm+k+hYAAAAAAAAAAAAAANbP3EnK31NhrZ+4k5W+oGwAAAAAAAAAACKfcM5ULIp9wzlQCwAAAAAAAAABEv8OZCyJf4cyFgAAAAAAAAAABDd8/5J6lkN3z/AJJ6lgAAAAAAAAAABFPuI+VPwWRT7iPlT8FgAAAAAAAACJdrOb0UsiXazm9FAsAAAAAAAAAACGb1/wBCyGb1/wBALAAAAAAAAAABdhEG4j5U/Ba7CINxHyp+ALAAAAAAAAAAESfFHzeilkSfFHzeilgAAAAAAAAAABDN9J9CyGb6T6FgAAAAAAAAAAAAAA1s/cScrfU2Gtn7iTlb6gbAAAAAAAAAAAIp9wzlQsin3DOVALAAAAAAAAAAES/w5kLIl/hzIWAAAAAAAAAAAEN3z/knqWQ3fP8AknqWAAAAAAAAAAAEU+4j5U/BZFPuI+VPwWAAAAAAAAAIl2s5vRSyJdrOb0UCwAAAAAAAAAAIZvX/AELIZvX/AEAsAAAAAAAAAAF2EQbiPlT8FrsIg3EfKn4AsAAAAAAAAAARJ8UfN6KWRJ8UfN6KWAAAAAAAAAAAEM30n0LIZvpPoWAAAAAAAAAAAAAADWz9xJyt9TYa2fuJOVvqBsAAAAAAAAAAAin3DOVCyKfcM5UAsAAAAAAAAAARL/DmQsiX+HMhYAAAAAAAAAAAQ3fP+SepZDd8/wCSepYAAAAAAAAAAART7iPlT8FkU+4j5U/BYAAAAAAAAAiXazm9FLIl2s5vRQLAAAAAAAAAAAhm9f8AQshm9f8AQCwAAAAAAAAAAXYRBuI+VPwWuwiDcR8qfgCwAAAAAAAAABEnxR83opZEnxR83opYAAAAAAAAAAAQzfSfQshm+k+hYAAAAAAAAAAAAAANbP3EnK31NhrZ+4k5W+oGwAAAAAAAAAACKfcM5ULIp9wzlQCwAAAAAAAAABEv8OZCyJf4cyFgAAAAAAAAAABDd8/5J6lkN3z/AJJ6lgAAAAAAAADzr2ve0hdDHU9BZ9JDVWjOztP9rvcibfciuai4lVdfhs2nop5N7dPZ3aek1XS21YMbZ6yONIJqd0iMxtRVVrmq5UTVet6X+BTE5uXwu18P0ZKvPUU52fBrvpF+l57Hsi9qs+klrtsK2qWmp6l8d9NLBejZFal6tVFVdd2vV4L/AEd20pt6rsy0aaKljhfTwsSotFz0VVjgWRrEVLl1Lre69b9UbvE8x9i/sxtqzdI4NIrejSjbSo5YIMaOdI5zVbety6kRFv8A71HqFbolZto1tp1Vqo+qdXtbDcj3xpHCjMKM1O161e6//v8A6KUc806ulxqjhODxGfl5vh2i8RrHNe0xGvbXff2fRaekMNHaktmxWdaFbUw07Kl7aaNq3Ruc9qLe5yXrexdW1b0uRdd2qTSmjdNDDQUddaT5qNlbGlMxtzoXqqI69zmp3bNutLkXXdxlLY2kEGkEy01qsjcyyKOlfVTUavZO5r58TkTGlz0vau1U97WmwzBYNpUNvRxWLVtpKelseno2SVFMszHo18ng5vvomFb77veW9Neq96nM/QydOnNEzERPW20b6e0Rrvezlo9JKOoqKKCipqysdWU7amNYo0RGxKt2JyuVLru9Nvgiij0loaiVl8NTDTzI9aepla1I50Yiq5W3KrtiKqYkS9EVUvKsawY7LqKaSKoc9kFC2kRHNTE652LGqp3r4XHFWLoTS2d/7dG2Y6iZFJEzs7OaypVjmq258t633IqpejUVe/vveJi5cjMVazptvrv/AI8t/p9c+kbZbGqa2OktGiiSnWeGplp2ua9mr3kTFqXWnuvwqvhqU32jpLRUNVUxPpquWGjVqVlTGxqxUyuRHJivVHL7rmquFFuRUvPmXR+1ZrHmsmstyOWmWl/TRYaPC7uufIuJcTkRLvdwprVbtl2bV0aqKuS04ILSbBZ9rKi10K0+J6+42N3ZvxIjcTWoi3td3r3jxLU05LmtVOmu19vD5Xva/lfy0fRpjak9lUVJJBUU1N29WyB81RGr2MaqOVVuRzfBO8+KytJEls+tqaqaCsZS1jaeKWjiVv6hzmtuajFcqo7E/DrW7VfeiX3crpBZtRaMNKlJVRUs1LUsqGOkhWVqq1FS5Wo5q9/icTaWirrRgq3WlWU89ZVSQOR6Un+lqwqrmIsTnOxIt6ot7r1RdqXJcm99FcvOUnBinFm031013jy7X6/S+rko7dZJTSvjs2vfUwzJDLSo1naMcrEfrXFgRMKouLFd3X36j4naUrNUWSlnWVV1sFf2qK9j4kWN0d6Ob7z0vVFRb7r08FU0rom9bPjg7SyY3tqv1DoorMRlLImBWI10SPvddfivVy60TwRDZQ6M1lBSUUdLacHb0dTPLG+SkVWqyZXK5qta9NaK5blRUTUiXDxLxTkaYmYmJnz5rbT/ADa33u7MAC7kAAAAAAQzev8AoWQzev8AoBYAAAAAAAAAALsIg3EfKn4LXYRBuI+VPwBYAAHkPtR9rtRo/bsti2FR0089OqJPNUI5Wo7UuFGpd3d9/fqPXjwf2wey7SCv0pqrdsGnZXQVjkdJCkqNkjfdcq3OuRWrd3Lfr2arzFizVFPhej+F8Lh+JnLZ+Y5baXm0X03+l3fPZH7QWaa0k8FVTR0tpUrWulZG5cEjVvTE1F1ol+pUVVuvTXrNtLpXWSWm6BtoWTUzJaj6P/GRRr+pSJs6xrIq9ouxvvqqtRLkXYcN7DPZ/aWiiVlqW0scdbVRpEynY9HdkxFvXEqalVVRNircibddydy/46iUHYNq8M7LTfaEM3Za2K6ZZFbdfsVrnMVb9aKop5ppi63Ef6Zg57Fpy+tF4t1jbW02nS/bXtLczSKkfWpA2mqlhdUOpmVWFvZPmbeisT3sV97XNvVLr0uvNUOldkyyU7MUzO3s7/IIrmXI2Pwdr1O1O1f9rvA+SztEYqG2Vq4f8YsC1UlSius5q1KOe5XK3tr9mJy3e7eiXJeaJ9CWS0NTTLaTkWWtdMx/Y7uByOasF1+tMMkiIvdivu1FvE0f0+H3tzTbTv576dNL2+jlKvSCngkpFnoq2KCZ8Le3e1jWNfKqIxi3uxKt7kRcKKid66lC6S0aLXuWlrUp6Bz2Tz9mmDG1U9xqX4nKt6XXIqa7tuo+C3tFZbQtKarZXU0bpZoZY3S0fayROiwKjGvxpdGqsRVaiIq3u169XISWA2SybRoH1TkWsqH1DZGsRFicrkc3UqrfcqIv9jxKcuSimmb6za++m1/rGvtt302Vbk9dpPJZ0lHVUTY6Js6w1DGo+9XqiOvarkVFRF1X6rtdxpr7Zrn1dorT2jZVl0VnzNp3TV0auSWVWNeqX42I1qI9qd6qt+y7X9llWRaENuSWvaVpxVUz6VtN2cNMsUbURyuxIivct63rfr8Nhiex6+K0quqsq04qSOue19THLTdquNGozHGuJuFVa1qa0cmpFu23tbHNloxZta1o72vpfeJ6X3if5K/SKGz7Mir6mmknp/06Tz1FI5r4Im3XqqPcrcabbsKKqp3ayGaQvS3rRoaizaiGjooGTOrVfH2aNVHqrlTHiu9y5Lkv23oiaziqrQVZrJprNW0YXxxWa2z1fNSdo9iIjkWSK91zHqjrlW52xvgcnPo9PUS1KVFbC+nr6BtHXxpTqiyXNemKNcfuX9oupUdsT5jxLzTkaaZtVedelXeLTHna/ltfutmk9IjFdUUVdSrhZIxszGor43PazGlzluRFciqi3Kidxtj0ks6SoqqdiTukpqyOkcmBPec9URHN162ouJFX/sd4HG2fog2CgraOZ9ltSoo3UqSUVmNp33OT4nKjlVV2bMKXpfdsu3UOiv6e0LLrXV/aSUjHLUp2NyVUq41R+33bnTSuu1/EmvVreJFdGQ8VqvTe21+3Xb1m+z6n6RwR1ctNLZ9fFI2CWeFrmMR1Q2O7FgbixIutLsSNvPsp7VpKmqpaenc6X9TSrVMe1PdSO9qIqr/eLV43L4HAUOjMlk2jDazq2GRKRJVf2Vnqs1Q16a1e5HK570ubcqJ4+7rS7foFZUtBT1lTO2RvbzuZSRyMwuhpGucsUap3XYnLcuu5yIutBEyrjYOVjDmvDqva3fWZv37RaXY2b6T6FkM30n0LLuWAAAAAAAAAAAAefWzptaFHpbNZEc1lNnZX09NBZUrH/q6yKRGK6dj0dcjWo6Rfgcn+tb1TuD0E1s/cScrfUtXIm1UT5qa2Pb28i4m7G9/zA2gnGzjbmMbONuYFAnGzjbmMbONuYFAnGzjbmMbONuYFAnGzjbmMbONuYFEU+4ZyoZxs425kQPYkLL3N+FO8DaCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gYl/hzIWapXs9z3m/EneXjZxtzAoE42cbcxjZxtzAoE42cbcxjZxtzAoE42cbcxjZxtzAoE42cbcxjZxtzAw3fP+SepZqa9nav8AebsTvLxs425gUCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gYp9xHyp+CzVA9iQRorm/Cnf/AEXjZxtzAoE42cbcxjZxtzAoE42cbcxjZxtzAoE42cbcxjZxtzAoiXazm9FM42cbcyJXsvZ7zfi8QNoJxs425jGzjbmBQJxs425jGzjbmBQJxs425jGzjbmBQJxs425jGzjbmBRDN6/6GcbONuZDHs7V/vN7u8DaCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gUCcbONuYxs425gUuwiDcR8qfgyr2XfG3MiB7EgYiub8Kd/9AbQTjZxtzGNnG3MCgTjZxtzGNnG3MCgTjZxtzGNnG3MCgTjZxtzGNnG3MDEnxR83opZrkezEz3m/F4/0pWNnG3MCgTjZxtzGNnG3MCgTjZxtzGNnG3MCgTjZxtzGNnG3MCgTjZxtzGNnG3MDDN9J9CzXGqLLIqKi7DYAAAAAAAAAAAA86tTQu3KiG2LKh/xDqW1LRWt/yUjnpVU972uREZgVHOZdc12NtyImrVr9FABURdqIpqY1vbyak+Fvd8zaa2fuJOVvqBeFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmREDW9gz3U+FO42EU+4ZyoBWFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDXK1vue6nxJ3F4W8KZEy/wAOZCwMYW8KZDC3hTIyAMYW8KZDC3hTIyAMYW8KZDC3hTIyAMYW8KZDC3hTIyANbWt7V/upsTu+ZeFvCmRLd8/5J6lgYwt4UyGFvCmRkAYwt4UyGFvCmRkAYwt4UyGFvCmRkAYwt4UyGFvCmRkAa6drewj91PhTu/ovC3hTImn3EfKn4LAxhbwpkMLeFMjIAxhbwpkMLeFMjIAxhbwpkMLeFMjIAxhbwpkRK1t7PdT4vA2ES7Wc3ooFYW8KZDC3hTIyAMYW8KZDC3hTIyAMYW8KZDC3hTIyAMYW8KZDC3hTIyAMYW8KZEMa3tX+6nd3Gwhm9f8AQCsLeFMhhbwpkZAGMLeFMhhbwpkZAGMLeFMhhbwpkZAGMLeFMhhbwpkZAGFa274UyIga3sI/dT4U7v6Ni7CINxHyp+AKwt4UyGFvCmRkAYwt4UyGFvCmRkAYwt4UyGFvCmRkAYwt4UyGFvCmRkAa5GtxM91Pi8P6UvC3hTImT4o+b0UsDGFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDGFvCmQwt4UyMgDXGiJLJcl2w2EM30n0LAAAAAAAAAAAAAABrZ+4k5W+psNbP3EnK31A2AAAAAAAAAAART7hnKhZFPuGcqAWAAAAAAAAAAIl/hzIWRL/DmQsAAAAAAAAAAAIbvn/JPUshu+f8AJPUsAAAOge27TKt0R0cp1stWsr62VY45HMRyRtal7nXLqVdbURF1a18Dyz2fe1bSeDSekgti0HWhQ1U7Y5myMbiZiW7E1URLrlW+7Ye0+0vQ2j00sJKGaVaephcslNOiX4HXXXL4tXVen9J4HQNBvYpLZmkMFpW7aNNUwUsiSxQQNd/sc1b248SJcmpFVNd+y+7bgriua9NnuuDZvgmHwqujNUx+pre8Xme3LPT3i06u86Y1lXQ6V2PWRVUzKWlp5pqqFr1RkkayQxuc5Ni4EkV//wBV8T4323U0ukNt25JLPNQU9nTugpkkVGKkD0arrtiKr+0TFw4e47hW2bRVkqy1UCSuWnkplvVbljkw423bNeFuRqp7Esqnhihjo2dnFSrRtY5VcnYrde1UVVvvu1qt6qZJpm7zeFncvThU0103mItO217+/m+KzLQtWO3IrKtb9FI+opH1MT6VjmozA5jXMcjnLfvG3O1X3LqOdOOsmxLNsuV01JFL2jmJHjmqJJnNYmxrVe5cLf6S5DkS0XaOZrw6674cfa32vNvyUU+4j5U/BZFPuI+VPwWS1wAAAAAAAAiXazm9FLIl2s5vRQLAAAAAAAAAAAhm9f8AQshm9f8AQCwAAAAAAAAAAXYRBuI+VPwWuwiDcR8qfgCwAAAAAAAAABEnxR83opZEnxR83opYAAAAAAAAAAAQzfSfQshm+k+hYAAAAAAAAAAAAAANbP3EnK31NhrZ+4k5W+oGwAAAAAAAAAACKfcM5ULIp9wzlQCwAAAAAAAAABEv8OZCyJf4cyFgAAAB8OkFf/i7BtC01bi/R0ss+G6+/AxXXbU8PE/Kdb7QNMqq1HWi7SKvilVVVGRTKyJqeCMT3bvp3GPExIo3eh4H8OY/GIrqw6opinv3froHRLH0jrNIPZNHpH/shrIGJPMkS4cawSYnol3c5GKl3g64+avtq0Y623KqGskWntKKSlstMS4YponNhRW/26SRy6tqMTwJ54adPCcaa6sOqYiqmZp+sTH8TM+kS9EB1K0rctOihteppG0rqCwsLJ2T4nTVGGJkjla7EiNXC9Lr0deqd15NuWjatXQaWRtWlhorPhmhaqNd2z1WlZJfffc25ZPBb/6uvWeaGGjh+JVMaxaf8ffxR7+Uu2N3z/knqWdTo7ctKq0fW1KClYsSzNhYnYvlljY29r3vjaqKq4k3aXORNuvUmG2jbFbbNh/obWoFpp4KhZ0Sjfc90b2oupZEVipfdct6tVHX39zmR/T8SJmKpiLX79IvbSJ10dtB1eDSKqdpNT0CrBPS1NTNTtdFTSIkbo2vdrlcuF6/61RWtT3VvS9biKW2NIZ9H22skFIqTSI1scNPJK6FiOVHSK1HIsmxPdbcqX7VHNCJyGLFua0Xt97/APk/kw7WD4rDrP11lw1Pbwzq7EjnxMcxqqjlRUwu1tVFS5WrrRUVD7SzUromiqaZ3gAAVAABFPuI+VPwWRT7iPlT8FgAAAB+dvbbp9b7tL6uxLMtCps+iorolSCRY3SuuRXOcqa7tdyJfsT+1O1f9POmdsW6+usW2auStdTRNlp5pNb0bfhc1ztrtatVFW9dt67DFGLE1cr02P8AC2awOHRn6qotaJt1tO377PXwef2UlfVVVVJQstl1c225WuqJKp/6VIG1Ko5uBz8Kp2aK1Ea2+/w2nJ2PpNX2hacWCjkdRTVUsGFtDOixNYr0SRZlTA5FVqe6iJdi2rcXipy8XhtdN5pm9t/zXfW17bejtpEiLezmOjWhblou0ModIrUSJsT6mknbBRxPV6NxorkVVVcV+q5Lku2Kq7T6airtqo0isJ0EtnxVFXZtZJeuKWFje0p1bqRydoqIqJeiomtVTVqHMf0yvrVEf3R9aYvP5+7uYOqUlv2taDqKz6WOip6+X9X28srXSRN/TTJE7C1HNVcTnIqa9Sbb1Pnq9MK2ms2hq3UdO59XLNQo1Hrc2qZKsaOVfJVWuVXd2rbeOaFI4bjzPLFr3tv6/wDzPt6O5gwzEjGo9UV13vKiXIq/IyWaAAAAAAEM3r/oWQzev+gFgAAAAAAAAAAuwiDcR8qfgtdhEG4j5U/AFgAAAAAAAAACJPij5vRSyJPij5vRSwAAAAAAAAAAAhm+k+hZDN9J9CwAAAAAAAAAAAAAAa2fuJOVvqbDWz9xJyt9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAAAAAACJf4cyFkS/wAOZCwAAAiohiqIJIJ2NkikarHscl6OaqXKinjVX7BKN9qulptIJYaBz1VIVpsT2N7mo/Fr+apme0ArVRTVu6XD+L5zh3N8tXy82+0/vdx9j2LZ1k2FDYlFToyhijWNI1W+9FvxXr3qqqqr8zS3RuxG0Nm0KULf09mStmo2Y3f63tvuW++921V1369ZywJtDT+ZxuaauebzN5169/XWfdxddo/ZNbWurKime6R6tWRrZ3tjlVvw42IqNfdq+JF2IfQ+y6B8NoQugvjtFVWrTG7/AGKsbY179XuNamq7ZftPsAtCP18W0RzTp5/naPZxUthWZNLP/olidI5j3OhqJInYmtVqORWuS512pVTWqXIt6IhlbAsvsKaFsU0aUr3SROjqJGPRzlVXKr0didiVVVb1W9dpyLd8/wCSepaqiJeqoif2LQt8zjbc8+89rftp6OIZo3Y7K2OsbTypNFO6eK6pkwxvcqq5WtxXNxYnXoiXLfrvN8ljWe6zYrPSOWOCF2KLsp3sexdetHtVHJtXv7zkE1pegFoROZxpmJmudPOfzq+ez6OmoKRtLSRqyJqudcrlcqq5Vc5VVVVVVVVVVVW9VU+gAliqqmqZmZvICe0Z2iRY241TEjb9d3jd4FBAAAIp9xHyp+CyKfcR8qfgsAAAPN/aV7J7P0stP/LUdctm170RJ17LtGS3Jciql6XOuu1992zvOY9megNn6EUdQ2CofWVlSqdtUPZhvRNjWtvXCmtV2rf9Eu7gCkUUxN7Opicaz2JlYydWJM4cdNOm0X3tHa7RQ0dPRRvjpo+zbJK+ZyYlW973K5y6/FVVT46ewLLp7RWuhhlZJ2jpUYlRJ2SPdfiekeLAjlvXWiX618VOTBa0OfGNiRe1U6767+r4o7Js9ln0tA2nupqR0boGY3e4rFRW6771uVE2nw1GjFiOWnVKWWJ0KyJA6GpljdCkio56MVrkVqKrU1JqRL0TUqnNkS7Wc3ootC1OZxqZvTXMfWXGzaPWTJR01IlPJEylv7B0E8kUjL/i99rkdr79etda3mf+P2N+nSnWhjWJKV1IjFcqokTlvcm3aqoiqu1bkvXUcoBaE/M43/efeUxsSONsbcWFqIiYnKq6vFV1r9SgCWAAAAAACGb1/wBCyGb1/wBALAAAAAAAAAABdhEG4j5U/Ba7CINxHyp+ALAAAAAAAAAAESfFHzeilkSfFHzeilgAAAAAAAAAABDN9J9CyGb6T6FgAAAAAHwaQWTR27Y1TZNoJItLUswSJHIrHXXoupya02H5vtmwPZvo1ptpDZWmVXpBZFPGkX+ISKWd7Zo1YiuejkR2J2K9NdzUuu23n6fPEdO9MdMk0xtGko9IbGsCyrOtKGhe+qpGyOi7SBZGTyOctyMc5MCKl11/fcoHdvYNDU0/slsKKrpJ6WXs5HYJ1djVqyvVr3YlVUVyKjrtiX6tVx3g6d7F66otL2aWTW1dpVFpVMiS9rVT7ZXpM9FVPFl6XNXhRuzYdxAAAAa2fuJOVvqbDWz9xJyt9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAAAAAACJf4cyFkS/w5kLAAAAAAAAAHT/bFblfo/oDXV9mKrKpXMiZKibrE5EV3zu1J/aodwPktmzaO17LqLMtCFJqWoYrJGKt16fNNi995FUTMaNrJYuHg5nDxMWnmpiYmY7xd+QLK0nt+zLVZalLa1WlUx2LG+VX4luu95FvR2pV2n6b0pe+1tHtHpn0VM99XV08jqep1x3ujcqtdqXUnyOs2V7ENGqS2UqZ62urKaJzXtppcNztup6oiXps2Xf8Ak9LrLOs+tpG0dZQUtTTMuVsMsLXsS7Zc1Uu1GHDw6oibvXfEXHOH5vGwcTK0603vNrb7R0vb/Uul09TVWJHatBCyjoJ319Il9MmKmpmTq2O9qKiXO9xVVFS69zV2KfXV2nbNNLV2XDaaTyQ19HC2rkhZiRszkR7HI1EarkTXqRPiadngsuzIKF9DBZ1HFSSIqPgZA1sbr9t7US5TNLZdmUtKylpbOpIIGSJI2KOFrWtei3o5ERLr79d5k5Zedqz2DVM1TRedN4jpb1npOmsa+WvXltO0qOeeikrXVH6e1qan7eSNiOdFK1iq12FEbficqXoibU79uKq1LVqqm1qez6nF+mtRlO1sKxJMsf6Zj3NjWRMCvxuVfe7kcmq5Luy1FBQ1Ec8c9HTysqLu3a+JFSW5ERMSKmu5ETb4Gh1iWM6jdRusmgWmc5HrCtOzArkRERbrrr0RES/+ibSx0ZrAjWaNfSLdLzbTtOmm7rlNUVFpWlBLQVkiVT7GqGRzzRNRzZWytbe5qe7qcmu7Vq1HJaM21NbtYtRF/qpYKVjZ4rkVUqXa3sVdqKxERP8A7/0hyc9m06RQrR01FBUUrHNpJHU6OSC9LlwoioqIqalRFQiwLLismhfBG7tJJZ5KieTDh7SWRyuc67u1rqTuREERNzFzGBXhTaNdo8tZv5bWt2m9nIAAs5qINxHyp+CyINxHyp+CwAAAAAAAABEu1nN6KWRLtZzeigWAAAAAAAAAABDN6/6FkM3r/oBYAAAAAAAAAALsIg3EfKn4LXYRBuI+VPwBYAAAAAAAAAAiT4o+b0UsiT4o+b0UsAAAAAAAAAAAIZvpPoWQzfSfQsAAAAAA+DSFbYSxalbAShW1MH/tkrcXY4r0+PD7111+w8cZantZt+1NILGbYHs5tF1D2cFodpDOsczlbjbH7zveuRe9LkVdu09j0htL/D2JV2p+hrK79NGr/wBPSR9pNJ/TW96nintEi0drtLqyudof7VaarnjjSrmsSlVkNWmBLkd72tURUat12tFA9O9kFrz277ObItSpgs2nmlY9robPjcyCLDI5qMa12tLkaiL3Xot2q47Ydc9mbLNi0GsyKyLFtGxKGNjmRUVoRLHUR3Pciq9qqutyorr79aORe87GAF6X3d4PFY31KRWvppaVh2RXusy3Z4p5KrE6sRkdSrGdg++6NGswXMu99UW/4tYe1Gtn7iTlb6luVyXXNV31NLXP7d/+tdiar0/sDeCMb/KXNBjf5S5oBYIxv8pc0GN/lLmgFgjG/wApc0GN/lLmgFgjG/ylzQY3+UuaAWRT7hnKgxv8pc0Igc/sWXRqvup3oBuBGN/lLmgxv8pc0AsEY3+UuaDG/wApc0AsEY3+UuaDG/ylzQCwRjf5S5oMb/KXNANVZUU9P2XbzxRY3ojcb0bevgl59B+ONOLWtG2dKrQrbUfKs/bvYkb1X/S1HLdGiLsRNl3qe6/9N9q2jX6Fz0tX2ksNFU9jTyOW+5mFFwXrw3/RFRPAw0Y3NVaz1/FvhOvh2RjNTiXnS8W79pvr7O/2bpBYVpTNhs+2aCrkeiq1kNQ16qibbkRTkzznQi2G/wDBqenZpNZVTMyyndnTU+Fs8bmx367pFW9ty3+6n0PtpKKokrqWnkte1nRz2R+qmurHorpkVqI9FRfdT3l91tzV1XotxeKtHIzHDacPFqp5rRF9762+kf76u8g85ba8FTW2ctvW9U2fTT2BTVK4KpadjpnK+92JFT3rv43+9dsW45CzbaqaNtFLblY+F1RYzHMbKuBZZkct9zdX+xUVvuol+u64c8MeJwrEoje8+k6+ne3Xs7i2pgdWPo0kRZ2RtkczvRrlVEX6q12RtPPqCskdSpNUWp+jqarRijc2qlVVdiRZFe/xW7EiqqbMV+o7BoVWtqqGpbDfMkNRgWRle6rifexq+5K/Wqa9aLsW9CYqupmchODTNUTeIt+e/r52dhBGN/lLmgxv8pc0LOcN3z/knqWaWuf2r/8AWuxO9C8b/KXNALBGN/lLmgxv8pc0AsEY3+UuaDG/ylzQCwRjf5S5oMb/AClzQCwRjf5S5oMb/KXNAEG4j5U/BZpgc/sWXRqvup3p4F43+UuaAWCMb/KXNBjf5S5oBYIxv8pc0GN/lLmgFgjG/wApc0GN/lLmgFkS7Wc3ooxv8pc0Ikc+9n+tfi8UA3AjG/ylzQY3+UuaAWCMb/KXNBjf5S5oBYIxv8pc0GN/lLmgFgjG/wApc0GN/lLmgFkM3r/oMb/KXNCGuf2r/wDWvd3oBuBGN/lLmgxv8pc0AsEY3+UuaDG/ylzQCwRjf5S5oMb/AClzQCwRjf5S5oMb/KXNALXYRBuI+VPwFc+7dLmhEDn9iy6NV91O9PADcCMb/KXNBjf5S5oBYIxv8pc0GN/lLmgFgjG/ylzQY3+UuaAWCMb/AClzQY3+UuaAJPij5vRSzTI597P9a/F4p4KXjf5S5oBYIxv8pc0GN/lLmgFgjG/ylzQY3+UuaAWCMb/KXNBjf5S5oBYIxv8AKXNBjf5S5oAZvpPoWa4lVZZFVLl1ajYAAAAAAfBpBSV1fY1TR2bab7Lq5WXRVbYkkWJb014V1L9TxrSWsr9HLSdZttf9QS0lYxEV8K2NE57L0vTEjb7r0VF1+J7oeIe0CgsWxdJ7Yrv+W6K0drzV8FpUVPaWtzHJAsUsU1y4uye1b01dQPQ/ZBJQzezuy5rOrrRr6aRJXNqa9qtmmVZX3uVO5FW9U/7bjth1P2QQsp/Z1ZMMdsU1rsa2S6qplVYV/wBr/cjv14GfAidyNQ7YAOArNDtHau13WpPQvdO+Vk0jEqZWwSyMuwvfCjuze5Lk1uaq6k8EOfAA1s/cScrfU2Gtn7iTlb6gbAAAAAAAAAAAIp9wzlQsin3DOVALAAAAAAAAAAHRtLvZfoppFan+SqqeemqZHJ2rqV6MSRdetyXKl63612rcn9na7BsizrCsuGzLKpWU1LEnusb3r3qq7VVfFT65f4cyFkRTETeG3jZ/NY2FTg4mJM007RM6QAAlqPlbQwNtSW0kxdtJAyByKvu4Wuc5NXje9f8AwfUAFqqpq3AAFQAAQ3fP+SepZDd8/wCSepYAAAAAAAAAAARBuI+VPwWRT7iPlT8FgAAAAAAAACJdrOb0UsiXazm9FAsAAAAAAAAAACGb1/0LIZvX/QCwAAAAAAAAAAXYRBuI+VPwWuwiDcR8qfgCwAAAAAAAAABEnxR83opZEnxR83opYAAAAAAAAAAAQzfSfQshm+k+hYAAAAAAPGLVsnSayvaHpJaND7J6LSaitGaKSOqqrQpmPvbGjXYcaKqN1fCqbb1vVFS72c/P3tDqNFv/AFIt9ntNtW3qGONIVsFlKszYVi7NMTo+zRUV+PFfi7//AAHtOhTqt+jNI6u0eh0dqFx47NilZI2D33XXOYiNXElztSfy8TmDqPsaltqb2Z2JJpAtQtoLC7EtQl0qsxu7NX/9yswXnbgAAAGtn7iTlb6mw1s/cScrfUDYAAAAAAAAAABFPuGcqFkU+4ZyoBYAAAAAAAAAAiX+HMhZEv8ADmQsAAAAAAAAAAAIbvn/ACT1LIbvn/JPUsAAAAAAAAAAAIp9xHyp+CyKfcR8qfgsAAAAAAAAARLtZzeilkS7Wc3ooFgAAAAAAAAAAQzev+hZDN6/6AWAAAAAAAAAAC7CINxHyp+C12EQbiPlT8AWAAAAAAAAAAIk+KPm9FLIk+KPm9FLAAAAAAAAAAACGb6T6FkM30n0LAAAAAAPg0hgtOqsSrp7Fr46C0HxqlPUyRJI2N3irV1Kec26/TOe3bYp7P8AaZZNOlkQR1FXSrYzZX0zVjvxKveq4XOuS9URU8Uv9VPIdLotItEtMrXr9G9LNDKGG3HRzT09vVCxyQyNYjMUdy+8ioiLcuQHf/Z5WT2hoZZ1bU25T27JOxz/ANfBB2LJkV7sNzP4qiXNVNt6LfrOfOreyiyaKw/Z/ZdmWfatPa0MTZFWsp3tdHLI6Rznq1WqqXY1cl3dcdpAAAAa2fuJOVvqbDWz9xJyt9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAAAAAACJf4cyFkS/w5kLAAAAAAAAAAACG75/yT1LIbvn/ACT1LAAAAAAAAAAACKfcR8qfgsin3EfKn4LAAAAAAAAAES7Wc3opZEu1nN6KBYAAAAAAAAAAEM3r/oWQzev+gFgAAAAAAAAAAuwiDcR8qfgtdhEG4j5U/AFgAAAAAAAAACJPij5vRSyJPij5vRSwAAAAAAAAAAAhm+k+hZDN9J9CwAAAAAAeF2/ZX6P2laS1td7JqzSynrpopIKySON+C6NrXNajr/d1bdS7U7kU90PDfaTWezuPS21GWt7VNMLGtJrk7Wjo6qZIYXYEuRrWxKl11y3IveoHqugKQpolRJBo47RyP/ZdZrmNasH+x3c3V73xauI506X7D5auf2WWLNXPr5J3skV0ldKr5pE7V9z1VddypcqIuxFRNd153QAAABrZ+4k+TfU2Gtn7iT5N9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAAAAAACJf4cyFkS/w5kLAAAAAAAAAAACG75/yT1LIbvn/JPUsAAAAAAAAAAAIp9xHyp+CyKfcR8qfgsAAAAAAAAARLtZzeilkS7Wc3ooFgAAAAAAAAAAQzev8AoWQzev8AoBYAAAAAAAAAALsIg3EfKn4LXYRBuI+VPwBYAAAAAAAAAAiT4o+b0UsiT4o+b0UsAAAAAAAAAAAIZvpPoWQzfSfQsAAAAAA4L2hVlTZ2gGkVoUUzoaqmsqpmhkbtY9sTla5PkqIp5TZnte0e/wA7ohHV6S0bqSSyHOth76e9UqkYzDidgvRb0fsW7x7j3GaOOaJ8M0bZI3tVr2OS9HIupUVO9Djv+O6P/wD4Ky//ANSPoBtsG17Nt6yYbWsisjrKGfF2U0d+F2FytW6/wVFT6H3Gqlpqekp209LBFBCy/DHGxGtS9b1uRNW1TaAAAA1s/cSfJvqbDWz9xJ8m+oGwAAAAAAAAAACKfcM5ULIp9wzlQCwAAAAAAAAABEv8OZCyJf4cyFgAAAAAAAAAABDd8/5J6lkN3z/knqWAAAAAAAAAAAEU+4j5U/BZFPuI+VPwWAAAAAAAAAIl2s5vRSyJdrOb0UCwAAAAAAAAAAIZvX/Qshm9f9ALAAAAAAAAAABdhEG4j5U/Ba7CINxHyp+ALAAAAAAAAAAESfFHzeilkSfFHzeilgAAAAAAAAAABDN9J9CyGb2T6FgAAAAAAAAAAAOEt3SazrHtmy7IqG1EtXaUvZxthYjkjTjeqqmFt+pNqquxFuW7mzzC3rB0wgteG0GMsuvmqbdinWVGyq6KFiPSJjkRLmxsRda8TnL/ACA9PNbP3Enyb6lXPc1t7sLrteH/APpqYx3byJ2rtia7k/v+gN4IwP8AOfknQYH+c/JOgFgjA/zn5J0GB/nPyToBYIwP85+SdBgf5z8k6AWCMD/OfknQYH+c/JOgFkU+4ZyoMD/OfknQiBjlhYvavT3U1XJ0A3AjA/zn5J0GB/nPyToBYIwP85+SdBgf5z8k6AWCMD/OfknQYH+c/JOgFgjA/wA5+SdBgf5z8k6AJf4cyFmmRjvc/wBr195O5OheB/nPyToBYIwP85+SdBgf5z8k6AWCMD/OfknQYH+c/JOgFgjA/wA5+SdBgf5z8k6AWCMD/OfknQYH+c/JOgBu+f8AJPUs0tY7tX/7X7E7k6F4H+c/JOgFgjA/zn5J0GB/nPyToBYIwP8AOfknQYH+c/JOgFgjA/zn5J0GB/nPyToBYIwP85+SdBgf5z8k6AKfcR8qfgs0wMcsEa9q9PdTVcnh8i8D/OfknQCwRgf5z8k6DA/zn5J0AsEYH+c/JOgwP85+SdALBGB/nPyToMD/ADn5J0AsiXazm9FGB/nPyToRIx17P9r197wToBuBGB/nPyToMD/OfknQCwRgf5z8k6DA/wA5+SdALBGB/nPyToMD/OfknQCwRgf5z8k6DA/zn5J0Ashm9f8AQYH+c/JOhDWO7R/+1/d3J0A3AjA/zn5J0GB/nPyToBYIwP8AOfknQYH+c/JOgFgjA/zn5J0GB/nPyToBYIwP85+SdBgf5z8k6AWuwiDcR8qfgwrHXb5+SdCYGOWFi9q9PdTVcnh8gNwIwP8AOfknQYH+c/JOgFgjA/zn5J0GB/nPyToBYIwP85+SdBgf5z8k6AWCMD/OfknQYH+c/JOgCT4o+b0Us0yMdez/AGv+LwTwX+i8D/OfknQCwRgf5z8k6DA/zn5J0AsEYH+c/JOgwP8AOfknQCwRgf5z8k6DA/zn5J0AsEYH+c/JOgwP85+SdADN9J9CzXEipJIiuV2zWpsAAAAAAAAAAAAAABrZ+4k+TfU2Gtn7iT5N9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAABxmlFu2do3Yk9r2pK5lNDci4Uvc5VW5ERO9VVfXYJmy+Hh14tcUUReZ0iPNyYPK9H/bbo/aVsR0FXZ9XQRzSYI53ua5qXr7qvu+G/wDq+75XqnotbaP6W2aChkh/1VqSNZNi2SNRHIy67vaj1vv/AIf2ViumrZu5vhWcydcUY+HNMzEz9I1n2fZL/DmQs4BNIO0q4o20iLDJarrPjl7T4sET3Ofdd3PY5l39X39xopNJK57GVlRZlOygktB9Cx8dU50qOSd0LXKxWIlyuS9bnLci/Mnmhi+Rx+33jrfz30nTd2YHEW5addSWhQUFn0VNUzVfaKqz1DomtRiIu1GOVVW/wNUduvWGaOohhoqymq4KaeOR6vZ/te1GqxzUvXEjrkvRNe264XhSnK4tVMVRGk+cX3ttvvo5wHGx23Z0ss8UT6iR0KPVyspZXNdgW5yNcjbnqi6rmqq3nxUGltkVNh0NrSrU0sdajEiZLTSI5z3R9ojWph9/Ui3K29Fu1KovBGUx5i8UT7fnZz4OJ/ztHE2tnqqiNkEEkbGojH9pe9jXI1Wql6uXFqREVdad96Hz1mldmU60GFldMlZUPp07Ojlc6NzY3PVHNRuJF934br9d91yKqLwmnKY9X9tEz9PK/wCzngEW9EVL9filwJayG75/yT1LIbvn/JPUsAAAAAAAAAAAIp9xHyp+CyKfcR8qfgsAAAAAAAAARLtZzeilkS7Wc3ooFgAAAAAAAAAAQzev+hZDN6/6AWAAAAAAAAAAC7CINxHyp+C12EQbiPlT8AWAAAAAAAAAAIk+KPm9FLIk+KPm9FLAAAAAAAAAAACGb6T6FkM30n0LAAAAAAAAAAAAAABrZ+4k+TfU2Gtn7iT5N9QNgAAAAAAAAAAEU+4ZyoWRT7hnKgFgAAAAB0b236N12k+hDqWzWLLV0tQypjiRURZLkc1Wpf33PVfpcd5BFUc0Wls5PN15PHox8PembvyDo3oVpHblsw2bBZVZDieiSyywuYyFt+tzlW7Zr1bVuuTWfqfSSzKmssaOGzXxMraSSOakfMq4UexU1OVEvuc3E1bk2OU5cGOjCiiJdrjPxJj8UxcOuaYpijaN97Xv7bOvRWDLT0Gj1KyaNy2dUpNUPcqosrlika5yatqvkxd3eZ0c0Zo7Oa6eqpaaWtWrqKhsut2HtJnvaqX7FwuRFu/vac7L/DmQsycsOPVncaqmab77/ef5lwtv0dqSWtZtoWZDRzupUla+OoqHRIqPRERUVrH+HgfHNYFfUw1FRUS0366qtCjqJGsV3ZxxwSxuwNVUvctzXLeqJeru5DswHKijOV0U0xTEadfre3u67ZVk2lTaQPqkbTUlI50rpGQVUj21CuW9HLE5uGN21VVqreqrftNNkWFacFDo3R1SUaNsSZExslc5Zo200kKOuViYXKr0W69URL9Z2gEcsLTnsSb7axb7TH7TP8bQ6zaFg176+qtCmkplmS0Yq2mjkc5GvwwJErXqiLhv95UVEW7Upur6O3KuKzqx8VnfraKuWpZTpO9I1YsMkWFZMCqq/wCxXX4E2XXd52AE8qPna9LxE2i30ta35r5sNvwpiREddrRFvQyAS1EN3z/knqWQ3fP+SepYAAAAAAAAAAART7iPlT8FkU+4j5U/BYAAAAAAAAAiXazm9FLIl2s5vRQLAAAAAAAAAAAhm9f9CyGb1/0AsAAAAAAAAAAF2EQbiPlT8FrsIg3EfKn4AsAAAAAAAAAARJ8UfN6KWRJ8UfN6KWAAAAAAAAAAAEM30n0LIZvpPoWAAAAAAAAAAAAAADWz9xJ8m+psNbP3Enyb6gbAAAAAAAAAAAIp9wzlQsin3DOVALAAAAAAAAAAES/w5kLIl/hzIWAAAAAAAAAAAEN3z/knqWQ3fP8AknqWAAAAAAAAAAAEU+4j5U/BZFPuI+VPwWAAAAAAAAAIl2s5vRSyJdrOb0UCwAAAAAAAAAAIZvX/AELIZvX/AEAsAAAAAAAAAAF2EQbiPlT8FrsIg3EfKn4AsAAAAAAAAAARJ8UfN6KWRJ8UfN6KWAAAAAAAAAAAEM30n0LIZvpPoWAAAAAAAAAAAAAADWz9xJyt9TYa2fuJOVvqBsAAAAAAAAAAAin3DOVCyKfcM5UAsAAAAAAAAAARL/DmQsiX+HMhYAAAAAAAAAAAQ3fP+SepZDd8/wCSepYAAAAAAAAAAART7iPlT8FkU+4j5U/BYAAAAeR+1b2t1GjluSWHYVJTVFRA1P1E897mscqX4WoipeqIqXrftW67Uc97IfaGmm1PU09XSR0lo0jWue2N97JWremJqLrS5UuVFv2pr16qRiUzVyuzi8Az2FkoztVHgm0762nabdpd+B1HR7SCe0bXqaaXSCxGvir6mBtnsi/9wrI3uan/AMt9+FuK/D9Dko9J6Fv6v9bBVWetLTfqntqGtxLDxI1rlVPkqIv9ExVDSxMjjUVctrzHr/Nr/S8OcIl2s5vRTr1q6TVNJZMlYzR61O1ZJC1IpUjZibI/Cjkdjw//AFvvRVS9ERbz6K/SCOnlZAtmWjLUshSpngibG50Eaq5EV3v3LerXXI1XKuFdRPNCvyWNa9vvHS3n5w5wHDw6Q0lTacNDRU9VVrLTQ1XaxMTs2xSq5GvVVVOBdW3wRdd3zJpHHS2FDaM1PW1kPZPlmnZExjY2NVb1dieifRqqq3bBzQiMnjXtbXTT1/07CDi7Nr5Kq3bQpsbXU8UNPJDcnGj1Vb/ohyhMTdhxMOcOeWfKfeLgACgAABDN6/6FkM3r/oBYAAAAAAAAAALsIg3EfKn4LXYRBuI+VPwBYAAAAAAAAAAiT4o+b0UsiT4o+b0UsAAAAAAAAAAAIZvpPoWQzfSfQsAAAAAAAAAAAAAAGtn7iTlb6mw1s/cScrfUDYAAAAAAAAAABFPuGcqFkU+4ZyoBYAAAAAAAAAAiX+HMhZEv8OZCwAAAAAAAAAAAhu+f8k9SyG75/wAk9SwAAAAAAAAAAAin3EfKn4LIp9xHyp+CwAAA8J9sPsut6v0mqLd0fhSvirHI6aDG1r4n3IiqmJURWrdfq1pfsu1nZfYXoBaWiiVtp22jIq2pYkTKdj0d2bEW9VcqalVVu2bLv71eogxxhUxVzPQ43xNncbIRkarctoi9tZiNo3t9ruOsqy/0NBVUqVLnfqKmonxtbhVnayOfcm3WmK6/+jr1LoQrGSRTV1MkUtC+jkSmouyc69WqkuLGt8l6Xqq3ourUmtV7kC80xLk4eex8Oappq1q1nSHBVFj2tXWbU0tpWxBK96RrCsNH2bI3MdjRytV6q5VVEvTEiXJqRNprq7GtVaxa+mtemp6yop2U1U79GrmOwq9WuY3tEVrkxuTWrkXVq1HYSJdrOb0UcsIjOYsbW9ot06Wt0j6xfdxdh2FBZFUr6aVVhSgpaGONzdbWwLJcqr33pJ4Js/vVxFZoYs9FBSLXwOZHTPp1Wak7RWYnKqyR3uuY+5br1R2xPkvbgRywmnP5imua4q1m3bpFo+zh7Fsips+udUyVkUySUkMErUgViq+O9Eei4luRUcvu6/n3HMAExFmDFxasWrmq3AASxgAAEM3r/oWQzev+gFgAAAAAAAAAAuwiDcR8qfgtdhEG4j5U/AFgAAAAAAAAACJPij5vRSyJPij5vRSwAAAAAAAAAAAhm+k+hZDN9J9CwAAAAAAAAAAAHUNO7X0lsGirLappLG/QUiN7KkkikfPWOW5MDXo5qRvc5cLUwvvW7xuTt50m0rI0pk0znthbNsW1aWBWpZUdVaksH6VMCI93ZpTvasiuV3v3qqNuRLtd4d1xIiIrlRt/cqmtj29vIuJuxvf8zYiXomJqX9/ea2Nb28mpPhb3fMC8bONuYxs425mcLeFMhhbwpkBjGzjbmMbONuZnC3hTIYW8KZAYxs425jGzjbmZwt4UyGFvCmQGMbONuYxs425mcLeFMhhbwpkBjGzjbmRA9iQsvc34U7zZhbwpkRA1vYM91PhTuArGzjbmMbONuZnC3hTIYW8KZAYxs425niftc9q9sWVpHUWFo6sNOlLcyapfGj3OeqIq4UdqREvu1ot6/wBHtuFvCmR417WvZNaNt2/Nb2j0lO59QiLPTSOwLjRLsTV2a7k1LdrvMWLzcvhej+F54fGd/wCfbltpfa+m/wBL76Ob9i3tFn0ubU2bazIo7Spmdqj49TZo1dcuruVqq1P7vQ7LROtW2lrayC25rPSKrmp6aBkMbmf6nqxVkRzVc69zVW5HN1Kl2vWdd9jXs5m0OSptC1J4ZrRqG9lhi1sjjvv1OVEVVVURV7tSHbarRyGaepdDaNoUlPVuV9TTQPYkcqqlzlvVqubem3A5t+3brFEVcsXRxXE4fTnsX5O0UaWm1487RPfp7aRL57U0llo5LQljs5J6Gy1RK6ftsLm+417sDLlxo1rkVb1TvRL7j4X6Q2lQV2kky0K1lBZ1W18ki1GF0cX6aF7kjbcuNUvc5UVW7dSrecpaOjFHWVFS5aushpqxWrWUsTmJFUYWo33r2q5L2ta1cKpeiIRW6KUtVV2hMto2hHDaUiOraZj2dnMiRtjw62q5qK1ly4VRVvXXsutMVNXBxMjTERVG8a796b9d9KrW02v1fJammVDS2vNRX0jmUk0ccyvrGsmVz0at7I7lV6Ij0VVvTvRL1QpmmlE+21oGLSLGlb+iW6sb2/a4sKr2N1+HFqvvv77rtZyFRYjUtOSsp7Sr6RtTKx9RBA5iMlc1ERFVVarm3ta1Fwql6IVBYTae0H1FPadfDTyTrUPo2OZ2SyKt7lvw40RV1qiOuVe7Wt7xKRVkeSPDrbvO+l+m9726W3crjZxtzGNnG3MzhbwpkMLeFMi7lMY2cbcxjZxtzM4W8KZDC3hTIDGNnG3MY2cbczOFvCmQwt4UyAxjZxtzGNnG3MzhbwpkMLeFMgNbXs7V/vN2J3l42cbcyWtb2r/dTYnd8y8LeFMgMY2cbcxjZxtzM4W8KZDC3hTIDGNnG3MY2cbczOFvCmQwt4UyAxjZxtzGNnG3MzhbwpkMLeFMgMY2cbcxjZxtzM4W8KZDC3hTIDXA9iQRorm/Cnf/AEXjZxtzJp2t7CP3U+FO7+i8LeFMgMY2cbcxjZxtzM4W8KZDC3hTIDGNnG3MY2cbczOFvCmQwt4UyAxjZxtzGNnG3MzhbwpkMLeFMgMY2cbcyJXsvZ7zfi8TZhbwpkRK1t7PdT4vACsbONuYxs425mcLeFMhhbwpkBjGzjbmMbONuZnC3hTIYW8KZAYxs425jGzjbmZwt4UyGFvCmQGMbONuYxs425mcLeFMhhbwpkBjGzjbmQx7O1f7ze7vNmFvCmRDGt7V/up3dwFY2cbcxjZxtzM4W8KZDC3hTIDGNnG3MY2cbczOFvCmQwt4UyAxjZxtzGNnG3MzhbwpkMLeFMgMY2cbcxjZxtzM4W8KZDC3hTIDCvZd8bcyIHsSBiK5vwp3/wBGxWtu+FMiIGt7CP3U+FO7+gKxs425jGzjbmZwt4UyGFvCmQGMbONuYxs425mcLeFMhhbwpkBjGzjbmMbONuZnC3hTIYW8KZAYxs425jGzjbmZwt4UyGFvCmQESPZiZ7zfi8f6UrGzjbmTI1uJnup8Xh/Sl4W8KZAYxs425jGzjbmZwt4UyGFvCmQGMbONuYxs425mcLeFMhhbwpkBjGzjbmMbONuZnC3hTIYW8KZAYxs425jGzjbmZwt4UyGFvCmQERqiyyKiouw2GuNESWS5LthsAAAAAAAAAAAAAABrZ+4k5W+psNbP3EnK31A2AAAAAAAAAAART7hnKhZFPuGcqAWAAAAAAAAAAIl/hzIWRL/DmQsAAAAAAAAAAAIbvn/JPUshu+f8k9SwAAAAAAAAAAAin3EfKn4LIp9xHyp+CwAAAAAAAABEu1nN6KWRLtZzeigWAAAAAAAAAABDN6/6FkM3r/oBYAAAAAAAAAALsIg3EfKn4LXYRBuI+VPwBYAAAAAAAAAAiT4o+b0UsiT4o+b0UsAAAAAAAAAAAIZvpPoWQzfSfQsAAAAAAAAAAAAAAGtn7iTlb6mw1s/cScrfUDYAAAAAAAAAABFPuGcqFkU+4ZyoBYAAAAAAAAAAiX+HMhZEv8OZCwAAAAAAAAAAAhu+f8k9SyG75/yT1LAAAAAAAAAAACKfcR8qfgsin3EfKn4LAAAAAAAAAES7Wc3opZEu1nN6KBYAAAAAAAAAAEM3r/oWQzev+gFgAAAAAAAAAAuwiDcR8qfgtdhEG4j5U/AFgAAAAAAAAACJPij5vRSyJPij5vRSwAAAAAAAAAAAhm+k+hZDN9J9CwAAAAAAAAAAAAAAacSNqH3o7W1uxqr4m4lEXtHL3KieoGO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xehEEjUhYio/4U/gpuIhS6FieDUAdqzwf9i9B2rPB/2L0LAEdqzwf9i9B2rPB/2L0LAEdqzwf9i9B2rPB/2L0LAEdqzwf9i9B2rPB/2L0LAGmSRq4NT/AIk/gpfas8H/AGL0MyJerLuIoCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgCO1Z4P+xeg7Vng/7F6FgDS2RvavW5+xP4KX2rPB/wBi9DLUVJHL3KiXFAR2rPB/2L0Has8H/YvQsAR2rPB/2L0Has8H/YvQsAR2rPB/2L0Has8H/YvQsAR2rPB/2L0Has8H/YvQsAaYJGpCxLn6mp/BfAvtWeD/ALF6GYmq2JjV2o1EUoCO1Z4P+xeg7Vng/wCxehYAjtWeD/sXoO1Z4P8AsXoWAI7Vng/7F6DtWeD/ALF6FgCO1Z4P+xehEkjVVmp/xcCm4iRL1Yvg4B2rPB/2L0Has8H/AGL0LAEdqzwf9i9B2rPB/wBi9CwBHas8H/YvQdqzwf8AYvQsAR2rPB/2L0Has8H/AGL0LAEdqzwf9i9CGyN7R63P7v4KbiWoqSPXuW64DHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBrWVt2x/2L0JhkakLEuf8KfwXwNy7CYUuiYi9zUQDHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBHas8H/YvQdqzwf9i9CwBpkkaqs1P+LgXwUvtWeD/sXoJEvcz+neilgR2rPB/wBi9B2rPB/2L0LAEdqzwf8AYvQdqzwf9i9CwBHas8H/AGL0Has8H/YvQsAR2rPB/wBi9B2rPB/2L0LAGqJyOlkVL+7alxtIaipI9y6kW64sAAAAAAAAAAAAAAHTNG7PpbO9qWkMdIx7Ulsmz5ZFfK6RznLNWIqq5yqq6kRNvcdzOvUOhtiUVs/5iB1r/rVRrXSSWzVyI9rVcrWua6VWuaivcqNVFRMS6tYHYQAAAAAAAAABxGmP+DSwJ36R4Vs1itdKxyuwyLiTC1Wt1vvW5MFy4lVEuU4r2cWTJZ0dp1bLNbY1DX1LZaOy2tRqU0aMa3ErW+6xz1RXK1NSar9d5zekFiWdb1HHSWlHM+OKZk8aw1EkL2SN1tcj43Ncip8zNi2RSWQyRlLLaEiSKiu/V2hPVKl3gsr3K36XAcgAAAAAAAAAAOje1GxobUs6rmorDsy1rSjp1jfJUT3S0TFRVSSJqoqJJrVU96O+5Pe1Jd2rRyrp7Q0fs6vpZpZ6eppIpYpZfje1zEVHO/tUW9T4re0TsO26l1TX09R2r4khldBWTQdtGiqqMk7NzcbfeXU69Na+JzFNBDTU0VNTxMihiYjI42Jc1rUS5ERO5EQDYAAAAAAAARPKyCCSaVVRkbVc5URVuREvXUhYA8g0f0hs+0/adYlu1larKu0KWrhhpXNcn6aJXwdjGqXXY3e85y9yuw33NQ9fPmms+kmtKmtKSLFVUsckcMmJUwtkw40uvuW/A3b4au8+kAAAAAAAAAdY9o9kSW5Y9HQMhs2dHWhC90Nfrhla1VcrVbcuPZfh77u7adnPitmyqC2KFaO0YFlhxtemF7mOY5q3o5rmqjmuRe9FRQOt+zZI6CqtvR//AA1i2dPZ9RGsj7JpkggqEkjRzX4NateialRVXYi33KdxOOsGxLNsOnlhs6B7O2k7WaSWZ8ssr7kTE971VzluRE1qupEQ5EAAAAAAAAAeWaR0FdpF7QbfoVsuxbRbZlHTPpmWu10kLGyNeq4GIup7nNciyLsRrbr+71M4TSDRWxLdqWVNo00yztjWFZIKqWBz477+zesbm42XqvuuvTWviBs0LtOG2dELItWnp3U0VXRxSshc7EsaK1Fw3993j37TlzXS08FLSxUtNCyGCFiRxxsbc1jUS5ERE2IiGwAAAAAAAAAdBpdGNG//AFLpVsfR6yaBLFgWpqJ6Wijie6eZHMjYrmoiqiM7Ryp/3Rqd+PlobPo6GWrlpYcElZP29Q5XK5Xvwtbet68LWpdsREQD6gAAAAAAAAAB1H2rvV2jdPQxM7eqrbQp4aemct0dS9H9osUi36o3Njdi26r9Tti/L7LY30VbpDZVTQwWZVRVcc62fSPxUtPG+NEZ2S3Jqd2blX3W+9fq717XbVk2fbNElJaVMk8SPbI33la5j27HNc1Uc1ydyoqKarCsOzLEZMlnwPa+ocj55ppnzSyqiXIr5HqrnXJqS9dQHJAAAAAAAAAADzLTSxX1WkttzWho5/m2VFHG2zaztYsNmKjXI7Fiejove/2Y2IqqmrWqIh3D2d1VbW6A6P1lpPdJWT2bTyTvdtc90bVVV/tb71KtvRSwrZrHVdfSSvlfGkU3Z1MsTZ40vuZK1jkbI33l1ORU1qc01rWNRrWo1qJciIlyIgGQAAAAAAADpntWs+lmsuz7QlY91RT2xZiRKsrsLb66FFXBfhvuVUvuvuO5nC6R6L2RpC6NbU/yD0jVitZBaVRAzEx2NrlbG9rVcjkRUcqXoqJr1IBwdo2bQ2/7SqyzrfpIK+hpLIp5qOlqGI+LHJLMkkmFdSuTs40vuvTuuvW/7fZi+RbBq6dZXy01JalZS0jnuVypDHO9rW3rrVG3K1L+5qH21+ili10FJFUsrXPpGLHDUNtCdtQjXXYmrMj0kci3JeiuW+5PA5SzKGks2ghoKCnZT00DEZHGxLkan/8Au8D6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkbva/bLKC1rbdoHJJYFk2hJRVdbDajHSNwORqvSJWIqp7zdV/ft1Xnfn6ZaKxzx08tv2fFPIsKNikmRr1WZMUaYV13uTWiAc8DhHaXaLtt9LAXSCzEtVXYP0n6lvaYuG6/wCL+tpm1tLdF7JtSOy7T0gsyjrpbsEE1Sxj1v2alXVf3X7QOaB1+zbcqajTO27HnWzG0lnwwSRujqb50xtVXdoz+CeC96f+N9g6V6M29VTUli2/ZtozwpfJHTVLXuRNl9yLrTWmvYBzIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw72eezFluUWkH/ACifSWkpJdIKqT/FrO+npamPE1zZFZhRXIq96LctyXbDsejejETvbnpTa1bYKLTR0dCyzqmal/1oqRojuycqXXphanu60uPTgB+ZrA0TtqKWHRe3bO0ufWR23+qWWjsym/SvXtcSVH6pzcWzWqK6/u/pO0OpZ9HtKdMaa2/Z1aOlU1tWklTQTxUbZYJYluwxPkW9I0Zd3p3fI9xAHi+kOjOkFraS+0+CgoKmndadj0cNHI5itimc2NcUbXr7q8K3Lqv13Hy6I2fV2vpzoNUWXoTaejcej1HNHalRV0SU7ZFdEjEjYv8A8vvXrf4Ov23nuQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=" alt="Mapa de posicionamiento Europa"/>
+      <div class="mapa-caption">Eje X: precio PEPM software (USD) · Eje Y: profundidad funcional en reconocimiento y engagement · Cobee y Factorial aparecen como competidores indirectos por presupuesto</div>
+    </div>
+
+    <!-- TABLA -->
+    <div>
+      <div class="tbl-label">Competidores europeos — funcionalidad y posicionamiento</div>
+      <table>
+        <tr>
+          <th style="width:16%;">Plataforma</th>
+          <th style="width:11%;">Origen</th>
+          <th style="width:12%;">Tipo</th>
+          <th>Foco principal</th>
+        </tr>
+        <tr><td>Reward Gateway</td><td>Reino Unido</td><td><span class="tag tag-alta">Directo</span></td><td>Referencia premium UK. Beneficios, wellbeing, reconocimiento y comunicación interna. Precio más alto del mercado.</td></tr>
+        <tr><td>Perkbox</td><td>Reino Unido</td><td><span class="tag tag-alta">Directo</span></td><td>Perks, wellbeing y reconocimiento. Muy conocido en UK, pero pricing no transparente.</td></tr>
+        <tr><td>Mo</td><td>Reino Unido</td><td><span class="tag tag-alta">Directo</span></td><td>Cultura, momentos y reconocimiento recurrente. Foco en manager activation y engagement.</td></tr>
+        <tr><td>Workstars</td><td>Reino Unido</td><td><span class="tag tag-alta">Directo</span></td><td>Reconocimiento 360°, rewards y analytics. Mejor benchmark de precio transparente en UK.</td></tr>
+        <tr><td>Bonusly</td><td>Global / EU</td><td><span class="tag tag-alta">Directo</span></td><td>Peer recognition y rewards con precio público. Separa suscripción de recompensas explícitamente.</td></tr>
+        <tr><td>Empuls</td><td>Global / EU</td><td><span class="tag tag-alta">Directo</span></td><td>Recognition, rewards y encuestas. Muy competitivo en precio para mid-market europeo.</td></tr>
+        <tr><td>VIP District</td><td>España</td><td><span class="tag tag-alta">Directo</span></td><td>Descuentos y reconocimiento top-down. Referencia local España. Menor profundidad funcional.</td></tr>
+        <tr class="tr-indirect"><td>Factorial</td><td>España</td><td><span class="tag tag-ind">Indirecto</span></td><td>HRIS con módulos de talento y beneficios. Captura presupuesto de People antes de que llegue Apprecio Beat.</td></tr>
+        <tr class="tr-indirect"><td>Cobee / Pluxee</td><td>España</td><td><span class="tag tag-ind">Indirecto</span></td><td>Plataforma de beneficios y retribución flexible. Compite por presupuesto HR, no por reconocimiento ni cultura.</td></tr>
+        <tr class="tr-beat"><td>Apprecio Beat</td><td>Apprecio</td><td>—</td><td>Reconocimiento, cultura, recompensas, campañas e IA para administradores.</td></tr>
+      </table>
+    </div>
+
+    <!-- ESPAÑA -->
+    <div class="country-grid cols-1">
+      <div class="c-card es">
+        <div class="c-flag">🇪🇸</div>
+        <div class="c-name">España — Mercado prioritario de entrada</div>
+        <div class="c-body">
+          Sensible al precio y con baja transparencia de pricing — la mayoría de vendors vende por cotización. El mercado de reconocimiento puro <strong>no está saturado</strong>: los referentes locales son HRIS (Factorial) y benefits (Cobee), no plataformas de cultura recurrente.<br><br>
+          La ventaja de Apprecio Beat en España es doble: <strong>idioma compartido</strong> que reduce fricción de soporte y go-to-market, y <strong>menor competencia directa</strong> en activación cultural. El riesgo principal es que el cliente compare Apprecio Beat contra Factorial o Cobee en vez de contra Workstars, Bonusly o Mo — lo que requiere una narrativa clara que posicione Apprecio Beat como plataforma de cultura, no como herramienta de beneficios.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pg-footer">
+    <span>Apprecio Beat · Europa</span>
+    <span>Precios en GBP/EUR normalizados a USD · PEPM = software sin presupuesto de recompensas</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     PÁGINA 3 — ANÁLISIS DE PRICING
+═══════════════════════════════════ -->
+<div class="page">
+  <div class="pg-header">
+    <div class="orn orn-1"></div>
+    <div class="orn orn-2"></div>
+    <div class="orn orn-3"></div>
+    <div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · Uso interno</div>
+        <div class="pg-title">¿US$4–6 PEPM es el precio correcto?</div>
+        <div class="pg-sub">Análisis interno basado en el benchmark de LATAM y Europa. Validación del rango de precio de Apprecio Beat en ambos mercados.</div>
+      </div>
+      <div class="pg-badge">
+        <span class="val">US$4–6</span>
+        <span class="lbl">Rango a validar</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-body">
+
+    <!-- LATAM -->
+    <div class="section-block">
+      <div class="section-lbl">LATAM</div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="pc-eyebrow">Contexto</div>
+          <div class="pc-title">Dónde cae US$4–6 en LATAM</div>
+          <div class="pc-body">
+            El rango de Apprecio Beat queda <strong>por encima de los competidores de precio bajo</strong> (Sparks US$1.5–2.5, Mis Méritos US$1–3, Bonda/Maslow US$1–4) y <strong>en línea con los de mayor profundidad funcional</strong> (GOintegro US$2–6, Betterfly US$2–6, SAWA ~US$5, StarMeUp US$4–7).
+            <ul>
+              <li>Sparks y Mis Méritos son más baratos pero con menor funcionalidad y modelos distintos (fintech, básico).</li>
+              <li>GOintegro y Betterfly entran más barato — el techo de Apprecio Beat coincide con el de ellos.</li>
+              <li>SAWA tiene precio similar pero funcionalidad acotada solo a ventas y operaciones.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card highlight">
+          <div class="pc-eyebrow">Veredicto LATAM</div>
+          <div class="pc-title">El precio es correcto, con un riesgo</div>
+          <div class="pc-body">
+            US$4–6 está bien posicionado si Apprecio Beat se vende como <strong>plataforma de cultura y activación recurrente</strong>. El riesgo es ser percibido como un catálogo de premios — en ese caso el cliente compara contra Sparks o Bonda y el precio no se defiende.
+            <ul>
+              <li><strong>Colombia:</strong> sensibilidad alta. El piso de US$4 puede generar fricción — clave separar software de recompensas desde el primer contacto.</li>
+              <li><strong>México y Chile:</strong> rango competitivo sin objeción fuerte si la propuesta de valor es clara.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EUROPA -->
+    <div class="section-block">
+      <div class="section-lbl">Europa — España</div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="pc-eyebrow">Contexto</div>
+          <div class="pc-title">Dónde cae US$4–6 en España</div>
+          <div class="pc-body">
+            Apprecio Beat queda en la <strong>zona mid-market</strong> — por encima de soluciones básicas (Empuls US$2–4, Workstars US$2–5, VIP District US$1.5–4) y <strong>por debajo del extremo premium</strong> (Reward Gateway US$7–10).
+            <ul>
+              <li>Bonusly (US$3–5) y Mo (US$3–6) son los comparables más cercanos en precio y funcionalidad.</li>
+              <li>VIP District es más barato pero mucho más básico — la diferencia funcional justifica el precio.</li>
+              <li>Factorial (desde €5.5) y Cobee compiten por presupuesto pero no resuelven reconocimiento ni cultura.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="price-card highlight">
+          <div class="pc-eyebrow">Veredicto Europa — España</div>
+          <div class="pc-title">El precio no es bajo — es competitivo</div>
+          <div class="pc-body">
+            US$4–6 <strong>no es barato en España</strong>. Es el rango donde compiten plataformas consolidadas de reconocimiento y cultura. Apprecio Beat puede sostenerse si entra con diferenciación clara: <strong>activación recurrente + IA para administradores + menor fricción que enterprise global</strong>.
+            <ul>
+              <li>El riesgo no es el precio — es la comparación. Si el cliente compara contra Factorial o Cobee, Apprecio Beat parece caro. Si compara contra Bonusly o Mo, el precio es razonable.</li>
+              <li>La narrativa en España debe posicionar Apprecio Beat como plataforma de cultura, no de beneficios.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VEREDICTO -->
+    <div class="verdict">
+      <div class="verdict-title">Veredicto general — uso interno</div>
+      <div class="verdict-body">
+        US$4–6 PEPM es un precio <strong>correcto y defendible</strong> en LATAM y Europa, siempre que Apprecio Beat se venda como plataforma de activación cultural recurrente con IA — no como herramienta de puntos. El precio no es el problema. El riesgo real está en la narrativa: si el equipo comercial lo vende como "sistema de recompensas", el cliente compara hacia abajo. Si lo vende como <strong>"infraestructura de cultura y reconocimiento con IA"</strong>, el precio queda en zona competitiva en ambos mercados.
+      </div>
+    </div>
+
+    <!-- RIESGOS -->
+    <div class="risk-grid">
+      <div class="risk-card green">
+        <div class="risk-lbl">✓ Sin fricción de precio</div>
+        <div class="risk-title">México, Chile y Reino Unido</div>
+        <div class="risk-body">El rango US$4–6 no genera objeción de precio si la propuesta de valor es clara. El mid-market en estos mercados paga ese rango sin fricción fuerte.</div>
+      </div>
+      <div class="risk-card yellow">
+        <div class="risk-lbl">⚠ Fricción inicial posible</div>
+        <div class="risk-title">Colombia y España</div>
+        <div class="risk-body">Alta sensibilidad al precio. En España el riesgo es la comparación incorrecta contra HRIS o benefits. En Colombia, clave separar software de recompensas desde el primer contacto.</div>
+      </div>
+      <div class="risk-card red">
+        <div class="risk-lbl">✗ Riesgo narrativo</div>
+        <div class="risk-title">Todos los mercados</div>
+        <div class="risk-body">Si se vende como "plataforma de puntos", el precio no se defiende en ningún mercado. El precio solo funciona con la narrativa correcta: cultura, reconocimiento e IA.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pg-footer">
+    <span>Apprecio Beat · Análisis interno de pricing</span>
+    <span>Documento confidencial — uso del equipo comercial y producto</span>
+  </div>
+</div>
+
+
 </body>
 </html>

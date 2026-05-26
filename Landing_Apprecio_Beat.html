@@ -1,519 +1,381 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apprecio Beat</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apprecio Beat — Cultura, reconocimiento y recompensas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-@page {
-  size: A4 portrait;
-  margin: 0;
+@page { size: A4 portrait; margin: 0; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{
+  font-family:'Montserrat',sans-serif;
+  background:#f0f2f5;
+  color:#1B1B1B;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
 }
 
-* {
-  box-sizing: border-box;
+.page{
+  width:210mm;
+  min-height:297mm;
+  margin:0 auto 10mm auto;
+  background:#FFFFFF;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  page-break-after:always;
+  break-after:page;
+}
+.page:last-child{ page-break-after:auto; break-after:auto; }
+
+/* ── TOPBAR ── */
+.topbar{
+  height:6px;
+  background:linear-gradient(90deg, #FA345E 0%, #B2A8E7 55%, #45C1AD 100%);
+  flex-shrink:0;
 }
 
-body {
-  margin: 0;
-  font-family: 'Montserrat', Arial, sans-serif;
-  background: #F5F6FA;
-  color: #1B1B1B;
+/* ── HEADER ── */
+.pg-header{
+  background:#FA345E;
+  padding:18px 20px 16px;
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.pg-header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.orn{
+  position:absolute; z-index:1; opacity:0.12;
+  background:#FFFFFF; border-radius:3px;
+}
+.orn-1{ width:48px; height:48px; top:-14px; right:180px; }
+.orn-2{ width:24px; height:24px; top:34px; right:158px; }
+.orn-3{ width:32px; height:32px; bottom:-10px; right:90px; }
+.orn-4{ width:16px; height:64px; top:0; right:64px; }
+.pg-tag{
+  font-size:9px; font-weight:700; letter-spacing:1.8px;
+  text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
+}
+.pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
+.pg-sub{
+  font-size:10.5px; color:rgba(255,255,255,0.82);
+  margin-top:5px; line-height:1.55; max-width:80%;
+}
+.pg-badge{
+  background:rgba(255,255,255,0.15);
+  border:1.5px solid rgba(255,255,255,0.3);
+  border-radius:12px; padding:10px 16px;
+  text-align:center; white-space:nowrap; flex-shrink:0;
+}
+.pg-badge .val{ font-size:13px; font-weight:900; color:#FFFFFF; display:block; line-height:1.3; }
+.pg-badge .lbl{ font-size:8.5px; font-weight:600; color:rgba(255,255,255,0.75); display:block; margin-top:2px; }
+
+/* ── CUERPO ── */
+.pg-body{
+  flex:1;
+  padding:16px 20px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
 }
 
-.page {
-  width: 210mm;
-  min-height: 297mm;
-  margin: 0 auto;
-  padding: 26px 38px 30px 38px;
-  box-sizing: border-box;
-  background: #FFFFFF;
+/* ── INTRO BOX ── */
+.intro-box{
+  background:#FFE6E8;
+  border-left:4px solid #FA345E;
+  border-radius:0 10px 10px 0;
+  padding:10px 13px;
+  font-size:10.5px; line-height:1.68; color:#1B1B1B;
+}
+.intro-box strong{ color:#FA345E; }
+
+/* ── TÍTULO DE SECCIÓN ── */
+.sec-title{
+  font-size:12px; font-weight:900; color:#1B1B1B;
+  margin-bottom:7px;
+  display:flex; align-items:center; gap:8px;
+}
+.sec-title::before{
+  content:'';
+  display:inline-block; width:3px; height:14px;
+  background:#FA345E; border-radius:2px; flex-shrink:0;
 }
 
-.topbar {
-  height: 9px;
-  width: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #FA345E 0%, #B2A8E7 58%, #45C1AD 100%);
-  margin-bottom: 20px;
+/* ── EDICIONES ── */
+.edition-grid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.edition-card{ border-radius:12px; padding:13px; border:1px solid #EEE; }
+.edition-card.base{ background:#FFF7F8; border-color:#FFD5DD; }
+.edition-card.pro { background:#F8F6FF; border-color:#DCD8F5; }
+.edition-eyebrow{
+  font-size:8px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; margin-bottom:4px;
+}
+.edition-card.base .edition-eyebrow{ color:#FA345E; }
+.edition-card.pro  .edition-eyebrow{ color:#B2A8E7; }
+.edition-name{ font-size:14px; font-weight:900; color:#1B1B1B; margin-bottom:4px; }
+.edition-desc{ font-size:10px; line-height:1.6; color:#4A4A4A; margin-bottom:7px; }
+.edition-tags{ display:flex; flex-wrap:wrap; gap:4px; }
+.etag{ display:inline-block; font-size:8.5px; font-weight:700; padding:2px 7px; border-radius:999px; }
+.edition-card.base .etag{ background:#FFE6E8; color:#FA345E; }
+.edition-card.pro  .etag{ background:#EDE9FC; color:#6B5CC4; }
+
+/* ── FLUJO ── */
+.flow-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:7px; }
+.flow-box{
+  background:#FAFAFA; border:1px solid #EEE;
+  border-radius:11px; padding:10px 8px; text-align:center;
+}
+.flow-num{
+  width:20px; height:20px; border-radius:50%;
+  background:#FA345E; color:#FFFFFF;
+  font-size:9.5px; font-weight:900; line-height:20px;
+  margin:0 auto 6px; display:block;
+}
+.flow-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
+.flow-box p{ font-size:9px; line-height:1.45; color:#555; }
+
+/* ── DIFERENCIADORES ── */
+.diff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.diff-box{ background:#FFFFFF; border:1px solid #EEE; border-radius:11px; padding:11px 12px; }
+.diff-box h4{ font-size:10.5px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
+.diff-box p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
+.diff-box.ai{ background:#F8F6FF; border-color:#DCD8F5; }
+.diff-box.ai h4{ color:#6B5CC4; }
+
+/* ── IMPACTO ── */
+.impact-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+.impact-card{
+  background:#FFFDF7; border:1px solid #F0E8C0;
+  border-radius:11px; padding:11px; text-align:center;
+}
+.impact-day{ font-size:20px; font-weight:900; color:#FA345E; display:block; margin-bottom:4px; }
+.impact-card p{ font-size:9.5px; line-height:1.5; color:#4A4A4A; }
+
+/* ── CASOS DE USO ── */
+.usecase-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+.usecase-box{ background:#FAFAFA; border:1px solid #EEE; border-radius:10px; padding:10px; }
+.usecase-icon{ font-size:15px; margin-bottom:4px; display:block; }
+.usecase-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
+.usecase-box p{ font-size:9px; line-height:1.45; color:#555; }
+
+/* ── CTA ── */
+.cta{
+  background:#FFE6E8; border:1px solid #FA345E;
+  border-radius:12px; padding:14px 16px;
+  display:flex; justify-content:space-between; align-items:center; gap:14px;
+}
+.cta-left h2{ font-size:13px; font-weight:900; color:#1B1B1B; margin-bottom:3px; line-height:1.3; }
+.cta-left p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
+.cta-btn{
+  flex-shrink:0;
+  background:#FA345E; color:#FFFFFF;
+  padding:9px 16px; border-radius:999px;
+  font-weight:800; font-size:10.5px;
+  text-decoration:none; white-space:nowrap;
 }
 
-.hero {
-  text-align: center;
-  margin-bottom: 20px;
+/* ── FOOTER ── */
+.pg-footer{
+  padding:7px 20px;
+  border-top:1px solid #F0F0F0;
+  display:flex; justify-content:space-between;
+  font-size:9px; color:#B0BEC8; font-weight:500;
+  flex-shrink:0;
 }
+.pg-footer span:first-child{ color:#FA345E; font-weight:700; }
 
-.badge {
-  display: inline-block;
-  background: #FFE6E8;
-  color: #FA345E;
-  padding: 7px 15px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.hero h1 {
-  font-size: 31px;
-  line-height: 1.16;
-  margin: 0 0 10px 0;
-  font-weight: 800;
-  color: #1B1B1B;
-}
-
-.hero p {
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: #4A4A4A;
-  max-width: 86%;
-  margin: 0 auto;
-}
-
-.section {
-  margin-top: 18px;
-}
-
-.section h2 {
-  font-size: 18px;
-  line-height: 1.25;
-  margin: 0 0 8px 0;
-  font-weight: 800;
-  color: #1B1B1B;
-}
-
-.section p {
-  font-size: 13px;
-  color: #4A4A4A;
-  line-height: 1.62;
-  margin: 0;
-}
-
-.intro-box {
-  background: linear-gradient(180deg, #FFF7F8 0%, #FFFFFF 100%);
-  border: 1px solid #FFD5DD;
-  border-left: 6px solid #FA345E;
-  border-radius: 16px;
-  padding: 14px 16px;
-}
-
-.intro-box strong {
-  color: #1B1B1B;
-}
-
-.cards {
-  display: flex;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.card {
-  flex: 1;
-  background: #FAFBFF;
-  border: 1px solid #E5E7EE;
-  border-radius: 16px;
-  padding: 15px;
-}
-
-.card.primary {
-  background: #FFF7F8;
-  border-color: #FFD5DD;
-}
-
-.card.performance {
-  background: #F8F6FF;
-  border-color: #DCD8F5;
-}
-
-.card h3 {
-  margin: 0 0 6px 0;
-  font-size: 16px;
-  line-height: 1.25;
-  font-weight: 800;
-  color: #1B1B1B;
-}
-
-.card .tagline {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #146787;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.card p {
-  font-size: 12.4px;
-  color: #4A4A4A;
-  line-height: 1.58;
-  margin: 0 0 8px 0;
-}
-
-.card ul {
-  margin: 8px 0 0 0;
-  padding-left: 16px;
-}
-
-.card li {
-  font-size: 12px;
-  line-height: 1.5;
-  color: #333333;
-  margin-bottom: 5px;
-}
-
-.flow {
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 9px;
-  margin-top: 11px;
-}
-
-.flow-box {
-  background: #FFFFFF;
-  border-radius: 13px;
-  padding: 11px 9px;
-  border: 1px solid #E5E7EE;
-  text-align: center;
-  min-height: 82px;
-}
-
-.flow-box .step {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  background: #FA345E;
-  color: #FFFFFF;
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 24px;
-  margin-bottom: 7px;
-}
-
-.flow-box h4 {
-  margin: 0 0 4px 0;
-  font-size: 12px;
-  font-weight: 800;
-  color: #1B1B1B;
-}
-
-.flow-box p {
-  font-size: 10.8px;
-  line-height: 1.38;
-  color: #555555;
-  margin: 0;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 11px;
-}
-
-.box {
-  background: #FAFBFF;
-  border-radius: 14px;
-  padding: 12px 13px;
-  border: 1px solid #E5E7EE;
-}
-
-.box h4 {
-  margin: 0 0 5px 0;
-  font-size: 13px;
-  line-height: 1.25;
-  font-weight: 800;
-  color: #146787;
-}
-
-.box p {
-  font-size: 12px;
-  color: #4A4A4A;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.promise {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 11px;
-}
-
-.promise-card {
-  background: #FFFDF7;
-  border: 1px solid #F1E7B8;
-  border-radius: 14px;
-  padding: 12px;
-  text-align: center;
-}
-
-.promise-card h3 {
-  margin: 0 0 5px 0;
-  font-size: 20px;
-  color: #FA345E;
-  font-weight: 800;
-}
-
-.promise-card p {
-  font-size: 11.8px;
-  line-height: 1.45;
-  color: #4A4A4A;
-  margin: 0;
-}
-
-.use-cases {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 9px;
-  margin-top: 11px;
-}
-
-.use-case {
-  background: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  border-radius: 13px;
-  padding: 10px;
-}
-
-.use-case h4 {
-  margin: 0 0 5px 0;
-  font-size: 12px;
-  line-height: 1.3;
-  font-weight: 800;
-  color: #1B1B1B;
-}
-
-.use-case p {
-  font-size: 11.2px;
-  line-height: 1.45;
-  color: #555555;
-  margin: 0;
-}
-
-.cta {
-  margin-top: 20px;
-  background: linear-gradient(90deg, #1B1B1B 0%, #2E2E38 100%);
-  color: #FFFFFF;
-  padding: 18px;
-  border-radius: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-}
-
-.cta h2 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  line-height: 1.25;
-  color: #FFFFFF;
-}
-
-.cta p {
-  font-size: 12px;
-  line-height: 1.5;
-  color: #DADADA;
-  margin: 0;
-}
-
-.button {
-  flex-shrink: 0;
-  background: #FA345E;
-  color: #FFFFFF;
-  padding: 11px 17px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.footer {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid #EAEAEA;
-  font-size: 10.8px;
-  color: #777777;
-  text-align: center;
-}
-
-@media print {
-  body {
-    background: #FFFFFF;
-  }
-
-  .page {
-    margin: 0;
-    width: 100%;
-    min-height: auto;
-  }
+@media print{
+  body{ background:#fff; }
+  .page{ margin:0; width:100%; }
 }
 </style>
 </head>
-
 <body>
 
 <div class="page">
   <div class="topbar"></div>
 
-  <div class="hero">
-    <div class="badge">Apprecio Beat · Cultura, reconocimiento y recompensas</div>
-    <h1>Convierte el reconocimiento en un hábito visible dentro de tu empresa</h1>
-    <p>
-      Apprecio Beat ayuda a las organizaciones a activar cultura, reconocer comportamientos clave y transformar la participación de los colaboradores en puntos, recompensas y experiencias medibles.
-    </p>
-  </div>
-
-  <div class="section intro-box">
-    <p>
-      Muchas empresas ya entregan beneficios, premios o incentivos, pero lo hacen de forma aislada: campañas sueltas, Excel, baja visibilidad y poco aprendizaje sobre qué realmente moviliza a las personas. <strong>Apprecio Beat</strong> ordena esas iniciativas en una plataforma continua, donde cada reconocimiento, campaña o logro puede convertirse en valor tangible para el colaborador y en información accionable para la empresa.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>Una plataforma que parte desde cultura y puede escalar hacia desempeño</h2>
-    <div class="cards">
-      <div class="card primary">
-        <span class="tagline">Edición base</span>
-        <h3>Apprecio Beat</h3>
-        <p>La base para construir cultura visible, participación y reconocimiento recurrente dentro de la organización.</p>
-        <ul>
-          <li>Reconocimiento entre pares y desde líderes</li>
-          <li>Insignias, campañas y activaciones internas</li>
-          <li>Feed social, notificaciones y participación</li>
-          <li>Puntos Apprecio y acceso a recompensas</li>
-          <li>Encuestas, feedback y medición de engagement</li>
-        </ul>
+  <div class="pg-header">
+    <div class="orn orn-1"></div>
+    <div class="orn orn-2"></div>
+    <div class="orn orn-3"></div>
+    <div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · Cultura, reconocimiento y recompensas</div>
+        <div class="pg-title">Cultura visible, reconocimiento recurrente<br>y recompensas reales para tus colaboradores</div>
+        <div class="pg-sub">Apprecio Beat ayuda a las organizaciones a activar cultura, reconocer comportamientos clave y transformar la participación de los colaboradores en puntos, recompensas y experiencias medibles.</div>
       </div>
-
-      <div class="card performance">
-        <span class="tagline">Expansión de valor</span>
-        <h3>Beat Performance</h3>
-        <p>La evolución para conectar cultura e incentivos con ejecución, aprendizaje, cumplimiento de metas y resultados.</p>
-        <ul>
-          <li>Scorecards, retos y ligas por objetivos</li>
-          <li>Entrenamientos y contenidos accionables</li>
-          <li>Centro de evidencia y validaciones</li>
-          <li>Incentivos asociados a KPIs y desempeño</li>
-          <li>Visibilidad de avance para líderes y equipos</li>
-        </ul>
+      <div class="pg-badge">
+        <span class="val">Apprecio Beat</span>
+        <span class="lbl">Landing comercial</span>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <h2>Cómo funciona Apprecio Beat</h2>
-    <div class="flow">
-      <div class="flow-box">
-        <div class="step">1</div>
-        <h4>Diseñar</h4>
-        <p>Definir comportamientos, campañas, públicos y reglas de participación.</p>
-      </div>
-      <div class="flow-box">
-        <div class="step">2</div>
-        <h4>Activar</h4>
-        <p>Lanzar reconocimientos, retos, encuestas o campañas internas.</p>
-      </div>
-      <div class="flow-box">
-        <div class="step">3</div>
-        <h4>Reconocer</h4>
-        <p>Hacer visibles los logros y reforzar acciones alineadas a la cultura.</p>
-      </div>
-      <div class="flow-box">
-        <div class="step">4</div>
-        <h4>Recompensar</h4>
-        <p>Convertir participación y logros en puntos, beneficios y experiencias.</p>
-      </div>
-      <div class="flow-box">
-        <div class="step">5</div>
-        <h4>Medir</h4>
-        <p>Observar adopción, actividad, uso de puntos e impacto del programa.</p>
-      </div>
+  <div class="pg-body">
+
+    <div class="intro-box">
+      Muchas empresas ya entregan beneficios, premios o incentivos, pero lo hacen de forma aislada: campañas sueltas, baja visibilidad y poco aprendizaje sobre qué moviliza realmente a las personas. <strong>Apprecio Beat</strong> ordena esas iniciativas en una plataforma continua, donde cada reconocimiento, campaña o logro se convierte en valor tangible para el colaborador y en información accionable para la empresa.
     </div>
-  </div>
 
-  <div class="section">
-    <h2>Diferenciales de Apprecio Beat</h2>
-    <div class="grid">
-      <div class="box">
-        <h4>Cultura visible, no solo beneficios</h4>
-        <p>El reconocimiento deja de ser informal o invisible y se transforma en una experiencia recurrente que refuerza comportamientos.</p>
-      </div>
-
-      <div class="box">
-        <h4>Puntos como motor de valor</h4>
-        <p>Los puntos conectan participación, reconocimiento e incentivos con recompensas reales, aumentando la percepción de valor.</p>
-      </div>
-
-      <div class="box">
-        <h4>Gobernanza y trazabilidad</h4>
-        <p>Reglas, permisos, presupuestos y reportes permiten controlar la operación sin perder flexibilidad para activar campañas.</p>
-      </div>
-
-      <div class="box">
-        <h4>Escalabilidad hacia performance</h4>
-        <p>La empresa puede comenzar con cultura y reconocimiento, y luego avanzar hacia metas, retos, entrenamientos y desempeño.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Impacto esperado en los primeros ciclos</h2>
-    <div class="promise">
-      <div class="promise-card">
-        <h3>D+7</h3>
-        <p>Primeras señales de actividad, participación y reconocimiento visible.</p>
-      </div>
-      <div class="promise-card">
-        <h3>D+14</h3>
-        <p>Lectura inicial de adopción, uso de puntos y campañas con mayor tracción.</p>
-      </div>
-      <div class="promise-card">
-        <h3>D+30</h3>
-        <p>Aprendizaje sobre comportamientos, segmentos activos y oportunidades de mejora.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Casos de uso habituales</h2>
-    <div class="use-cases">
-      <div class="use-case">
-        <h4>Reconocimiento cultural</h4>
-        <p>Valores, logros, hitos y comportamientos que la empresa quiere reforzar.</p>
-      </div>
-      <div class="use-case">
-        <h4>Campañas internas</h4>
-        <p>Activaciones por fechas, focos de negocio, participación o engagement.</p>
-      </div>
-      <div class="use-case">
-        <h4>Beneficios e incentivos</h4>
-        <p>Uso de puntos, recompensas y experiencias como valor tangible para colaboradores.</p>
-      </div>
-      <div class="use-case">
-        <h4>Performance</h4>
-        <p>Retos, scorecards, entrenamientos y KPIs cuando la empresa necesita movilizar resultados.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="cta">
+    <!-- EDICIONES -->
     <div>
-      <h2>Con Apprecio Beat, Rewards abre la puerta y Beat permite quedarse dentro</h2>
-      <p>Agenda una demo para ver cómo activar cultura, reconocimiento y recompensas en una experiencia continua para tus colaboradores.</p>
+      <div class="sec-title">Una plataforma que crece con tu organización</div>
+      <div class="edition-grid">
+        <div class="edition-card base">
+          <div class="edition-eyebrow">Edición base</div>
+          <div class="edition-name">Apprecio Beat</div>
+          <div class="edition-desc">La base para construir cultura visible, participación y reconocimiento recurrente dentro de la organización.</div>
+          <div class="edition-tags">
+            <span class="etag">Reconocimientos</span>
+            <span class="etag">eCards</span>
+            <span class="etag">Insignias</span>
+            <span class="etag">Encuestas</span>
+            <span class="etag">Feed social</span>
+            <span class="etag">Recompensas</span>
+            <span class="etag">Puntos</span>
+            <span class="etag">Work-Life</span>
+          </div>
+        </div>
+        <div class="edition-card pro">
+          <div class="edition-eyebrow">Versión Pro</div>
+          <div class="edition-name">Beat Performance</div>
+          <div class="edition-desc">La expansión natural de Apprecio Beat para conectar cultura con ejecución, metas y resultados de negocio.</div>
+          <div class="edition-tags">
+            <span class="etag">Scorecards</span>
+            <span class="etag">Retos</span>
+            <span class="etag">Ligas</span>
+            <span class="etag">KPIs</span>
+            <span class="etag">Entrenamientos</span>
+            <span class="etag">Centro de evidencia</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <a href="#" class="button">Solicitar demo</a>
+
+    <!-- FLUJO -->
+    <div>
+      <div class="sec-title">Cómo funciona Apprecio Beat</div>
+      <div class="flow-grid">
+        <div class="flow-box">
+          <span class="flow-num">1</span>
+          <h4>Diseñar</h4>
+          <p>Comportamientos, campañas, públicos y reglas de participación.</p>
+        </div>
+        <div class="flow-box">
+          <span class="flow-num">2</span>
+          <h4>Activar</h4>
+          <p>Lanzar reconocimientos, retos, encuestas o campañas internas.</p>
+        </div>
+        <div class="flow-box">
+          <span class="flow-num">3</span>
+          <h4>Reconocer</h4>
+          <p>Hacer visibles los logros y reforzar acciones alineadas a la cultura.</p>
+        </div>
+        <div class="flow-box">
+          <span class="flow-num">4</span>
+          <h4>Recompensar</h4>
+          <p>Convertir participación y logros en puntos, beneficios y experiencias.</p>
+        </div>
+        <div class="flow-box">
+          <span class="flow-num">5</span>
+          <h4>Medir</h4>
+          <p>Adopción, actividad, uso de puntos e impacto del programa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIFERENCIADORES -->
+    <div>
+      <div class="sec-title">Diferenciales de Apprecio Beat</div>
+      <div class="diff-grid">
+        <div class="diff-box">
+          <h4>Cultura visible, no solo beneficios</h4>
+          <p>El reconocimiento deja de ser informal o invisible y se transforma en una experiencia recurrente que refuerza comportamientos alineados a la organización.</p>
+        </div>
+        <div class="diff-box ai">
+          <h4>Intelligence Layer — IA para administradores</h4>
+          <p>Copiloto de IA que analiza comportamientos, detecta baja participación y propone campañas y acciones concretas para mejorar resultados sin aumentar la carga operativa de RR.HH.</p>
+        </div>
+        <div class="diff-box">
+          <h4>Puntos como motor de valor</h4>
+          <p>Los puntos conectan participación, reconocimiento e incentivos con recompensas reales, aumentando la percepción de valor del programa.</p>
+        </div>
+        <div class="diff-box">
+          <h4>Escalabilidad hacia desempeño</h4>
+          <p>La empresa comienza con cultura y reconocimiento, y puede avanzar hacia metas, retos, entrenamientos y desempeño con Beat Performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPACTO -->
+    <div>
+      <div class="sec-title">Señales de impacto esperadas</div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <span class="impact-day">D+14</span>
+          <p>Primeras señales de actividad, participación y reconocimiento visible en la plataforma.</p>
+        </div>
+        <div class="impact-card">
+          <span class="impact-day">D+30</span>
+          <p>Lectura inicial de adopción, uso de puntos y campañas con mayor tracción.</p>
+        </div>
+        <div class="impact-card">
+          <span class="impact-day">D+90</span>
+          <p>Aprendizaje sobre comportamientos, segmentos activos y oportunidades de mejora del programa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASOS DE USO -->
+    <div>
+      <div class="sec-title">Casos de uso habituales</div>
+      <div class="usecase-grid">
+        <div class="usecase-box">
+          <span class="usecase-icon">🏅</span>
+          <h4>Reconocimiento cultural</h4>
+          <p>Valores, logros, hitos y comportamientos que la empresa quiere reforzar.</p>
+        </div>
+        <div class="usecase-box">
+          <span class="usecase-icon">📣</span>
+          <h4>Campañas internas</h4>
+          <p>Activaciones por fechas, focos de negocio, participación o engagement.</p>
+        </div>
+        <div class="usecase-box">
+          <span class="usecase-icon">🎁</span>
+          <h4>Beneficios e incentivos</h4>
+          <p>Uso de puntos, recompensas y experiencias como valor tangible para colaboradores.</p>
+        </div>
+        <div class="usecase-box">
+          <span class="usecase-icon">🎯</span>
+          <h4>Metas y desempeño</h4>
+          <p>Retos, scorecards y KPIs para movilizar resultados. Disponible en Beat Performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <div class="cta-left">
+        <h2>Rewards abre la puerta. Apprecio Beat permite quedarse dentro.</h2>
+        <p>Agenda una demo para ver cómo activar cultura, reconocimiento y recompensas en una experiencia continua para tus colaboradores.</p>
+      </div>
+      <a href="#" class="cta-btn">Solicitar demo</a>
+    </div>
+
   </div>
 
-  <div class="footer">
-    Apprecio · Apprecio Beat · Landing comercial para cultura, reconocimiento, engagement, recompensas y performance
+  <div class="pg-footer">
+    <span>Apprecio Beat</span>
+    <span>Cultura · Reconocimiento · Recompensas · Engagement</span>
   </div>
 </div>
 
