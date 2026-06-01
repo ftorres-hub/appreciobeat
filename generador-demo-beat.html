@@ -432,7 +432,7 @@ function generarResumen() {
 
   const rows = [
     ['Empresa', m.empresa],
-    ['Contacto', m.contacto || document.getElementById('f-contacto').value || '—'],
+    ['Contacto', m.contacto || '—'],
     ['Fecha', m.fecha],
     ['Tipo de documento', tipoDoc],
     ['Dotación', m.dotacion || a.colaboradores || '—'],
@@ -471,8 +471,7 @@ async function generarPropuesta() {
   const m = meetingData;
   const a = contextAnswers;
   const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
-  const kam = document.getElementById('f-kam').value.trim();
-  const contacto = m.contacto || document.getElementById('f-contacto').value || '';
+  const contacto = m.contacto || '';
 
   const mensajes = [
     'Analizando necesidades del cliente…',
