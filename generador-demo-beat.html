@@ -374,61 +374,21 @@ async function buscarReunion() {
   document.getElementById('btn-buscar').disabled = true;
 
   try {
-    // Calcular rango de fecha ±1 día
-    const d = new Date(fecha);
-    const startDate = new Date(d); startDate.setDate(d.getDate() - 1);
-    const endDate = new Date(d); endDate.setDate(d.getDate() + 1);
-    const fmt = dt => dt.toISOString().split('T')[0];
-
-    const prompt = `Usa la herramienta de Diio para buscar la reunión con el cliente "${cliente}"${kam ? ` que tuvo ${kam}` : ''} alrededor del ${fecha}.
-    
-Busca con start_date="${fmt(startDate)}", end_date="${fmt(endDate)}", proper_nouns="${cliente}${kam ? ', ' + kam : ''}".
-
-Extrae y devuelve SOLO un JSON con esta estructura exacta (sin texto adicional, sin backticks):
-{
-  "encontrada": true o false,
-  "empresa": "nombre empresa",
-  "contacto": "nombre y cargo del contacto cliente si aparece",
-  "fecha": "fecha de la reunión",
-  "tipo": "exploracion" o "mantencion",
-  "dotacion": "número o rango si se menciona",
-  "paises": "países mencionados",
-  "dolores": ["dolor 1", "dolor 2", "dolor 3"],
-  "contexto": "resumen de 2-3 oraciones del contexto del programa",
-  "datos_extra": "cualquier otro dato relevante mencionado"
-}
-
-Si no se encuentra la reunión, devuelve: {"encontrada": false}`;
-
     const response = await fetch('/.netlify/functions/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        mcp_servers: [{ type: 'url', url: 'https://login.diio.com/mcp/external/handle_server', name: 'diio' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ action: 'buscar', cliente, kam, fecha })
     });
 
-    const data = await response.json();
-
-    // Extraer JSON de la respuesta
-    let jsonText = '';
-    for (const block of data.content) {
-      if (block.type === 'text') jsonText += block.text;
-      if (block.type === 'mcp_tool_result') {
-        try { jsonText += block.content?.[0]?.text || ''; } catch(e) {}
-      }
-    }
-
-    // Limpiar y parsear
-    const match = jsonText.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('No se pudo parsear la respuesta');
-    const result = JSON.parse(match[0]);
+    const result = await response.json();
 
     document.getElementById('loading1').classList.add('hidden');
     document.getElementById('btn-buscar').disabled = false;
+
+    if (result.error) {
+      alert('Error: ' + result.error);
+      return;
+    }
 
     if (!result.encontrada) {
       document.getElementById('meeting-result').innerHTML = `
@@ -542,72 +502,19 @@ async function generarPropuesta() {
     document.getElementById('loading4-text').textContent = mensajes[mi];
   }, 2500);
 
-  const prompt = `Eres un especialista en Apprecio Beat, plataforma de reconocimiento y engagement de Apprecio. 
-
-Datos de la reunión:
-- Empresa: ${m.empresa}
-- Contacto: ${contacto}
-- Fecha: ${m.fecha}
-- Tipo: ${m.tipo === 'exploracion' ? 'Exploración' : 'Mantención / seguimiento'}
-- Dotación: ${m.dotacion || a.colaboradores || 'No especificada'}
-- Países: ${m.paises || 'No especificados'}
-- Contexto: ${m.contexto}
-- Dolores: ${(m.dolores || []).join(', ')}
-- Datos extra: ${m.datos_extra || '—'}
-
-Contexto adicional del programa:
-- Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || 'No especificado')}
-- Se conocen entre sí: ${a.se_conocen || 'No especificado'}
-- Comportamientos a mover: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || 'No especificado')}
-- Operación: ${a.operacion || 'No especificado'}
-- Admin: ${a.admin || 'No especificado'}
-- Experiencia previa: ${a.experiencia || 'No especificado'}
-- Tipo de reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || 'No especificado')}
-
-RESTRICCIONES IMPORTANTES:
-- Spot Rewards es entrega directa de puntos de un manager a un colaborador — NO para campañas ni aceleradores.
-- Los aceleradores de corto plazo van en Retos.
-- Las insignias no tienen lógica automática de premiación — es manual.
-- Las Ligas no están 100% activas — no detallar su funcionamiento.
-- Los puntos económicos son inviables en programas multi-país con distintas monedas.
-- El catálogo de Apprecio no es diferenciable por nivel.
-- Si infiere una funcionalidad no confirmada, marcarla con: (esto lo estoy infiriendo — verificar con producto antes de prometérselo al cliente)
-- Las cards no llevan el trigger en comillas del cliente.
-
-Genera el documento "${tipoDoc}" como HTML con esta estructura exacta.
-Usa SOLO estas clases CSS ya definidas (no agregues estilos inline ni nuevas clases):
-- Portada: clase doc-portada con doc-portada-label, h1, doc-portada-meta, doc-meta-item, doc-edition
-- Secciones: doc-section con doc-section-title
-- Bullets: ul.doc-bullets con li
-- Cards de módulo: mod-card con mod-card-header, mod-badge (base o performance), mod-card-title, mod-why, mod-action-row (con mod-action-label y mod-action-text), mod-inference
-- Flujo/pasos: div.doc-steps con div.doc-step (div.doc-step-num + div.doc-step-content)
-
-Estructura del documento:
-1. Portada con empresa, contacto, fecha, dotación, edición sugerida (Beat base o Beat Performance)
-2. Contexto y necesidades (bullets con lo identificado)
-3. Acciones sugeridas por módulo Beat base (cards)
-4. Acciones por Beat Performance solo si aplica (cards con badge performance)
-5. ${m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración'} (doc-steps)
-
-Devuelve SOLO el HTML interno (sin DOCTYPE, sin html/head/body tags, sin estilos). Empieza directamente con <div class="doc-portada">.`;
 
   try {
     const response = await fetch('/.netlify/functions/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ action: 'generar', meetingInfo: m, contextAnswers: a })
     });
 
     const data = await response.json();
     clearInterval(loadingInterval);
 
-    let html = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
-    // Limpiar posibles backticks
-    html = html.replace(/^```html?\n?/i, '').replace(/```$/g, '').trim();
+    if (data.error) throw new Error(data.error);
+    let html = data.html || '';
 
     document.getElementById('loading4').classList.add('hidden');
     document.getElementById('steps-container').classList.add('hidden');
