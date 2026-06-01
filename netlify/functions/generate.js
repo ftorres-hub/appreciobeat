@@ -40,6 +40,8 @@ async function buscarReunion(token, cliente, kam, fecha) {
   console.log('Meetings status:', res.status);
   const data = await res.json();
   console.log('Total meetings:', data.meetings?.length || 0);
+  if (data.meetings?.length > 0) console.log('Sample meeting keys:', JSON.stringify(Object.keys(data.meetings[0])));
+  if (data.meetings?.length > 0) console.log('Sample meeting:', JSON.stringify(data.meetings[0]).slice(0, 500));
 
   if (!data.meetings || data.meetings.length === 0) return null;
 
