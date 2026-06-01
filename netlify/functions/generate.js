@@ -7,16 +7,42 @@ exports.handler = async function(event) {
     const body = JSON.parse(event.body);
     const useMcp = body.mcp_servers && body.mcp_servers.length > 0;
 
-    console.log('Llamada recibida. useMcp:', useMcp);
-    console.log('Body keys:', Object.keys(body));
+    console.log('useMcp:', useMcp);
+
+    let accessToken = null;
 
     if (useMcp) {
+      // Paso 1: obtener access token de Diio
+      console.log('Obteniendo access token de Diio...');
+      const tokenRes = await fetch('https://apprecio.diio.com/api/external/refresh_token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          client_id: '5b4df826-ec35-4d96-9dd3-90311504ef71',
+          client_secret: '871714aa-995e-4da8-9d5a-754c32caa303',
+          refresh_token: '1104ade4-ca47-45a7-816b-21f55975460d'
+        })
+      });
+
+      console.log('Token status:', tokenRes.status);
+      const tokenData = await tokenRes.json();
+      console.log('Token response keys:', Object.keys(tokenData));
+
+      accessToken = tokenData.access_token || tokenData.token || tokenData.jwt;
+      console.log('Access token obtenido:', accessToken ? 'SI' : 'NO');
+
+      if (!accessToken) {
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+          body: JSON.stringify({ error: { type: 'diio_auth_error', message: 'No se pudo obtener access token de Diio', detail: tokenData } })
+        };
+      }
+
+      // Paso 2: inyectar access token en el MCP
       body.mcp_servers = body.mcp_servers.map(s => {
         if (s.name === 'diio') {
-          return {
-            ...s,
-            authorization_token: '1104ade4-ca47-45a7-816b-21f55975460d'
-          };
+          return { ...s, authorization_token: accessToken };
         }
         return s;
       });
@@ -36,10 +62,8 @@ exports.handler = async function(event) {
       body: JSON.stringify(body)
     });
 
-    console.log('Status Anthropic:', response.status);
+    console.log('Anthropic status:', response.status);
     const data = await response.json();
-    console.log('Respuesta tipo:', data.type);
-    console.log('Content blocks:', data.content?.length);
     if (data.error) console.log('Error Anthropic:', JSON.stringify(data.error));
 
     return {
@@ -47,6 +71,7 @@ exports.handler = async function(event) {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(data)
     };
+
   } catch (e) {
     console.log('Error catch:', e.message);
     return {
