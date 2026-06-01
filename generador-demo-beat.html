@@ -260,7 +260,44 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 
 <script>
 // ── API Key ──
-  // ── Estado global ──
+  // ── Config ──
+  const ANTHROPIC_KEY = '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';
+  const DIIO_BASE = 'https://apprecio.diio.com/api/external';
+
+  async function getDiioToken() {
+    const res = await fetch(`${DIIO_BASE}/refresh_token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: '5b4df826-ec35-4d96-9dd3-90311504ef71',
+        client_secret: '871714aa-995e-4da8-9d5a-754c32caa303',
+        refresh_token: '1104ade4-ca47-45a7-816b-21f55975460d'
+      })
+    });
+    const data = await res.json();
+    return data.access_token;
+  }
+
+  async function callClaude(messages, maxTokens = 1500) {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: maxTokens,
+        messages
+      })
+    });
+    const data = await res.json();
+    return data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
+  }
+
+// ── Estado global ──
 let meetingData = null;
 let contextAnswers = {};
 
@@ -358,30 +395,62 @@ async function buscarReunion() {
   document.getElementById('btn-buscar').disabled = true;
 
   try {
-    const response = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'buscar', linkDiio })
-    });
+    // 1. Obtener token Diio
+    const token = await getDiioToken();
 
-    const result = await response.json();
+    // 2. Extraer ID del link
+    const match = linkDiio.match(/meetings\/([a-f0-9\-]{36})/i);
+    if (!match) throw new Error('Link inválido');
+    const meetingId = match[1];
+
+    // 3. Obtener meeting
+    const mRes = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!mRes.ok) throw new Error('Reunión no encontrada');
+    const m = await mRes.json();
+
+    // 4. Obtener transcript
+    let transcriptText = '';
+    if (m.last_transcript_id) {
+      const tRes = await fetch(`${DIIO_BASE}/v1/transcripts/${m.last_transcript_id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (tRes.ok) {
+        const tData = await tRes.json();
+        transcriptText = tData.transcript || tData.text || '';
+      }
+    }
+
+    const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
+    const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
+
+    // 5. Claude extrae datos
+    const extractPrompt = `Analiza esta reunión de ventas de Apprecio y devuelve SOLO este JSON (sin backticks):
+{
+  "empresa": "nombre empresa cliente",
+  "contacto": "nombre y cargo del contacto cliente principal",
+  "fecha": "fecha legible en español",
+  "tipo": "exploracion o mantencion",
+  "dotacion": "número colaboradores si se menciona, sino null",
+  "paises": "países mencionados, sino null",
+  "dolores": ["necesidad 1", "necesidad 2", "necesidad 3"],
+  "contexto": "resumen 2-3 oraciones del contexto y necesidad"
+}
+
+Nombre reunión: ${m.name}
+Fecha: ${m.scheduled_at}
+Ejecutivo Apprecio: ${sellers}
+Contactos cliente: ${customers}
+Transcript: ${transcriptText.slice(0, 2000)}`;
+
+    const text = await callClaude([{ role: 'user', content: extractPrompt }]);
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No se pudo parsear respuesta');
+    const result = { encontrada: true, meetingId, ...JSON.parse(jsonMatch[0]) };
 
     document.getElementById('loading1').classList.add('hidden');
     document.getElementById('btn-buscar').disabled = false;
-
-    if (result.error) {
-      alert('Error: ' + result.error);
-      return;
-    }
-
-    if (!result.encontrada) {
-      document.getElementById('meeting-result').innerHTML = `
-        <div style="padding:16px; background:#FFF5F7; border-radius:8px; border: 1px solid #FFCCD6; font-size:12px; color:#D42A4E; font-weight:600;">
-          No se encontró una reunión con "${cliente}" en esa fecha. Intenta con otra fecha o verifica el nombre.
-        </div>`;
-      document.getElementById('step2').classList.remove('hidden');
-      return;
-    }
 
     meetingData = result;
     renderMeetingCard(result);
@@ -391,7 +460,7 @@ async function buscarReunion() {
   } catch(e) {
     document.getElementById('loading1').classList.add('hidden');
     document.getElementById('btn-buscar').disabled = false;
-    alert('Error al conectar con Diio. Intenta nuevamente.');
+    alert('Error al conectar. Intenta nuevamente.');
     console.error(e);
   }
 }
@@ -487,18 +556,36 @@ async function generarPropuesta() {
 
 
   try {
-    const response = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'generar', meetingInfo: m, contextAnswers: a })
-    });
+    const genPrompt = `Eres especialista en Apprecio Beat. Genera propuesta comercial basada en esta reunión.
 
-    const data = await response.json();
+Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
+Tipo: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
+Contexto: ${m.contexto}
+Dolores: ${(m.dolores || []).join(', ')}
+Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
+Comportamientos: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
+Operación: ${a.operacion || '?'} | Admin: ${a.admin || '?'} | Experiencia: ${a.experiencia || '?'}
+Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
+
+RESTRICCIONES: Spot Rewards=entrega directa manager→colaborador NO campañas. Aceleradores→Retos. Insignias sin lógica automática. Ligas no detallar. Puntos económicos inviables multi-país. Inferencias: marcar (inferencia—verificar con producto).
+
+Devuelve SOLO este JSON (sin backticks):
+{
+  "tipo_doc": "${m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa'}",
+  "edition": "Apprecio Beat o Beat Performance",
+  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
+  "modulos_base": [{"modulo":"nombre","por_que":"razón","accion":"acción concreta","configuracion":"cómo configurar"}],
+  "modulos_performance": [],
+  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
+}`;
+
+    const genText = await callClaude([{ role: 'user', content: genPrompt }], 2000);
     clearInterval(loadingInterval);
 
-    if (data.error) throw new Error(data.error);
-    const { propuesta, meetingInfo: mi } = data;
-    let html = renderPropuesta(propuesta, mi, a);
+    const genMatch = genText.match(/\{[\s\S]*\}/);
+    if (!genMatch) throw new Error('No se pudo parsear propuesta');
+    const propuesta = JSON.parse(genMatch[0]);
+    let html = renderPropuesta(propuesta, m, a);
 
     document.getElementById('loading4').classList.add('hidden');
     document.getElementById('steps-container').classList.add('hidden');
