@@ -1,5 +1,4 @@
-
- const DIIO_CLIENT_ID = '5b4df826-ec35-4d96-9dd3-90311504ef71';
+const DIIO_CLIENT_ID = '5b4df826-ec35-4d96-9dd3-90311504ef71';
 const DIIO_CLIENT_SECRET = '871714aa-995e-4da8-9d5a-754c32caa303';
 const DIIO_REFRESH_TOKEN = '1104ade4-ca47-45a7-816b-21f55975460d';
 const DIIO_BASE = 'https://apprecio.diio.com/api/external';
@@ -19,70 +18,9 @@ async function getDiioToken() {
   return data.access_token;
 }
 
-async function buscarReunion(token, cliente, kam, fecha) {
-  const d = new Date(fecha);
-  const desde = new Date(d); desde.setDate(d.getDate() - 3);
-  const hasta = new Date(d); hasta.setDate(d.getDate() + 3);
-  const fmt = dt => dt.toISOString().split('T')[0];
-
-  const params = new URLSearchParams({
-    start_date: fmt(desde),
-    end_date: fmt(hasta),
-    limit: '50'
-  });
-
-  const res = await fetch(`${DIIO_BASE}/v1/meetings?${params}`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-
-  const data = await res.json();
-  console.log('Total meetings:', data.meetings?.length || 0);
-  if (!data.meetings || data.meetings.length === 0) return null;
-
-  const clienteLower = cliente.toLowerCase();
-  const kamLower = kam ? kam.toLowerCase() : '';
-
-  // Buscar por nombre de reunión o participantes
-  let found = data.meetings.find(m => {
-    const nombre = (m.name || '').toLowerCase();
-    const sellers = (m.attendees?.sellers || []).map(p => (p.name || p.email || '').toLowerCase()).join(' ');
-    const customers = (m.attendees?.customers || []).map(p => (p.name || p.email || '').toLowerCase()).join(' ');
-    const todos = nombre + ' ' + sellers + ' ' + customers;
-    const matchCliente = todos.includes(clienteLower);
-    const matchKam = !kamLower || sellers.includes(kamLower);
-    return matchCliente && matchKam;
-  });
-
-  // Si no hay match, devolver el más cercano a la fecha
-  if (!found) {
-    found = data.meetings.reduce((prev, curr) => {
-      const diffPrev = Math.abs(new Date(prev.scheduled_at) - d);
-      const diffCurr = Math.abs(new Date(curr.scheduled_at) - d);
-      return diffCurr < diffPrev ? curr : prev;
-    });
-  }
-
-  console.log('Meeting encontrado:', found?.name);
-  return found;
-}
-
-async function obtenerTranscript(token, transcriptId) {
-  if (!transcriptId) return null;
-  const res = await fetch(`${DIIO_BASE}/v1/transcripts/${transcriptId}`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  if (!res.ok) return null;
-  return await res.json();
-}
-
-async function obtenerMeetingDetalle(token, meetingId) {
-  const res = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  console.log('Meeting detalle keys:', JSON.stringify(Object.keys(data)).slice(0, 200));
-  return data;
+function extraerIdDesdeLinkDiio(link) {
+  const match = link.match(/meetings\/([a-f0-9\-]{36})/i);
+  return match ? match[1] : null;
 }
 
 exports.handler = async function(event) {
@@ -97,54 +35,80 @@ exports.handler = async function(event) {
 
   try {
     const body = JSON.parse(event.body);
-    const { action, cliente, kam, fecha, contextAnswers, meetingInfo } = body;
+    const { action, linkDiio, contextAnswers, meetingInfo } = body;
 
     console.log('Action:', action);
 
-    // ── BUSCAR ──
+    // ── BUSCAR POR LINK ──
     if (action === 'buscar') {
-      const token = await getDiioToken();
-      const meeting = await buscarReunion(token, cliente, kam, fecha);
+      const meetingId = extraerIdDesdeLinkDiio(linkDiio || '');
+      console.log('Meeting ID extraído:', meetingId);
 
-      if (!meeting) {
-        return { statusCode: 200, headers, body: JSON.stringify({ encontrada: false }) };
+      if (!meetingId) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ encontrada: false, error: 'No se pudo extraer el ID del link. Verifica que sea un link válido de Diio.' })
+        };
       }
 
-      // Obtener detalle y transcript
-      const [detalle, transcript] = await Promise.all([
-        obtenerMeetingDetalle(token, meeting.id),
-        obtenerTranscript(token, meeting.last_transcript_id)
-      ]);
+      const token = await getDiioToken();
 
-      const m = detalle || meeting;
+      // Obtener meeting
+      const meetingRes = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
 
-      // Armar texto para Claude
+      console.log('Meeting status:', meetingRes.status);
+      if (!meetingRes.ok) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ encontrada: false, error: 'No se encontró la reunión. Verifica el link.' })
+        };
+      }
+
+      const m = await meetingRes.json();
+      console.log('Meeting name:', m.name);
+      console.log('Meeting keys:', JSON.stringify(Object.keys(m)));
+
+      // Obtener transcript si existe
+      let transcriptText = '';
+      if (m.last_transcript_id) {
+        const tRes = await fetch(`${DIIO_BASE}/v1/transcripts/${m.last_transcript_id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (tRes.ok) {
+          const tData = await tRes.json();
+          console.log('Transcript keys:', JSON.stringify(Object.keys(tData)).slice(0, 100));
+          transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
+        }
+      }
+
       const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
       const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
-      const transcriptText = transcript?.transcript || transcript?.text || transcript?.content || '';
       const summary = m.summary || m.description || m.analysis || m.notes || '';
 
-      console.log('Summary length:', summary.length);
-      console.log('Transcript length:', transcriptText.length);
+      console.log('Summary length:', summary.length, 'Transcript length:', transcriptText.length);
 
       const extractPrompt = `Analiza esta reunión de ventas de Apprecio y extrae los datos clave.
 
 Nombre reunión: ${m.name || ''}
-Fecha: ${m.scheduled_at || ''}
+Fecha: ${m.scheduled_at || m.created_at || ''}
 Ejecutivo Apprecio: ${sellers}
 Contactos cliente: ${customers}
 Resumen/análisis: ${summary.slice(0, 2000)}
 Transcript: ${transcriptText.slice(0, 2000)}
 
-Devuelve SOLO este JSON (sin backticks):
+Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
-  "empresa": "nombre empresa cliente (extrae del nombre de reunión o participantes)",
+  "empresa": "nombre empresa cliente",
   "contacto": "nombre y cargo del contacto cliente principal",
   "fecha": "fecha legible en español",
   "tipo": "exploracion o mantencion",
-  "dotacion": "número aproximado colaboradores si se menciona, si no pon null",
-  "paises": "países mencionados, si no pon null",
-  "dolores": ["dolor o necesidad 1", "dolor 2", "dolor 3"],
+  "dotacion": "número aproximado colaboradores si se menciona, si no null",
+  "paises": "países mencionados, si no null",
+  "dolores": ["necesidad o dolor 1", "necesidad 2", "necesidad 3"],
   "contexto": "resumen de 2-3 oraciones del contexto y necesidad del cliente"
 }`;
 
@@ -165,18 +129,17 @@ Devuelve SOLO este JSON (sin backticks):
       const claudeData = await claudeRes.json();
       const text = claudeData.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
       const match = text.match(/\{[\s\S]*\}/);
-      const extracted = match ? JSON.parse(match[0]) : {};
-
-      console.log('Extracted empresa:', extracted.empresa);
+      if (!match) throw new Error('No se pudo parsear respuesta de Claude');
+      const extracted = JSON.parse(match[0]);
 
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ encontrada: true, meetingId: meeting.id, ...extracted })
+        body: JSON.stringify({ encontrada: true, meetingId, ...extracted })
       };
     }
 
-    // ── GENERAR ──
+    // ── GENERAR PROPUESTA ──
     if (action === 'generar') {
       const m = meetingInfo;
       const a = contextAnswers || {};
@@ -206,7 +169,7 @@ Contexto adicional:
 RESTRICCIONES:
 - Spot Rewards: entrega directa manager→colaborador. NO para campañas ni aceleradores.
 - Aceleradores de corto plazo van en Retos.
-- Insignias: sin lógica automática de premiación, es manual.
+- Insignias: sin lógica automática, es manual.
 - Ligas: no están 100% activas, no detallar.
 - Puntos económicos: inviables en programas multi-país con distintas monedas.
 - Catálogo Apprecio: no diferenciable por nivel.
