@@ -7,6 +7,19 @@ exports.handler = async function(event) {
     const body = JSON.parse(event.body);
     const useMcp = body.mcp_servers && body.mcp_servers.length > 0;
 
+    // Si usa MCP de Diio, inyectar credenciales
+    if (useMcp) {
+      body.mcp_servers = body.mcp_servers.map(s => {
+        if (s.name === 'diio') {
+          return {
+            ...s,
+            authorization_token: '1104ade4-ca47-45a7-816b-21f55975460d'
+          };
+        }
+        return s;
+      });
+    }
+
     const headers = {
       'Content-Type': 'application/json',
       'x-api-key': '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',
