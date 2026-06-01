@@ -7,7 +7,9 @@ exports.handler = async function(event) {
     const body = JSON.parse(event.body);
     const useMcp = body.mcp_servers && body.mcp_servers.length > 0;
 
-    // Si usa MCP de Diio, inyectar credenciales
+    console.log('Llamada recibida. useMcp:', useMcp);
+    console.log('Body keys:', Object.keys(body));
+
     if (useMcp) {
       body.mcp_servers = body.mcp_servers.map(s => {
         if (s.name === 'diio') {
@@ -27,13 +29,18 @@ exports.handler = async function(event) {
     };
     if (useMcp) headers['anthropic-beta'] = 'mcp-client-2025-04-04';
 
+    console.log('Llamando a Anthropic...');
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers,
       body: JSON.stringify(body)
     });
 
+    console.log('Status Anthropic:', response.status);
     const data = await response.json();
+    console.log('Respuesta tipo:', data.type);
+    console.log('Content blocks:', data.content?.length);
+    if (data.error) console.log('Error Anthropic:', JSON.stringify(data.error));
 
     return {
       statusCode: 200,
@@ -41,6 +48,7 @@ exports.handler = async function(event) {
       body: JSON.stringify(data)
     };
   } catch (e) {
+    console.log('Error catch:', e.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: e.message })
