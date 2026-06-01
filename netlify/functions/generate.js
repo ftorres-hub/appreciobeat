@@ -145,52 +145,49 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
       const a = contextAnswers || {};
       const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
 
-      const prompt = `Eres un especialista en Apprecio Beat, plataforma de reconocimiento y engagement de Apprecio.
+      const prompt = `Eres especialista en Apprecio Beat. Genera una propuesta comercial basada en esta reunión.
 
-Datos de la reunión:
-- Empresa: ${m.empresa}
-- Contacto: ${m.contacto || '—'}
-- Fecha: ${m.fecha}
-- Tipo: ${m.tipo === 'exploracion' ? 'Exploración' : 'Mantención / seguimiento'}
-- Dotación: ${m.dotacion || a.colaboradores || 'No especificada'}
-- Países: ${m.paises || 'No especificados'}
-- Contexto: ${m.contexto}
-- Dolores: ${(m.dolores || []).join(', ')}
-
-Contexto adicional:
-- Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || 'No especificado')}
-- Se conocen entre sí: ${a.se_conocen || 'No especificado'}
-- Comportamientos a mover: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || 'No especificado')}
-- Operación: ${a.operacion || 'No especificado'}
-- Admin: ${a.admin || 'No especificado'}
-- Experiencia previa: ${a.experiencia || 'No especificado'}
-- Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || 'No especificado')}
+Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
+Tipo: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
+Contexto: ${m.contexto}
+Dolores: ${(m.dolores || []).join(', ')}
+Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
+Comportamientos: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
+Operación: ${a.operacion || '?'} | Admin: ${a.admin || '?'} | Experiencia previa: ${a.experiencia || '?'}
+Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
 
 RESTRICCIONES:
-- Spot Rewards: entrega directa manager→colaborador. NO para campañas ni aceleradores.
-- Aceleradores de corto plazo van en Retos.
-- Insignias: sin lógica automática, es manual.
-- Ligas: no están 100% activas, no detallar.
-- Puntos económicos: inviables en programas multi-país con distintas monedas.
-- Catálogo Apprecio: no diferenciable por nivel.
-- Funcionalidades no confirmadas: marcar con (esto lo estoy infiriendo — verificar con producto antes de prometérselo al cliente)
-- Cards sin trigger en comillas del cliente.
+- Spot Rewards: entrega directa manager→colaborador, NO campañas.
+- Aceleradores corto plazo → Retos.
+- Insignias: sin lógica automática.
+- Ligas: no detallar, no están activas.
+- Puntos económicos: inviables en multi-país.
+- Inferencias: marcar con (inferencia — verificar con producto).
 
-Genera "${tipoDoc}" como HTML usando SOLO estas clases CSS ya definidas:
-- doc-portada, doc-portada-label, doc-portada-meta, doc-meta-item, doc-edition
-- doc-section, doc-section-title
-- ul.doc-bullets con li
-- mod-card, mod-card-header, mod-badge (base o performance), mod-card-title, mod-why, mod-action-row, mod-action-label, mod-action-text, mod-inference
-- div.doc-steps, div.doc-step, div.doc-step-num, div.doc-step-content
-
-Estructura:
-1. Portada — empresa, contacto, fecha, dotación, edición sugerida
-2. Contexto y necesidades — bullets
-3. Acciones por módulo Beat base — cards
-4. Acciones Beat Performance — solo si aplica
-5. ${m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración'} — doc-steps
-
-Devuelve SOLO el HTML interno, empieza con <div class="doc-portada">.`;
+Devuelve SOLO este JSON (sin backticks):
+{
+  "tipo_doc": "${tipoDoc}",
+  "edition": "Apprecio Beat o Beat Performance",
+  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
+  "modulos_base": [
+    {
+      "modulo": "nombre módulo",
+      "por_que": "por qué se recomienda para este cliente",
+      "accion": "acción concreta a crear",
+      "configuracion": "cómo configurarlo"
+    }
+  ],
+  "modulos_performance": [
+    {
+      "modulo": "nombre módulo",
+      "por_que": "por qué aplica",
+      "accion": "acción concreta",
+      "configuracion": "configuración sugerida"
+    }
+  ],
+  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
+}
+modulos_performance solo si aplica, sino array vacío.`;
 
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -201,16 +198,18 @@ Devuelve SOLO el HTML interno, empieza con <div class="doc-portada">.`;
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 4000,
+          max_tokens: 2000,
           messages: [{ role: 'user', content: prompt }]
         })
       });
 
       const data = await res.json();
-      let html = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
-      html = html.replace(/^```html?\n?/i, '').replace(/```$/g, '').trim();
+      const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('No se pudo parsear respuesta');
+      const propuesta = JSON.parse(match[0]);
 
-      return { statusCode: 200, headers, body: JSON.stringify({ html }) };
+      return { statusCode: 200, headers, body: JSON.stringify({ propuesta, meetingInfo: m, contextAnswers: a }) };
     }
 
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Acción no reconocida' }) };
