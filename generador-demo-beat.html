@@ -170,24 +170,10 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
           <div class="step-subtitle">Para buscar la reunión correcta en Diio</div>
         </div>
       </div>
-      <div class="field-group">
+      <div class="field-group single">
         <div class="field">
-          <label>Nombre del cliente / empresa</label>
-          <input type="text" id="f-cliente" placeholder="Ej: Banco Falabella" />
-        </div>
-        <div class="field">
-          <label>KAM / Ejecutivo que tuvo la reunión</label>
-          <input type="text" id="f-kam" placeholder="Ej: Valentina Rojas" />
-        </div>
-      </div>
-      <div class="field-group">
-        <div class="field">
-          <label>Fecha de la reunión</label>
-          <input type="date" id="f-fecha" />
-        </div>
-        <div class="field">
-          <label>Contacto del cliente (opcional)</label>
-          <input type="text" id="f-contacto" placeholder="Ej: Jefa de RRHH" />
+          <label>Link de la reunión en Diio</label>
+          <input type="text" id="f-link" placeholder="https://login.diio.com/meetings/..." />
         </div>
       </div>
       <div style="margin-top:8px;">
@@ -361,12 +347,10 @@ function toggleOption(btn, type, qid) {
 
 // ── PASO 1: Buscar reunión ──
 async function buscarReunion() {
-  const cliente = document.getElementById('f-cliente').value.trim();
-  const kam = document.getElementById('f-kam').value.trim();
-  const fecha = document.getElementById('f-fecha').value;
+  const linkDiio = document.getElementById('f-link').value.trim();
 
-  if (!cliente || !fecha) {
-    alert('Por favor ingresa el nombre del cliente y la fecha.');
+  if (!linkDiio) {
+    alert('Por favor ingresa el link de la reunión en Diio.');
     return;
   }
 
@@ -377,7 +361,7 @@ async function buscarReunion() {
     const response = await fetch('/.netlify/functions/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'buscar', cliente, kam, fecha })
+      body: JSON.stringify({ action: 'buscar', linkDiio })
     });
 
     const result = await response.json();
@@ -538,10 +522,7 @@ function resetTodo() {
   document.getElementById('result-container').style.display = 'none';
   document.getElementById('steps-container').classList.remove('hidden');
   ['step2','step3','step4'].forEach(id => document.getElementById(id).classList.add('hidden'));
-  document.getElementById('f-cliente').value = '';
-  document.getElementById('f-kam').value = '';
-  document.getElementById('f-fecha').value = '';
-  document.getElementById('f-contacto').value = '';
+  document.getElementById('f-link').value = '';
   document.getElementById('btn-buscar').disabled = false;
   document.getElementById('btn-generar-row').classList.remove('hidden');
   window.scrollTo(0, 0);
