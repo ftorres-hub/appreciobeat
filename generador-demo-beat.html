@@ -497,7 +497,8 @@ async function generarPropuesta() {
     clearInterval(loadingInterval);
 
     if (data.error) throw new Error(data.error);
-    let html = data.html || '';
+    const { propuesta, meetingInfo: mi } = data;
+    let html = renderPropuesta(propuesta, mi, a);
 
     document.getElementById('loading4').classList.add('hidden');
     document.getElementById('steps-container').classList.add('hidden');
