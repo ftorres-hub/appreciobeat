@@ -9,7 +9,7 @@ exports.handler = async function(event) {
 
     const headers = {
       'Content-Type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'x-api-key': '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',
       'anthropic-version': '2023-06-01',
     };
     if (useMcp) headers['anthropic-beta'] = 'mcp-client-2025-04-04';
