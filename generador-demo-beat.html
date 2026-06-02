@@ -543,11 +543,15 @@ Devuelve SOLO este JSON (sin backticks):
 }`;
 
     // Llamar al Cloudflare Worker para generación
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 40000);
     const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ meetingInfo: m, contextAnswers: a })
+      body: JSON.stringify({ meetingInfo: m, contextAnswers: a }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     const workerData = await workerRes.json();
     clearInterval(loadingInterval);
 
