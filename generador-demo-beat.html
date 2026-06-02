@@ -575,7 +575,71 @@ Devuelve SOLO este JSON (sin backticks):
   }
 }
 
-function resetTodo() {
+
+  function renderPropuesta(p, m, a) {
+    const dotacion = m.dotacion || (a && a.colaboradores) || '—';
+    const paises = m.paises || '—';
+    const necesidadesHTML = (p.necesidades || []).map(n => `<li>${n}</li>`).join('');
+    const modBaseHTML = (p.modulos_base || []).map(mod => `
+      <div class="mod-card">
+        <div class="mod-card-header">
+          <span class="mod-badge base">Beat base</span>
+          <div class="mod-card-title">${mod.modulo}</div>
+        </div>
+        <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
+        <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
+        <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+      </div>`).join('');
+    const modPerfHTML = (p.modulos_performance || []).length > 0 ? `
+      <div class="doc-section">
+        <div class="doc-section-title">Módulos Beat Performance</div>
+        ${(p.modulos_performance || []).map(mod => `
+          <div class="mod-card">
+            <div class="mod-card-header">
+              <span class="mod-badge performance">Beat Performance</span>
+              <div class="mod-card-title">${mod.modulo}</div>
+            </div>
+            <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
+            <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
+            <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+          </div>`).join('')}
+      </div>` : '';
+    const pasosHTML = (p.pasos_demo || []).map((paso, i) => `
+      <div class="doc-step">
+        <div class="doc-step-num">${i+1}</div>
+        <div class="doc-step-content">${paso}</div>
+      </div>`).join('');
+    const tipoLabel = m.tipo === 'exploracion' ? 'Exploración' : 'Mantención';
+    const pasosLabel = m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración';
+    return `
+      <div class="doc-portada">
+        <div class="doc-portada-label">${p.tipo_doc}</div>
+        <h1>${m.empresa}</h1>
+        <div class="doc-portada-meta">
+          <div class="doc-meta-item"><strong>Contacto</strong>${m.contacto || '—'}</div>
+          <div class="doc-meta-item"><strong>Fecha</strong>${m.fecha}</div>
+          <div class="doc-meta-item"><strong>Dotación</strong>${dotacion}</div>
+          <div class="doc-meta-item"><strong>Países</strong>${paises}</div>
+          <div class="doc-meta-item"><strong>Tipo de reunión</strong>${tipoLabel}</div>
+        </div>
+        <div class="doc-edition">Edición sugerida: ${p.edition}</div>
+      </div>
+      <div class="doc-section">
+        <div class="doc-section-title">Contexto y necesidades</div>
+        <ul class="doc-bullets">${necesidadesHTML}</ul>
+      </div>
+      <div class="doc-section">
+        <div class="doc-section-title">Módulos Beat base recomendados</div>
+        ${modBaseHTML}
+      </div>
+      ${modPerfHTML}
+      <div class="doc-section">
+        <div class="doc-section-title">${pasosLabel}</div>
+        <div class="doc-steps">${pasosHTML}</div>
+      </div>`;
+  }
+
+  function resetTodo() {
   meetingData = null;
   contextAnswers = {};
   document.getElementById('result-container').style.display = 'none';
