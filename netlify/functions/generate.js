@@ -54,7 +54,6 @@ exports.handler = async function(event) {
 
       const token = await getDiioToken();
 
-      // Obtener meeting
       const meetingRes = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -70,9 +69,7 @@ exports.handler = async function(event) {
 
       const m = await meetingRes.json();
       console.log('Meeting name:', m.name);
-      console.log('Meeting keys:', JSON.stringify(Object.keys(m)));
 
-      // Obtener transcript si existe
       let transcriptText = '';
       if (m.last_transcript_id) {
         const tRes = await fetch(`${DIIO_BASE}/v1/transcripts/${m.last_transcript_id}`, {
@@ -80,7 +77,6 @@ exports.handler = async function(event) {
         });
         if (tRes.ok) {
           const tData = await tRes.json();
-          console.log('Transcript keys:', JSON.stringify(Object.keys(tData)).slice(0, 100));
           transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
         }
       }
@@ -88,8 +84,6 @@ exports.handler = async function(event) {
       const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
       const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
       const summary = m.summary || m.description || m.analysis || m.notes || '';
-
-      console.log('Summary length:', summary.length, 'Transcript length:', transcriptText.length);
 
       const extractPrompt = `Analiza esta reunión de ventas de Apprecio y extrae los datos clave.
 
@@ -144,50 +138,108 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
       const m = meetingInfo;
       const a = contextAnswers || {};
       const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
+      const esExploracion = m.tipo === 'exploracion';
+      const esMultipais = m.paises && m.paises.split(',').length > 1;
 
-      const prompt = `Eres especialista en Apprecio Beat. Genera una propuesta comercial basada en esta reunión.
+      const prompt = `Eres especialista en Apprecio Beat, la plataforma de transformación digital, activación cultural y gestión de productividad de Apprecio para colaboradores o vendedores tercerizados.
 
+## DATOS DE LA REUNIÓN
 Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
-Tipo: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
+Tipo de reunión: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
 Contexto: ${m.contexto}
-Dolores: ${(m.dolores || []).join(', ')}
-Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
-Comportamientos: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
-Operación: ${a.operacion || '?'} | Admin: ${a.admin || '?'} | Experiencia previa: ${a.experiencia || '?'}
-Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
+Dolores identificados: ${(m.dolores || []).join(', ')}
 
-RESTRICCIONES:
-- Spot Rewards: entrega directa manager→colaborador, NO campañas.
-- Aceleradores corto plazo → Retos.
-- Insignias: sin lógica automática.
-- Ligas: no detallar, no están activas.
-- Puntos económicos: inviables en multi-país.
-- Inferencias: marcar con (inferencia — verificar con producto).
+## CONTEXTO ADICIONAL DEL KAM
+Participantes del programa: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
+Comportamientos a mover: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
+Modelo de operación: ${a.operacion || '?'}
+Capacidad del admin: ${a.admin || '?'}
+Experiencia previa con incentivos: ${a.experiencia || '?'}
+Tipo de reconocimiento preferido: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
+Los participantes se conocen entre sí: ${a.se_conocen || '?'}
 
-Devuelve SOLO este JSON (sin backticks):
+## PRODUCTO: APPRECIO BEAT — MÓDULOS DISPONIBLES
+
+### EDICIÓN BASE (Apprecio Beat) — módulos disponibles:
+- **Home:** pantalla principal con "Para Ti" (acciones pendientes automáticas) y feed resumido. "Para Ti" NO es un módulo separado — es una sección del Home.
+- **Feed social:** muro de actividad. Reconocimientos, eventos automáticos, logros. Los colaboradores reaccionan y comentan.
+- **Reconocimientos personalizados:** el manager o un colaborador envía un reconocimiento con nombre predefinido vinculado a valores de la empresa. Configurable: límite de reconocimientos por mes y presupuesto de puntos por mes (son independientes). Se publican en feed si el colaborador activa "que todos lo vean".
+- **Spot Rewards:** entrega directa e inmediata de puntos de un manager a un colaborador específico. Sin reglas, sin KPI, sin duración. Es un gesto puntual — NO campañas ni aceleradores.
+- **Ocasiones:** reconocimientos de momentos especiales configurados por la empresa (bienvenida a nuevos, Navidad, año nuevo, fiestas patrias).
+- **eCards:** tarjetas digitales prediseñadas para ocasiones específicas. Pueden firmarse por varios colaboradores. Sin puntos vinculados.
+- **Eventos automáticos:** cubren cumpleaños y aniversarios laborales. Se publican solos en el feed usando eCards como formato visual. Sin acción del admin.
+- **Premios:** dinámicas de nominación, votación y resultado. Tres etapas: Nominación → Votación → Resultado. Mecánica flexible por ciclo.
+- **Recompensas (Work Life):** beneficios no monetarios — días libres, merchandise, beneficios corporativos. Configurable con o sin aprobación del manager.
+- **Recompensas (Catálogo de Apprecio):** marketplace de gift cards. Igual para todos — NO diferenciable por nivel de colaborador.
+- **Encuestas:** el admin crea encuestas de clima, cultura, satisfacción o engagement con periodicidad configurable. La IA ayuda a crear plantillas.
+- **Insignias:** badges simbólicos entre pares. Sin puntos ni límite de envío. Sin lógica automática de premiación — si se quiere destacar a quien más recibe, debe hacerse manualmente.
+- **Entrenamientos:** experiencias de aprendizaje tipo e-learning con contenidos, secciones, quizzes y misiones. Aparecen automáticamente en "Para Ti". La IA ayuda a crear contenido.
+- **Puntos y gamificación:** gestiona los tres tipos de puntos. XP: por acciones en la plataforma, suben de nivel. Reconocimiento: para canjear recompensas. Económicos: valor monetario real para el catálogo de Apprecio.
+
+### EDICIÓN PERFORMANCE (Beat Performance) — módulos adicionales:
+- **Retos / Scorecards:** desafíos con KPI, duración y premio definido. Individuales (con ranking) o de equipo. Dos modos de operación: (1) el colaborador sube evidencia —foto, PDF— solo si el reto se configura como necesario, el admin aprueba y los puntos se liberan; (2) el admin carga meta y resultado directamente, el colaborador solo revisa su avance y la scorecard se genera automáticamente según % de cumplimiento, generando alertas de avance. Incluye semáforos de desempeño en tiempo real. **Los aceleradores de corto plazo (48-72h con KPI) van AQUÍ, no en Spot Rewards.**
+- **Centro de evidencia:** centraliza registros y evidencias que los usuarios cargan para demostrar cumplimiento dentro de un reto. El admin revisa, aprueba o rechaza. Los puntos se liberan según la lógica del reto.
+- **Ligas:** dinámicas competitivas grupales. ⚠️ No están 100% activas — si se incluyen, marcarlas como módulo en desarrollo.
+
+## RESTRICCIONES — NUNCA VIOLAR:
+1. **Spot Rewards ≠ aceleradores ni campañas.** Los aceleradores de corto plazo (48-72h con KPI) van en RETOS.
+2. **Insignias → sin lógica automática.** Si se quiere premiar al que más recibe, es manual.
+3. **Ligas → no están 100% activas.** Marcarlas como en desarrollo si aparecen.
+4. **Puntos económicos → inviables en programas multi-país** con distintas monedas. ${esMultipais ? 'ESTE CLIENTE OPERA EN MÚLTIPLES PAÍSES — no proponer puntos económicos. Usar puntos de reconocimiento.' : ''}
+5. **Catálogo de Apprecio → no diferenciable por nivel.** Work Life podría serlo pero es inferencia — marcarlo.
+6. **Notificaciones push creadas por admin → no disponibles.** Las automáticas del sistema sí.
+7. **"Para Ti" → sección automática del Home,** no módulo separado. No nombrarlo como módulo.
+8. **Dashboard → panel de admin,** no módulo de la app del colaborador.
+9. **Nombre correcto: "Eventos automáticos"** — nunca "Hitos automatizados".
+10. **Cualquier funcionalidad no confirmada → marcar:** *(inferencia — verificar con producto)*
+
+## INSTRUCCIONES DE GENERACIÓN
+
+Tipo de documento: ${tipoDoc}
+${esExploracion
+  ? '→ Es una EXPLORACIÓN: las acciones deben ser propuestas hipotéticas de cómo podría verse el programa. Usa lenguaje como "podría configurarse", "se podría crear", "permitiría".'
+  : '→ Es una MANTENCIÓN/SEGUIMIENTO: las acciones deben ser concretas y accionables — lo que el KAM debe crear HOY en la plataforma. Usa lenguaje imperativo: "crear", "configurar", "activar".'
+}
+
+Selecciona SOLO los módulos realmente relevantes para este cliente según sus dolores y contexto. No incluyas módulos por incluir.
+Justifica cada módulo conectando directamente con un dolor o necesidad identificada en la reunión.
+La configuración sugerida debe ser específica y realista — no genérica.
+Los pasos de demo deben narrar un flujo coherente que muestre el valor de Beat para este cliente específico.
+
+## EDICIÓN A SUGERIR
+- Sugiere **Apprecio Beat** si los dolores se resuelven con los módulos base.
+- Sugiere **Beat Performance** si el cliente menciona: metas comerciales, KPIs, desempeño de vendedores, formación, aceleradores, cumplimiento de objetivos, o si tiene fuerza de ventas.
+
+Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
   "tipo_doc": "${tipoDoc}",
-  "edition": "Apprecio Beat o Beat Performance",
-  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
+  "edition": "Apprecio Beat o Beat Performance (elige según los dolores del cliente)",
+  "necesidades": [
+    "necesidad concreta 1 basada en la reunión",
+    "necesidad concreta 2",
+    "necesidad concreta 3",
+    "necesidad concreta 4"
+  ],
   "modulos_base": [
     {
-      "modulo": "nombre módulo",
-      "por_que": "por qué se recomienda para este cliente",
-      "accion": "acción concreta a crear",
-      "configuracion": "cómo configurarlo"
+      "modulo": "nombre exacto del módulo (ej: Reconocimientos personalizados)",
+      "por_que": "justificación conectada directamente a un dolor o necesidad de este cliente — nunca genérica",
+      "accion": "${esExploracion ? 'descripción hipotética de la acción: qué se podría configurar y cómo se vería' : 'acción concreta que el KAM debe crear en la plataforma'}",
+      "configuracion": "configuración específica y realista para este cliente (límites, tipos de puntos, aprobaciones, etc.)"
     }
   ],
-  "modulos_performance": [
-    {
-      "modulo": "nombre módulo",
-      "por_que": "por qué aplica",
-      "accion": "acción concreta",
-      "configuracion": "configuración sugerida"
-    }
-  ],
-  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
+  "modulos_performance": [],
+  "pasos_demo": [
+    "paso 1 — qué mostrar primero y por qué conecta con el cliente",
+    "paso 2",
+    "paso 3",
+    "paso 4",
+    "paso 5"
+  ]
 }
-modulos_performance solo si aplica, sino array vacío.`;
+
+modulos_performance: incluir SOLO si se sugiere edición Beat Performance, sino array vacío [].
+Para módulos con inferencias o funcionalidades no confirmadas, agregar al final del campo correspondiente: (inferencia — verificar con producto)`;
 
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -198,7 +250,7 @@ modulos_performance solo si aplica, sino array vacío.`;
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
+          max_tokens: 2500,
           messages: [{ role: 'user', content: prompt }]
         })
       });
