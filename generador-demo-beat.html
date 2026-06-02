@@ -395,62 +395,25 @@ async function buscarReunion() {
   document.getElementById('btn-buscar').disabled = true;
 
   try {
-    // 1. Obtener token Diio
-    const token = await getDiioToken();
-
-    // 2. Extraer ID del link
-    const match = linkDiio.match(/meetings\/([a-f0-9\-]{36})/i);
-    if (!match) throw new Error('Link inválido');
-    const meetingId = match[1];
-
-    // 3. Obtener meeting
-    const mRes = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
-      headers: { 'Authorization': `Bearer ${token}` }
+    const response = await fetch('/.netlify/functions/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'buscar', linkDiio })
     });
-    if (!mRes.ok) throw new Error('Reunión no encontrada');
-    const m = await mRes.json();
 
-    // 4. Obtener transcript
-    let transcriptText = '';
-    if (m.last_transcript_id) {
-      const tRes = await fetch(`${DIIO_BASE}/v1/transcripts/${m.last_transcript_id}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (tRes.ok) {
-        const tData = await tRes.json();
-        transcriptText = tData.transcript || tData.text || '';
-      }
-    }
-
-    const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
-    const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
-
-    // 5. Claude extrae datos
-    const extractPrompt = `Analiza esta reunión de ventas de Apprecio y devuelve SOLO este JSON (sin backticks):
-{
-  "empresa": "nombre empresa cliente",
-  "contacto": "nombre y cargo del contacto cliente principal",
-  "fecha": "fecha legible en español",
-  "tipo": "exploracion o mantencion",
-  "dotacion": "número colaboradores si se menciona, sino null",
-  "paises": "países mencionados, sino null",
-  "dolores": ["necesidad 1", "necesidad 2", "necesidad 3"],
-  "contexto": "resumen 2-3 oraciones del contexto y necesidad"
-}
-
-Nombre reunión: ${m.name}
-Fecha: ${m.scheduled_at}
-Ejecutivo Apprecio: ${sellers}
-Contactos cliente: ${customers}
-Transcript: ${transcriptText.slice(0, 2000)}`;
-
-    const text = await callClaude([{ role: 'user', content: extractPrompt }]);
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No se pudo parsear respuesta');
-    const result = { encontrada: true, meetingId, ...JSON.parse(jsonMatch[0]) };
+    const result = await response.json();
 
     document.getElementById('loading1').classList.add('hidden');
     document.getElementById('btn-buscar').disabled = false;
+
+    if (result.error || !result.encontrada) {
+      document.getElementById('meeting-result').innerHTML = `
+        <div style="padding:16px; background:#FFF5F7; border-radius:8px; border:1px solid #FFCCD6; font-size:12px; color:#D42A4E; font-weight:600;">
+          No se encontró la reunión. Verifica el link de Diio.
+        </div>`;
+      document.getElementById('step2').classList.remove('hidden');
+      return;
+    }
 
     meetingData = result;
     renderMeetingCard(result);
@@ -460,7 +423,7 @@ Transcript: ${transcriptText.slice(0, 2000)}`;
   } catch(e) {
     document.getElementById('loading1').classList.add('hidden');
     document.getElementById('btn-buscar').disabled = false;
-    alert('Error al conectar. Intenta nuevamente.');
+    alert('Error al conectar con Diio. Intenta nuevamente.');
     console.error(e);
   }
 }
@@ -579,12 +542,17 @@ Devuelve SOLO este JSON (sin backticks):
   "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
 }`;
 
-    const genText = await callClaude([{ role: 'user', content: genPrompt }], 2000);
+    // Llamar al Cloudflare Worker para generación
+    const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meetingInfo: m, contextAnswers: a })
+    });
+    const workerData = await workerRes.json();
     clearInterval(loadingInterval);
 
-    const genMatch = genText.match(/\{[\s\S]*\}/);
-    if (!genMatch) throw new Error('No se pudo parsear propuesta');
-    const propuesta = JSON.parse(genMatch[0]);
+    if (workerData.error) throw new Error(workerData.error);
+    const propuesta = workerData.propuesta;
     let html = renderPropuesta(propuesta, m, a);
 
     document.getElementById('loading4').classList.add('hidden');
