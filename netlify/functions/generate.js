@@ -181,6 +181,14 @@ Los participantes se conocen entre sí: ${a.se_conocen || '?'}
 - **Centro de evidencia:** centraliza registros y evidencias que los usuarios cargan para demostrar cumplimiento dentro de un reto. El admin revisa, aprueba o rechaza. Los puntos se liberan según la lógica del reto.
 - **Ligas:** dinámicas competitivas grupales. ⚠️ No están 100% activas — si se incluyen, marcarlas como módulo en desarrollo.
 
+## ⚠️ RESTRICCIÓN CRÍTICA — MÓDULOS
+SOLO puedes recomendar módulos con los nombres EXACTOS listados arriba. Está PROHIBIDO:
+- Inventar módulos que no están en la lista (ej: "Ranking y Competencia", "Automatización Always On", "Analytics Avanzados", "Integración API", "Puntos e Incentivos")
+- Combinar módulos o crear nombres nuevos
+- Renombrar módulos existentes
+Si un dolor del cliente no se resuelve con un módulo de la lista, NO lo incluyas. Es mejor una propuesta corta y precisa que una larga con módulos inventados.
+Los nombres válidos son ÚNICAMENTE: Home · Feed social · Reconocimientos personalizados · Spot Rewards · Ocasiones · eCards · Eventos automáticos · Premios · Recompensas (Work Life) · Recompensas (Catálogo de Apprecio) · Encuestas · Insignias · Puntos y gamificación · Entrenamientos · Retos / Scorecards · Centro de evidencia · Ligas
+
 ## RESTRICCIONES — NUNCA VIOLAR:
 1. **Spot Rewards ≠ aceleradores ni campañas.** Los aceleradores de corto plazo (48-72h con KPI) van en RETOS.
 2. **Insignias → sin lógica automática.** Si se quiere premiar al que más recibe, es manual.
