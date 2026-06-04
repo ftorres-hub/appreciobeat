@@ -1,440 +1,279 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AQS - Account Qualification Score | Apprecio Beat</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    @page {
-      size: A4 portrait;
-      margin: 14mm;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AQS — Account Qualification Score · Apprecio Beat</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 0; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{
+  font-family:'Montserrat',sans-serif;
+  background:#f0f2f5;
+  color:#1B1B1B;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+.page{
+  width:210mm;
+  min-height:297mm;
+  margin:0 auto 10mm auto;
+  background:#FFFFFF;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  page-break-after:always;
+  break-after:page;
+}
+.page:last-child{ page-break-after:auto; break-after:auto; }
 
-    * {
-      box-sizing: border-box;
-    }
+/* ── TOPBAR ── */
+.topbar{
+  height:6px;
+  background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%);
+  flex-shrink:0;
+}
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
-      background: #f5f7fb;
-      color: #1B1B1B;
-    }
+/* ── HEADER ── */
+.pg-header{
+  background:#FA345E;
+  padding:18px 20px 16px;
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.pg-header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.orn{
+  position:absolute; z-index:1; opacity:0.12;
+  background:#FFFFFF; border-radius:3px;
+}
+.orn-1{ width:48px; height:48px; top:-14px; right:180px; }
+.orn-2{ width:24px; height:24px; top:34px; right:158px; }
+.orn-3{ width:32px; height:32px; bottom:-10px; right:90px; }
+.orn-4{ width:16px; height:64px; top:0; right:64px; }
+.pg-tag{
+  font-size:9px; font-weight:700; letter-spacing:1.8px;
+  text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
+}
+.pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
+.pg-sub{
+  font-size:10.5px; color:rgba(255,255,255,0.82);
+  margin-top:5px; line-height:1.55; max-width:80%;
+}
+.pg-badge{
+  background:rgba(255,255,255,0.15);
+  border:1.5px solid rgba(255,255,255,0.3);
+  border-radius:12px; padding:10px 16px;
+  text-align:center; white-space:nowrap; flex-shrink:0;
+}
+.pg-badge .val{ font-size:13px; font-weight:900; color:#FFFFFF; display:block; line-height:1.3; }
+.pg-badge .lbl{ font-size:8.5px; font-weight:600; color:rgba(255,255,255,0.75); display:block; margin-top:2px; }
 
-    .page {
-      width: 210mm;
-      min-height: 297mm;
-      margin: 0 auto;
-      background: #FFFFFF;
-      padding: 16mm 15mm 15mm 15mm;
-    }
+/* ── CUERPO ── */
+.pg-body{
+  flex:1;
+  padding:14px 20px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
-    .topbar {
-      width: 100%;
-      height: 9px;
-      background: linear-gradient(90deg, #FA345E 0%, #B2A8E7 52%, #45C1AD 100%);
-      border-radius: 999px;
-      margin-bottom: 18px;
-    }
+/* ── INTRO BOX ── */
+.intro-box{
+  background:#FFE6E8;
+  border-left:4px solid #FA345E;
+  border-radius:0 10px 10px 0;
+  padding:10px 13px;
+  font-size:10.5px; line-height:1.68; color:#1B1B1B;
+}
+.intro-box strong{ color:#FA345E; }
 
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-      color: #FA345E;
-      margin-bottom: 6px;
-    }
+/* ── TÍTULO DE SECCIÓN ── */
+.sec-title{
+  font-size:13px; font-weight:900; color:#1B1B1B;
+  display:flex; align-items:center; gap:8px;
+  margin-bottom:7px;
+}
+.sec-title::before{
+  content:'';
+  display:inline-block; width:3px; height:16px;
+  background:#FA345E; border-radius:2px; flex-shrink:0;
+}
 
-    h1 {
-      margin: 0 0 8px 0;
-      font-size: 28px;
-      line-height: 1.12;
-      color: #1B1B1B;
-      letter-spacing: -0.4px;
-    }
+/* ── GRIDS ── */
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
 
-    .subtitle {
-      font-size: 13.5px;
-      line-height: 1.65;
-      color: #444444;
-      margin-bottom: 18px;
-      max-width: 96%;
-    }
+/* ── CARDS ── */
+.card{
+  border:1px solid #EEE; border-radius:12px;
+  padding:12px 13px; background:#FFFFFF;
+}
+.card.soft{ background:#F8F6FF; border-color:#DCD8F5; }
+.card.green{ background:#F4FBF9; border-color:#C9EADF; }
+.card.blue{ background:#F0FAFC; border-color:#CDEFF4; }
+.card.rose{ background:#FFE6E8; border-color:#FA345E; }
+.card h3{ font-size:11.5px; font-weight:800; color:#1B1B1B; margin-bottom:5px; }
+.card p{ font-size:10px; line-height:1.6; color:#4B5563; margin-bottom:5px; }
+.card p:last-child{ margin-bottom:0; }
+.card ul{ padding-left:14px; margin-top:4px; }
+.card li{ font-size:10px; line-height:1.55; color:#374151; margin-bottom:4px; }
 
-    .intro-box {
-      background: linear-gradient(180deg, #FFE6E8 0%, #FFFFFF 100%);
-      border: 1px solid #ffd0d8;
-      border-radius: 18px;
-      padding: 16px 18px;
-      margin-bottom: 18px;
-    }
+/* ── PILLS ── */
+.pill-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.pill{ padding:5px 9px; border-radius:999px; font-size:9.5px; font-weight:800; }
+.pill.high{ background:#FFE6E8; color:#B4234A; }
+.pill.mid{ background:#EDE9FC; color:#6B5CC4; }
+.pill.low{ background:#E8F9F6; color:#0F6E56; }
+.pill.neutral{ background:#EEF2F7; color:#475467; }
 
-    .intro-box p {
-      margin: 0;
-      font-size: 12.8px;
-      line-height: 1.75;
-      color: #2f2f2f;
-    }
+/* ── TAGS ── */
+.tag{
+  display:inline-block; margin:2px 3px 2px 0;
+  padding:3px 7px; border-radius:999px;
+  font-size:9px; font-weight:800;
+}
+.tag.beat{ background:#FFE6E8; color:#A91F43; }
+.tag.perf{ background:#E8F9F6; color:#0F6E56; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
+/* ── STEPS ── */
+.step{
+  border:1px solid #EEE;
+  border-radius:12px;
+  padding:12px 13px 10px;
+  background:#FFFFFF;
+  page-break-inside:avoid;
+  break-inside:avoid;
+}
+.step.s1{ border-left:4px solid #FA345E; }
+.step.s2{ border-left:4px solid #B2A8E7; }
+.step.s3{ border-left:4px solid #45C1AD; }
+.step-num{
+  font-size:8.5px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; margin-bottom:4px;
+}
+.step.s1 .step-num{ color:#FA345E; }
+.step.s2 .step-num{ color:#B2A8E7; }
+.step.s3 .step-num{ color:#45C1AD; }
+.step h3{ font-size:11.5px; font-weight:800; color:#1B1B1B; margin-bottom:5px; }
+.step p{ font-size:10px; line-height:1.6; color:#4B5563; margin-bottom:5px; }
+.step ul{ padding-left:14px; margin:4px 0 5px; }
+.step li{ font-size:10px; line-height:1.55; color:#374151; margin-bottom:3px; }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+/* ── FORMULA ── */
+.formula-box{
+  background:#FFE6E8;
+  border:1px solid #FA345E;
+  border-radius:12px;
+  padding:14px 16px;
+  page-break-inside:avoid;
+  break-inside:avoid;
+}
+.formula-lbl{
+  font-size:8.5px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; color:#FA345E; margin-bottom:5px;
+}
+.formula{
+  font-size:14px; font-weight:900; color:#1B1B1B;
+  line-height:1.4; margin-bottom:5px;
+}
+.formula-note{ font-size:9.5px; line-height:1.65; color:#4B5563; }
 
-    .card {
-      background: #FFFFFF;
-      border: 1px solid #E7E9EF;
-      border-radius: 18px;
-      padding: 14px;
-    }
+/* ── TABLAS ── */
+table{ width:100%; border-collapse:collapse; font-size:10px; }
+th{
+  background:#B2A8E7; color:#1B1B1B;
+  text-align:left; padding:6px 9px;
+  font-weight:800; font-size:9.5px;
+}
+th:first-child{ border-radius:8px 0 0 0; }
+th:last-child{ border-radius:0 8px 0 0; }
+td{
+  border-bottom:1px solid #F0F0F0;
+  padding:6px 9px; vertical-align:top;
+  line-height:1.5; color:#374151;
+  background:#FFFFFF;
+}
+tr:nth-child(even) td{ background:#FAFAFA; }
+.td-highlight td{ background:#FFE6E8 !important; font-weight:700; }
 
-    .card.soft {
-      background: #FAFAFF;
-      border-color: #E8E4FF;
-    }
+/* ── CLOSING ── */
+.closing{
+  background:#FFE6E8;
+  border:1px solid #FA345E;
+  border-radius:12px;
+  padding:12px 14px;
+  page-break-inside:avoid;
+  break-inside:avoid;
+}
+.closing h3{ font-size:12px; font-weight:900; color:#FA345E; margin-bottom:5px; }
+.closing p{ font-size:10px; line-height:1.7; color:#1B1B1B; }
 
-    .card.green {
-      background: #F1FFF7;
-      border-color: #D7FAB6;
-    }
+/* ── FOOTER ── */
+.pg-footer{
+  padding:7px 20px;
+  border-top:1px solid #F0F0F0;
+  display:flex; justify-content:space-between;
+  font-size:9px; color:#B0BEC8; font-weight:500;
+  flex-shrink:0;
+}
+.pg-footer span:first-child{ color:#FA345E; font-weight:700; }
 
-    .card.blue {
-      background: #F0FAFC;
-      border-color: #CDEFF4;
-    }
-
-    .card h2 {
-      margin: 0 0 10px 0;
-      font-size: 15.5px;
-      line-height: 1.3;
-      color: #1B1B1B;
-    }
-
-    .card h3 {
-      margin: 0 0 8px 0;
-      font-size: 13.5px;
-      line-height: 1.35;
-      color: #1B1B1B;
-    }
-
-    .card p {
-      margin: 0 0 8px 0;
-      font-size: 12.1px;
-      line-height: 1.65;
-      color: #4B5563;
-    }
-
-    .card p:last-child {
-      margin-bottom: 0;
-    }
-
-    .section-title {
-      margin: 22px 0 10px 0;
-      font-size: 18px;
-      line-height: 1.22;
-      color: #1B1B1B;
-      letter-spacing: -0.2px;
-    }
-
-    .section-text {
-      font-size: 12.8px;
-      line-height: 1.75;
-      color: #4B5563;
-      margin-bottom: 12px;
-    }
-
-    ul.clean {
-      margin: 8px 0 0 0;
-      padding-left: 18px;
-    }
-
-    ul.clean li {
-      margin-bottom: 7px;
-      font-size: 12.1px;
-      line-height: 1.6;
-      color: #374151;
-    }
-
-    .process {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .step {
-      border: 1px solid #E7E9EF;
-      border-left: 5px solid #FA345E;
-      border-radius: 16px;
-      padding: 14px 14px 12px 14px;
-      background: #FFFFFF;
-    }
-
-    .step:nth-child(2) {
-      border-left-color: #B2A8E7;
-    }
-
-    .step:nth-child(3) {
-      border-left-color: #45C1AD;
-    }
-
-    .step-number {
-      display: inline-block;
-      font-size: 10.5px;
-      font-weight: 800;
-      color: #FA345E;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .step h3 {
-      margin: 0 0 8px 0;
-      font-size: 14.5px;
-      color: #1B1B1B;
-    }
-
-    .step p {
-      margin: 0 0 8px 0;
-      font-size: 12.1px;
-      line-height: 1.65;
-      color: #4B5563;
-    }
-
-    .step ul {
-      margin: 6px 0 8px 0;
-      padding-left: 18px;
-    }
-
-    .step li {
-      margin-bottom: 6px;
-      font-size: 12.1px;
-      line-height: 1.55;
-      color: #374151;
-    }
-
-    .formula-box {
-      background: #1B1B1B;
-      color: #FFFFFF;
-      border-radius: 18px;
-      padding: 16px;
-      margin: 14px 0 10px 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .formula-box:after {
-      content: '';
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      right: -55px;
-      top: -60px;
-      background: rgba(250, 52, 94, 0.28);
-      border-radius: 50%;
-    }
-
-    .formula-box .label {
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #FFE6E8;
-      margin-bottom: 6px;
-      font-weight: 800;
-      position: relative;
-      z-index: 1;
-    }
-
-    .formula {
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.35;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .formula-note {
-      font-size: 12px;
-      line-height: 1.65;
-      color: #F3F4F6;
-      position: relative;
-      z-index: 1;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 11.5px;
-    }
-
-    th {
-      text-align: left;
-      background: #FA345E;
-      color: #FFFFFF;
-      padding: 9px 10px;
-      font-size: 11.3px;
-      font-weight: 800;
-    }
-
-    td {
-      border: 1px solid #E7E9EF;
-      padding: 8px 10px;
-      vertical-align: top;
-      color: #374151;
-      line-height: 1.5;
-    }
-
-    tr:nth-child(even) td {
-      background: #FAFAFA;
-    }
-
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
-      margin-bottom: 18px;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .pill {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 10.8px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .pill.high {
-      background: #FFE6E8;
-      color: #B4234A;
-    }
-
-    .pill.mid {
-      background: #F0ECFF;
-      color: #6955B8;
-    }
-
-    .pill.low {
-      background: #EAF9F6;
-      color: #146787;
-    }
-
-    .pill.neutral {
-      background: #EEF2F7;
-      color: #475467;
-    }
-
-    .highlight {
-      color: #FA345E;
-      font-weight: 800;
-    }
-
-    .tag {
-      display: inline-block;
-      margin: 2px 4px 2px 0;
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: #FFE6E8;
-      color: #A91F43;
-      font-size: 10.2px;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    .tag.performance {
-      background: #EAF9F6;
-      color: #146787;
-    }
-
-    .closing-box {
-      margin-top: 18px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #FFE6E8 100%);
-      border: 1px solid #FFD5DF;
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .closing-box h2 {
-      margin: 0 0 10px 0;
-      font-size: 15.5px;
-      color: #1B1B1B;
-    }
-
-    .closing-box p {
-      margin: 0;
-      font-size: 12.2px;
-      line-height: 1.75;
-      color: #4B5563;
-    }
-
-    .footer-note {
-      margin-top: 14px;
-      font-size: 10.2px;
-      color: #8B95A1;
-      text-align: right;
-    }
-
-    .avoid-break {
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-  </style>
+@media print{
+  body{ background:#fff; }
+  .page{ margin:0; width:100%; }
+}
+</style>
 </head>
 <body>
-  <div class="page">
-    <div class="topbar"></div>
 
-    <div class="eyebrow">Apprecio Beat · GTM Comercial</div>
-    <h1>2.3 Scoring AQS<br>(Account Qualification Score)</h1>
-    <div class="subtitle">
-      El <strong>AQS</strong> es el sistema estándar para calificar cuentas y oportunidades de <strong>Apprecio Beat</strong> dentro del funnel comercial. Su objetivo es ordenar la prioridad, definir el tratamiento adecuado y decidir cuándo una oportunidad debe avanzar como <strong>Beat base</strong>, cuándo debe escalar a <strong>Beat Performance</strong> y qué nivel de acompañamiento interno requiere.
+<!-- ═══════════ PÁGINA 1 ═══════════ -->
+<div class="page">
+  <div class="topbar"></div>
+  <div class="pg-header">
+    <div class="orn orn-1"></div><div class="orn orn-2"></div>
+    <div class="orn orn-3"></div><div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · GTM Comercial</div>
+        <div class="pg-title">AQS — Account Qualification Score</div>
+        <div class="pg-sub">Sistema estándar para calificar cuentas y oportunidades de Apprecio Beat dentro del funnel comercial. Define prioridad, tratamiento y edición recomendada.</div>
+      </div>
+      <div class="pg-badge">
+        <span class="val">AQS</span>
+        <span class="lbl">Scoring comercial</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-body">
+
+    <div class="intro-box">
+      <strong>Apprecio Beat</strong> es la plataforma de reconocimiento, recompensas y engagement de colaboradores de Apprecio. El AQS no mide precio ni complejidad aislada — mide la <strong>madurez comercial real</strong> de una oportunidad y su capacidad de transformarse en una relación SaaS recurrente. En simple: <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong>
     </div>
 
-    <div class="intro-box avoid-break">
-      <p>
-        Apprecio Beat es la evolución de Fuerza: una plataforma de <strong>Recognition &amp; Rewards</strong> para mejorar engagement, motivación y retención de colaboradores mediante reconocimiento, recompensas y experiencias digitales de participación. El AQS no mide precio ni complejidad aislada; mide la <strong>madurez comercial real</strong> de una oportunidad y su capacidad de transformarse en una relación SaaS recurrente. En simple: <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong>
-      </p>
-    </div>
-
-    <div class="grid-2 avoid-break">
+    <!-- PARA QUÉ Y PRINCIPIO -->
+    <div class="grid-2">
       <div class="card">
-        <h2>¿Para qué sirve el AQS?</h2>
-        <ul class="clean">
+        <h3>¿Para qué sirve el AQS?</h3>
+        <ul>
           <li>Priorizar oportunidades de Apprecio Beat con criterios objetivos.</li>
-          <li>Distinguir si la necesidad corresponde a <strong>Beat base</strong> o <strong>Beat Performance</strong>.</li>
-          <li>Definir el tratamiento comercial: <strong>1:1, 1:few, educación o nurture</strong>.</li>
-          <li>Determinar qué recursos internos involucrar: <strong>KAM, BDM, PM, CM o Dirección Comercial</strong>.</li>
+          <li>Distinguir si la necesidad corresponde a <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
+          <li>Definir el tratamiento comercial: 1:1, 1:few, educación o nurture.</li>
+          <li>Determinar qué recursos internos involucrar: KAM, BDM, PM, CM o Dirección Comercial.</li>
           <li>Evitar que oportunidades transaccionales consuman esfuerzo de solución SaaS.</li>
         </ul>
       </div>
-
       <div class="card soft">
-        <h2>Principio de uso</h2>
-        <p>
-          El AQS mide <span class="highlight">prioridad comercial y madurez SaaS</span>. No reemplaza el criterio del ejecutivo ni define por sí solo el precio, pero sí ordena foco, cadencia y profundidad de venta.
-        </p>
+        <h3>Principio de uso</h3>
+        <p>El AQS mide <strong>prioridad comercial y madurez SaaS</strong>. No reemplaza el criterio del ejecutivo ni define por sí solo el precio, pero sí ordena foco, cadencia y profundidad de venta.</p>
         <div class="pill-row">
           <div class="pill high">Avance activo</div>
           <div class="pill mid">Madurar</div>
@@ -444,44 +283,41 @@
       </div>
     </div>
 
-    <div class="grid-2 avoid-break">
+    <!-- EDICIONES -->
+    <div class="grid-2">
       <div class="card green">
-        <h2>Apprecio Beat</h2>
-        <p>Edición base para cultura, reconocimiento, engagement y recompensas. Aplica cuando el cliente busca activar participación, visibilidad cultural y conexión entre colaboradores.</p>
+        <h3>Apprecio Beat</h3>
+        <p>Plataforma de cultura, reconocimiento, engagement y recompensas. Aplica cuando el cliente busca activar participación, visibilidad cultural y conexión entre colaboradores.</p>
         <div>
-          <span class="tag">Reconocimientos</span>
-          <span class="tag">eCards</span>
-          <span class="tag">Insignias</span>
-          <span class="tag">Encuestas</span>
-          <span class="tag">Recompensas</span>
-          <span class="tag">Feed social</span>
+          <span class="tag beat">Reconocimientos</span>
+          <span class="tag beat">eCards</span>
+          <span class="tag beat">Insignias</span>
+          <span class="tag beat">Encuestas</span>
+          <span class="tag beat">Recompensas</span>
+          <span class="tag beat">Feed social</span>
         </div>
       </div>
-
       <div class="card blue">
-        <h2>Beat Performance</h2>
-        <p>Edición superior para empresas que además necesitan activar desempeño, formación, cumplimiento de metas, evidencia y competencia sana entre equipos.</p>
+        <h3>Beat Performance</h3>
+        <p>Versión de Apprecio Beat para equipos que además necesitan activar desempeño, formación, cumplimiento de metas, evidencia y competencia sana entre equipos.</p>
         <div>
-          <span class="tag performance">Scorecards</span>
-          <span class="tag performance">KPIs</span>
-          <span class="tag performance">Entrenamientos</span>
-          <span class="tag performance">Centro de evidencia</span>
-          <span class="tag performance">Ligas</span>
+          <span class="tag perf">Scorecards</span>
+          <span class="tag perf">KPIs</span>
+          <span class="tag perf">Entrenamientos</span>
+          <span class="tag perf">Centro de evidencia</span>
+          <span class="tag perf">Ligas</span>
         </div>
       </div>
     </div>
 
-    <h2 class="section-title">Proceso operativo de evaluación AQS</h2>
-    <div class="section-text">
-      El AQS se gestiona con un flujo trazable: primero se calcula una lectura sugerida a partir de la reunión, luego se valida comercialmente y finalmente se consolida cuando existe suficiente información para proponer alcance, edición y próximos pasos.
-    </div>
-
-    <div class="process">
-      <div class="step avoid-break">
-        <div class="step-number">Paso 1</div>
+    <!-- PROCESO -->
+    <div class="sec-title">Proceso operativo de evaluación AQS</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="step s1">
+        <div class="step-num">Paso 1</div>
         <h3>AQS sugerido post reunión de exploración</h3>
         <p><strong>Disparador:</strong> cuando una reunión de exploración, upsell desde Rewards o levantamiento con cliente queda registrada en Diio.</p>
-        <p><strong>Proceso:</strong> Diio genera un resumen estructurado y n8n/Gemini evalúa señales de:</p>
+        <p><strong>Proceso:</strong> el sistema analiza automáticamente las señales de la reunión y evalúa cinco factores:</p>
         <ul>
           <li><strong>Fit Beat:</strong> calce con colaboradores, cultura, reconocimiento, engagement o recompensas.</li>
           <li><strong>Intent:</strong> urgencia, dolor explícito y voluntad de avanzar.</li>
@@ -489,22 +325,21 @@
           <li><strong>Viabilidad operativa:</strong> disponibilidad de datos, responsables y capacidad de operar el programa.</li>
           <li><strong>Patrocinio:</strong> sponsor funcional y acceso a decisores.</li>
         </ul>
-        <p><strong>Resultado:</strong> se registra un <strong>AQS sugerido</strong> y una recomendación inicial: Beat base, Beat Performance, educación o nurture.</p>
+        <p><strong>Resultado:</strong> se registra un AQS sugerido y una recomendación inicial: Apprecio Beat, Beat Performance, educación o nurture.</p>
       </div>
 
-      <div class="step avoid-break">
-        <div class="step-number">Paso 2</div>
+      <div class="step s2">
+        <div class="step-num">Paso 2</div>
         <h3>Revisión comercial y ajuste de edición</h3>
         <p><strong>Acción esperada:</strong> el KAM o BDM valida el AQS sugerido, corrige señales insuficientes y deja una justificación breve si ajusta el puntaje.</p>
         <p><strong>Rol del PM:</strong> revisar si la necesidad detectada calza con la edición recomendada, si hay promesas implícitas fuera de alcance y si la oportunidad requiere demo, propuesta o educación previa.</p>
-        <p><strong>Resultado:</strong> la oportunidad queda clasificada con una ruta comercial clara: <strong>Beat base</strong>, <strong>Beat Performance</strong>, maduración o descarte.</p>
+        <p><strong>Resultado:</strong> la oportunidad queda clasificada con una ruta comercial clara: <strong>Apprecio Beat</strong>, <strong>Beat Performance</strong>, maduración o descarte.</p>
       </div>
 
-      <div class="step avoid-break">
-        <div class="step-number">Paso 3</div>
+      <div class="step s3">
+        <div class="step-num">Paso 3</div>
         <h3>AQS validado al solicitar propuesta o demo avanzada</h3>
-        <p>El AQS se vuelve más confiable cuando el cliente entrega información concreta para propuesta o demo: población objetivo, problema a resolver, sponsor, timing, presupuesto estimado, datos disponibles y módulos esperados.</p>
-        <p>En esta instancia se valida:</p>
+        <p>El AQS se vuelve más confiable cuando el cliente entrega información concreta: población objetivo, problema a resolver, sponsor, timing, presupuesto estimado y módulos esperados. En esta instancia se valida:</p>
         <ul>
           <li>si el caso es solo reconocimiento/recompensas o también performance,</li>
           <li>si existe intención de programa recurrente y no solo campaña puntual,</li>
@@ -512,32 +347,31 @@
           <li>si existe decision date y proceso de compra identificable,</li>
           <li>si la oportunidad amerita acompañamiento PM o senior.</li>
         </ul>
-        <p><strong>Resultado:</strong> se registra un <strong>AQS validado final</strong> en HubSpot, junto con edición recomendada, razón de avance y próximos pasos.</p>
+        <p><strong>Resultado:</strong> se registra un AQS validado final en HubSpot, junto con edición recomendada, razón de avance y próximos pasos.</p>
       </div>
     </div>
 
-    <div class="formula-box avoid-break">
-      <div class="label">Modelo de scoring</div>
+    <!-- FÓRMULA -->
+    <div class="formula-box">
+      <div class="formula-lbl">Modelo de scoring</div>
       <div class="formula">AQS = 4 × (Fit Beat + Intent + Expansión SaaS + Viabilidad operativa + Patrocinio)</div>
-      <div class="formula-note">
-        Cada factor se puntúa de <strong>0 a 5</strong>. El resultado final es un score entre <strong>0 y 100</strong>. Si hay duda entre dos valores, se elige el más bajo. Cada puntuación debe basarse en evidencia registrada en la reunión, CRM o formulario comercial.
-      </div>
+      <div class="formula-note">Cada factor se puntúa de <strong>0 a 5</strong>. El resultado final es un score entre <strong>0 y 100</strong>. Si hay duda entre dos valores, se elige el más bajo. Cada puntuación debe basarse en evidencia registrada en la reunión, CRM o formulario comercial.</div>
     </div>
 
-    <div class="mini-grid avoid-break">
+    <!-- REGLAS Y AVANCE -->
+    <div class="grid-2">
       <div class="card">
         <h3>Reglas generales</h3>
-        <ul class="clean">
-          <li>El score mide <strong>madurez de oportunidad Beat</strong>.</li>
+        <ul>
+          <li>El score mide <strong>madurez de oportunidad Apprecio Beat</strong>.</li>
           <li>No mide precio, margen ni dificultad técnica aislada.</li>
           <li>Debe distinguir campaña puntual vs programa recurrente.</li>
           <li>No debe inflarse si no hay sponsor, timing o evidencia.</li>
         </ul>
       </div>
-
       <div class="card soft">
         <h3>Regla de avance</h3>
-        <ul class="clean">
+        <ul>
           <li><strong>AQS ≥ 70:</strong> avance activo y alta prioridad.</li>
           <li><strong>AQS 55–69:</strong> madurar con reunión, demo o educación.</li>
           <li><strong>AQS 40–54:</strong> oportunidad temprana o uso puntual.</li>
@@ -546,235 +380,208 @@
       </div>
     </div>
 
-    <h2 class="section-title">Factores del AQS y rúbrica de evaluación</h2>
+  </div>
 
-    <div class="avoid-break">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; color: #1B1B1B;">1. Fit Beat</h3>
-      <div class="section-text" style="margin-bottom: 6px;">
-        Mide qué tan bien calza la cuenta con los problemas que Apprecio Beat resuelve: cultura visible, reconocimiento, engagement, recompensas, retención o desempeño de colaboradores.
+  <div class="pg-footer">
+    <span>Apprecio Beat · AQS</span>
+    <span>Account Qualification Score · GTM Comercial</span>
+  </div>
+</div>
+
+
+<!-- ═══════════ PÁGINA 2 ═══════════ -->
+<div class="page">
+  <div class="topbar"></div>
+  <div class="pg-header">
+    <div class="orn orn-1"></div><div class="orn orn-2"></div>
+    <div class="orn orn-3"></div><div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · AQS</div>
+        <div class="pg-title">Factores y rúbrica de evaluación</div>
+        <div class="pg-sub">Cada factor se puntúa de 0 a 5. La suma de los cinco factores multiplicada por 4 da el AQS final entre 0 y 100.</div>
       </div>
+      <div class="pg-badge">
+        <span class="val">0 → 100</span>
+        <span class="lbl">Score final</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-body">
+
+    <!-- FACTOR 1 -->
+    <div>
+      <div class="sec-title">1. Fit Beat</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide qué tan bien calza la cuenta con los problemas que Apprecio Beat resuelve: cultura visible, reconocimiento, engagement, recompensas, retención o desempeño de colaboradores.</p>
       <table>
-        <thead>
-          <tr>
-            <th style="width: 18%;">Puntaje</th>
-            <th>Criterio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>Fuera de foco: no hay colaboradores objetivo ni necesidad de cultura, reconocimiento, engagement o performance.</td></tr>
-          <tr><td>1</td><td>Necesidad muy puntual, transaccional o limitada a entrega de beneficios sin programa.</td></tr>
-          <tr><td>2</td><td>Existe interés en recompensas o participación, pero sin dolor claro ni población relevante.</td></tr>
-          <tr><td>3</td><td>Calza con Beat base: reconocimiento, encuestas, recompensas, hitos o feed social para colaboradores.</td></tr>
-          <tr><td>4</td><td>Calce sólido: cultura/engagement recurrente, sponsor funcional y necesidad multi-área o multi-sede.</td></tr>
-          <tr><td>5</td><td>ICP ideal: necesidad transversal de engagement y/o desempeño, población relevante, recurrencia esperada y problema estratégico.</td></tr>
-        </tbody>
+        <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
+        <tr><td>0</td><td>Fuera de foco: no hay colaboradores objetivo ni necesidad de cultura, reconocimiento, engagement o performance.</td></tr>
+        <tr><td>1</td><td>Necesidad muy puntual, transaccional o limitada a entrega de beneficios sin programa.</td></tr>
+        <tr><td>2</td><td>Existe interés en recompensas o participación, pero sin dolor claro ni población relevante.</td></tr>
+        <tr><td>3</td><td>Calza con Apprecio Beat: reconocimiento, encuestas, recompensas, hitos o feed social para colaboradores.</td></tr>
+        <tr><td>4</td><td>Calce sólido: cultura/engagement recurrente, sponsor funcional y necesidad multi-área o multi-sede.</td></tr>
+        <tr><td>5</td><td>ICP ideal: necesidad transversal de engagement y/o desempeño, población relevante, recurrencia esperada y problema estratégico.</td></tr>
       </table>
     </div>
 
-    <div class="avoid-break" style="margin-top: 14px;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; color: #1B1B1B;">2. Intent</h3>
-      <div class="section-text" style="margin-bottom: 6px;">
-        Mide el nivel de urgencia y voluntad real de resolver el problema con una solución digital, no solo el interés exploratorio en conocer la plataforma.
-      </div>
+    <!-- FACTOR 2 -->
+    <div>
+      <div class="sec-title">2. Intent</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide el nivel de urgencia y voluntad real de resolver el problema con una solución digital, no solo el interés exploratorio en conocer la plataforma.</p>
       <table>
-        <thead>
-          <tr>
-            <th style="width: 18%;">Puntaje</th>
-            <th>Criterio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>Sin señales de interés o necesidad.</td></tr>
-          <tr><td>1</td><td>Curiosidad vaga o conversación informativa sin dolor.</td></tr>
-          <tr><td>2</td><td>Interés exploratorio, sin timing ni siguiente paso definido.</td></tr>
-          <tr><td>3</td><td>Proyecto posible a 6–12 meses o necesidad reconocida sin prioridad inmediata.</td></tr>
-          <tr><td>4</td><td>Proyecto activo, búsqueda de alternativas o necesidad priorizada internamente.</td></tr>
-          <tr><td>5</td><td>Urgencia en ≤ 3 meses, dolor explícito y disposición a avanzar con demo/propuesta.</td></tr>
-        </tbody>
+        <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
+        <tr><td>0</td><td>Sin señales de interés o necesidad.</td></tr>
+        <tr><td>1</td><td>Curiosidad vaga o conversación informativa sin dolor.</td></tr>
+        <tr><td>2</td><td>Interés exploratorio, sin timing ni siguiente paso definido.</td></tr>
+        <tr><td>3</td><td>Proyecto posible a 6–12 meses o necesidad reconocida sin prioridad inmediata.</td></tr>
+        <tr><td>4</td><td>Proyecto activo, búsqueda de alternativas o necesidad priorizada internamente.</td></tr>
+        <tr><td>5</td><td>Urgencia en ≤ 3 meses, dolor explícito y disposición a avanzar con demo o propuesta.</td></tr>
       </table>
     </div>
 
-    <div class="avoid-break" style="margin-top: 14px;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; color: #1B1B1B;">3. Expansión SaaS</h3>
-      <div class="section-text" style="margin-bottom: 6px;">
-        Mide si la oportunidad puede transformarse en una relación recurrente de Apprecio Beat, especialmente desde clientes Rewards o campañas puntuales.
-      </div>
+    <!-- FACTOR 3 -->
+    <div>
+      <div class="sec-title">3. Expansión SaaS</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si la oportunidad puede transformarse en una relación recurrente de Apprecio Beat, especialmente desde clientes Rewards o campañas puntuales.</p>
       <table>
-        <thead>
-          <tr>
-            <th style="width: 18%;">Puntaje</th>
-            <th>Criterio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>Uso único sin continuidad ni interés en plataforma.</td></tr>
-          <tr><td>1</td><td>Campaña aislada, incentivo puntual o beneficio ocasional.</td></tr>
-          <tr><td>2</td><td>Posible repetición, pero sin dueño interno ni programa definido.</td></tr>
-          <tr><td>3</td><td>Interés en programa recurrente de reconocimiento, encuestas o recompensas.</td></tr>
-          <tr><td>4</td><td>Necesidad clara de recurrencia, comunicación interna y seguimiento de adopción.</td></tr>
-          <tr><td>5</td><td>Oportunidad estratégica de expansión desde Rewards a Beat, con uso diario, métricas e impacto medible.</td></tr>
-        </tbody>
+        <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
+        <tr><td>0</td><td>Uso único sin continuidad ni interés en plataforma.</td></tr>
+        <tr><td>1</td><td>Campaña aislada, incentivo puntual o beneficio ocasional.</td></tr>
+        <tr><td>2</td><td>Posible repetición, pero sin dueño interno ni programa definido.</td></tr>
+        <tr><td>3</td><td>Interés en programa recurrente de reconocimiento, encuestas o recompensas.</td></tr>
+        <tr><td>4</td><td>Necesidad clara de recurrencia, comunicación interna y seguimiento de adopción.</td></tr>
+        <tr><td>5</td><td>Oportunidad estratégica de expansión desde Rewards a Apprecio Beat, con uso diario, métricas e impacto medible.</td></tr>
       </table>
     </div>
 
-    <div class="avoid-break" style="margin-top: 14px;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; color: #1B1B1B;">4. Viabilidad operativa</h3>
-      <div class="section-text" style="margin-bottom: 6px;">
-        Mide si el cliente puede implementar y sostener el programa con información, responsables y operación suficiente. Para Beat Performance, también considera KPIs, evidencias, entrenamientos o reglas de scorecard.
-      </div>
+    <!-- FACTOR 4 -->
+    <div>
+      <div class="sec-title">4. Viabilidad operativa</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si el cliente puede implementar y sostener el programa con información, responsables y operación suficiente. Para Beat Performance, también considera KPIs, evidencias, entrenamientos o reglas de scorecard.</p>
       <table>
-        <thead>
-          <tr>
-            <th style="width: 18%;">Puntaje</th>
-            <th>Criterio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>Sin base de usuarios, responsables ni datos mínimos.</td></tr>
-          <tr><td>1</td><td>Alta fragilidad operativa: información desordenada o sin ownership interno.</td></tr>
-          <tr><td>2</td><td>Existe población objetivo, pero faltan responsables, reglas o datos confiables.</td></tr>
-          <tr><td>3</td><td>Viable para Beat base: usuarios definidos, responsable interno y mecánica inicial clara.</td></tr>
-          <tr><td>4</td><td>Viabilidad sólida: datos accesibles, comunicación interna y capacidad de administrar campañas.</td></tr>
-          <tr><td>5</td><td>Viabilidad alta para Beat Performance: KPIs, scorecards, evidencias o contenidos listos para operar.</td></tr>
-        </tbody>
+        <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
+        <tr><td>0</td><td>Sin base de usuarios, responsables ni datos mínimos.</td></tr>
+        <tr><td>1</td><td>Alta fragilidad operativa: información desordenada o sin ownership interno.</td></tr>
+        <tr><td>2</td><td>Existe población objetivo, pero faltan responsables, reglas o datos confiables.</td></tr>
+        <tr><td>3</td><td>Viable para Apprecio Beat: usuarios definidos, responsable interno y mecánica inicial clara.</td></tr>
+        <tr><td>4</td><td>Viabilidad sólida: datos accesibles, comunicación interna y capacidad de administrar campañas.</td></tr>
+        <tr><td>5</td><td>Viabilidad alta para Beat Performance: KPIs, scorecards, evidencias o contenidos listos para operar.</td></tr>
       </table>
     </div>
 
-    <div class="avoid-break" style="margin-top: 14px;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; color: #1B1B1B;">5. Patrocinio</h3>
-      <div class="section-text" style="margin-bottom: 6px;">
-        Mide el nivel de sponsor, influencia y capacidad real para movilizar la decisión dentro de la empresa.
-      </div>
+    <!-- FACTOR 5 -->
+    <div>
+      <div class="sec-title">5. Patrocinio</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide el nivel de sponsor, influencia y capacidad real para movilizar la decisión dentro de la empresa.</p>
       <table>
-        <thead>
-          <tr>
-            <th style="width: 18%;">Puntaje</th>
-            <th>Criterio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>Contacto frío o sin vínculo con el problema.</td></tr>
-          <tr><td>1</td><td>Usuario sin influencia ni acceso a sponsor.</td></tr>
-          <tr><td>2</td><td>Manager medio o contacto operativo con interés limitado.</td></tr>
-          <tr><td>3</td><td>Champion funcional con capacidad de impulsar conversación interna.</td></tr>
-          <tr><td>4</td><td>Sponsor senior accesible: RRHH, Cultura, Comercial, Operaciones, Marketing Interno o Transformación.</td></tr>
-          <tr><td>5</td><td>Decisor y champion activos, con proceso de compra y decision date identificados.</td></tr>
-        </tbody>
+        <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
+        <tr><td>0</td><td>Contacto frío o sin vínculo con el problema.</td></tr>
+        <tr><td>1</td><td>Usuario sin influencia ni acceso a sponsor.</td></tr>
+        <tr><td>2</td><td>Manager medio o contacto operativo con interés limitado.</td></tr>
+        <tr><td>3</td><td>Champion funcional con capacidad de impulsar conversación interna.</td></tr>
+        <tr><td>4</td><td>Sponsor senior accesible: RRHH, Cultura, Comercial, Operaciones, Marketing Interno o Transformación.</td></tr>
+        <tr><td>5</td><td>Decisor y champion activos, con proceso de compra y decision date identificados.</td></tr>
       </table>
     </div>
 
-    <h2 class="section-title">Tratamiento según AQS</h2>
-    <table class="avoid-break">
-      <thead>
-        <tr>
-          <th style="width: 22%;">AQS</th>
-          <th style="width: 27%;">Tratamiento</th>
-          <th>Acción recomendada</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>70 o más</strong></td>
-          <td>Prioridad alta</td>
-          <td>Avance activo con demo/propuesta. Involucrar PM si hay definición de edición, alcance o Performance.</td>
-        </tr>
-        <tr>
-          <td><strong>55 a 69</strong></td>
-          <td>Prioridad media</td>
-          <td>Madurar necesidad, confirmar sponsor, definir edición y conseguir decision date antes de propuesta final.</td>
-        </tr>
-        <tr>
-          <td><strong>40 a 54</strong></td>
-          <td>Oportunidad temprana</td>
-          <td>Educar, enviar asset, agendar follow-up o explorar si viene desde Rewards como futura expansión.</td>
-        </tr>
-        <tr>
-          <td><strong>39 o menos</strong></td>
-          <td>Nurture</td>
-          <td>No comprometer recursos senior. Mantener contacto, contenido educativo o campaña de reactivación.</td>
-        </tr>
-      </tbody>
-    </table>
+  </div>
 
-    <h2 class="section-title">Lectura esperada por edición</h2>
-    <table class="avoid-break">
-      <thead>
-        <tr>
-          <th style="width: 26%;">Ruta</th>
-          <th>Criterio de recomendación</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Apprecio Beat</strong></td>
-          <td>Recomendar cuando el dolor principal sea cultura visible, reconocimiento, hitos, encuestas, recompensas, feed social, engagement o fidelización de colaboradores.</td>
-        </tr>
-        <tr>
-          <td><strong>Beat Performance</strong></td>
-          <td>Recomendar cuando además existan metas, KPIs, entrenamientos, evidencia, scorecards, ligas, cumplimiento o desempeño medible.</td>
-        </tr>
-        <tr>
-          <td><strong>Rewards → Beat</strong></td>
-          <td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, gestión de colaboradores o interés en medir impacto más allá de redenciones.</td>
-        </tr>
-        <tr>
-          <td><strong>Nurture / educación</strong></td>
-          <td>Usar cuando el cliente solo busca una entrega puntual, no tiene sponsor, no tiene timing o aún no reconoce el problema como programa recurrente.</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="pg-footer">
+    <span>Apprecio Beat · AQS</span>
+    <span>Factores y rúbrica de evaluación</span>
+  </div>
+</div>
 
-    <h2 class="section-title">AQS esperado por Tier</h2>
-    <table class="avoid-break">
-      <thead>
-        <tr>
-          <th style="width: 24%;">Tier</th>
-          <th>AQS esperado para Apprecio Beat</th>
-        </tr>
-      </thead>
-      <tbody>
+
+<!-- ═══════════ PÁGINA 3 ═══════════ -->
+<div class="page">
+  <div class="topbar"></div>
+  <div class="pg-header">
+    <div class="orn orn-1"></div><div class="orn orn-2"></div>
+    <div class="orn orn-3"></div><div class="orn orn-4"></div>
+    <div class="pg-header-inner">
+      <div>
+        <div class="pg-tag">Apprecio Beat · AQS</div>
+        <div class="pg-title">Tratamiento, lectura por edición y registro</div>
+        <div class="pg-sub">Cómo actuar según el score obtenido, cuándo recomendar cada edición y cómo registrar el AQS en el CRM.</div>
+      </div>
+      <div class="pg-badge">
+        <span class="val">AQS</span>
+        <span class="lbl">Guía de acción</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-body">
+
+    <!-- TRATAMIENTO -->
+    <div>
+      <div class="sec-title">Tratamiento según AQS</div>
+      <table>
+        <tr><th style="width:18%;">AQS</th><th style="width:22%;">Tratamiento</th><th>Acción recomendada</th></tr>
+        <tr class="td-highlight"><td><strong>70 o más</strong></td><td>Prioridad alta</td><td>Avance activo con demo o propuesta. Involucrar PM si hay definición de edición, alcance o Beat Performance.</td></tr>
+        <tr><td><strong>55 a 69</strong></td><td>Prioridad media</td><td>Madurar necesidad, confirmar sponsor, definir edición y conseguir decision date antes de propuesta final.</td></tr>
+        <tr><td><strong>40 a 54</strong></td><td>Oportunidad temprana</td><td>Educar, enviar asset, agendar follow-up o explorar si viene desde Rewards como futura expansión.</td></tr>
+        <tr><td><strong>39 o menos</strong></td><td>Nurture</td><td>No comprometer recursos senior. Mantener contacto, contenido educativo o campaña de reactivación.</td></tr>
+      </table>
+    </div>
+
+    <!-- LECTURA POR EDICIÓN -->
+    <div>
+      <div class="sec-title">Lectura esperada por edición</div>
+      <table>
+        <tr><th style="width:24%;">Ruta</th><th>Criterio de recomendación</th></tr>
+        <tr><td><strong>Apprecio Beat</strong></td><td>Recomendar cuando el dolor principal sea cultura visible, reconocimiento, hitos, encuestas, recompensas, feed social, engagement o fidelización de colaboradores.</td></tr>
+        <tr><td><strong>Beat Performance</strong></td><td>Recomendar cuando además existan metas, KPIs, entrenamientos, evidencia, scorecards, ligas, cumplimiento o desempeño medible.</td></tr>
+        <tr><td><strong>Rewards → Apprecio Beat</strong></td><td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, gestión de colaboradores o interés en medir impacto más allá de redenciones.</td></tr>
+        <tr><td><strong>Nurture / educación</strong></td><td>Usar cuando el cliente solo busca una entrega puntual, no tiene sponsor, no tiene timing o aún no reconoce el problema como programa recurrente.</td></tr>
+      </table>
+    </div>
+
+    <!-- AQS POR TIER -->
+    <div>
+      <div class="sec-title">AQS esperado por Tier</div>
+      <table>
+        <tr><th style="width:20%;">Tier</th><th>AQS esperado para Apprecio Beat</th></tr>
         <tr>
           <td><strong>Tier A / A+</strong></td>
-          <td>
-            Entrada válida: <strong>≥ 60</strong><br>
-            Para propuesta ejecutiva o demo avanzada: <strong>≥ 70</strong><br>
-            Para comprometer recursos senior: <strong>≥ 75</strong> o señal clara de Beat Performance
-          </td>
+          <td>Entrada válida: <strong>≥ 60</strong> · Para propuesta ejecutiva o demo avanzada: <strong>≥ 70</strong> · Para comprometer recursos senior: <strong>≥ 75</strong> o señal clara de Beat Performance</td>
         </tr>
         <tr>
           <td><strong>Tier B</strong></td>
-          <td>
-            Entrada válida: <strong>≥ 55</strong><br>
-            Para esfuerzo 1:1: <strong>≥ 65</strong><br>
-            Para Performance: confirmar KPIs, responsable y operación mínima
-          </td>
+          <td>Entrada válida: <strong>≥ 55</strong> · Para esfuerzo 1:1: <strong>≥ 65</strong> · Para Performance: confirmar KPIs, responsable y operación mínima</td>
         </tr>
         <tr>
           <td><strong>Tier C</strong></td>
-          <td>
-            Entrada válida: <strong>≥ 45</strong><br>
-            Tratamiento principal: <strong>educación, paquetes simples y maduración</strong><br>
-            Excepción: <strong>AQS ≥ 65</strong> si hay sponsor activo, recurrencia y urgencia real
-          </td>
+          <td>Entrada válida: <strong>≥ 45</strong> · Tratamiento principal: educación, paquetes simples y maduración · Excepción: <strong>≥ 65</strong> si hay sponsor activo, recurrencia y urgencia real</td>
         </tr>
-      </tbody>
-    </table>
+      </table>
+    </div>
 
-    <div class="closing-box avoid-break">
-      <h2>Sistema de registro y uso del AQS</h2>
+    <!-- REGISTRO -->
+    <div class="closing">
+      <h3>Sistema de registro y uso del AQS</h3>
       <p>
-        El AQS puede calcularse automáticamente desde el flujo <strong>Diio + n8n + Gemini</strong>, pero el puntaje final debe quedar validado en <strong>HubSpot</strong>. La ficha de oportunidad debe registrar: AQS sugerido, AQS validado, edición recomendada, fuente de la oportunidad, sponsor, decision date, justificación de ajustes, próximos pasos y estado de avance. Esto permite usar el AQS para priorización comercial, seguimiento del pipeline, análisis de conversión Rewards → Beat y aprendizaje posterior sobre cierres o descartes.
+        El AQS puede calcularse automáticamente desde el flujo integrado con Diio, pero el puntaje final debe quedar validado en <strong>HubSpot</strong>. La ficha de oportunidad debe registrar: AQS sugerido, AQS validado, edición recomendada, fuente de la oportunidad, sponsor, decision date, justificación de ajustes, próximos pasos y estado de avance. Esto permite usar el AQS para priorización comercial, seguimiento del pipeline, análisis de conversión Rewards → Apprecio Beat y aprendizaje posterior sobre cierres o descartes.
       </p>
     </div>
 
-    <div class="closing-box avoid-break" style="margin-top: 12px;">
-      <h2>Aclaración final</h2>
+    <!-- ACLARACIÓN FINAL -->
+    <div class="closing">
+      <h3>Tier vs AQS — aclaración final</h3>
       <p>
-        El <strong>Tier</strong> define el tipo de cuenta desde una mirada estructural: tamaño, potencial y valor estratégico. El <strong>AQS</strong> define qué tan madura y prioritaria es una oportunidad específica de Apprecio Beat dentro de ese universo. En simple: <strong>Tier = potencial de cuenta</strong>; <strong>AQS = prioridad comercial real</strong>; <strong>edición recomendada = mejor camino de solución.</strong>
+        El <strong>Tier</strong> define el tipo de cuenta desde una mirada estructural: tamaño, potencial y valor estratégico. El <strong>AQS</strong> define qué tan madura y prioritaria es una oportunidad específica de Apprecio Beat dentro de ese universo. En simple: <strong>Tier = potencial de cuenta · AQS = prioridad comercial real · edición recomendada = mejor camino de solución.</strong>
       </p>
     </div>
 
-    <div class="footer-note">Apprecio · Apprecio Beat · Account Qualification Score</div>
   </div>
+
+  <div class="pg-footer">
+    <span>Apprecio Beat · AQS</span>
+    <span>Tratamiento comercial · Registro en HubSpot</span>
+  </div>
+</div>
+
 </body>
 </html>
