@@ -118,10 +118,11 @@ Campos adicionales: ${extraFields.slice(0, 1000)}
 Transcript: ${transcriptText.slice(0, 2000)}
 
 INSTRUCCIONES PARA EXTRAER DOLORES:
-- Extrae entre 4 y 6 dolores o necesidades ESPECÍFICAS mencionadas en la reunión
-- Usa lenguaje textual y concreto — NO paráfrasis genéricas como "necesitan motivar al equipo"
-- Cada dolor debe reflejar algo real que dijo el cliente: un problema operativo, una limitación, un objetivo concreto, una preocupación específica
-- Si el cliente mencionó contexto de negocio relevante (quiénes son los participantes, cómo opera, qué quieren lograr), inclúyelo en el contexto
+- Extrae entre 4 y 6 dolores del NEGOCIO — problemas que una plataforma de incentivos, reconocimiento o productividad puede resolver
+- INCLUIR: falta de reconocimiento, dificultad para medir desempeño, baja motivación, necesidad de validar registros o evidencias, gestión de metas o KPIs, capacitación de equipos, fidelización de canales, control de fraude en registros, necesidad de automatización del programa
+- EXCLUIR: dolores logísticos del proceso de venta como "necesitan presentar al presidente", "presión de tiempo para cerrar", "falta de presupuesto aprobado", "obstáculos administrativos de contratación"
+- Usa lenguaje concreto y específico del cliente — no genérico
+- Si el cliente mencionó quiénes son los participantes del programa (instaladores, vendedores, colaboradores), inclúyelo en el contexto
 
 Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
