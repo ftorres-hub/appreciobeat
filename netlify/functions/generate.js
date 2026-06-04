@@ -77,6 +77,7 @@ exports.handler = async function(event) {
         });
         if (tRes.ok) {
           const tData = await tRes.json();
+          console.log('TRANSCRIPT RAW:', JSON.stringify(tData).slice(0, 500));
           transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
         }
       }
