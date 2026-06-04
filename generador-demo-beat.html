@@ -477,10 +477,10 @@ async function generarPropuesta() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 40000);
 
-    const workerRes = await fetch('/.netlify/functions/generate', {
+    const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'generar', meetingInfo: m, contextAnswers: a }),
+      body: JSON.stringify({ meetingInfo: m, contextAnswers: a }),
       signal: controller.signal
     });
     clearTimeout(timeout);
