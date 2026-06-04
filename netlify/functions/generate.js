@@ -77,9 +77,12 @@ exports.handler = async function(event) {
         });
         if (tRes.ok) {
           const tData = await tRes.json();
-          console.log('TRANSCRIPT KEYS:', JSON.stringify(Object.keys(tData)));
-console.log('TRANSCRIPT SAMPLE:', JSON.stringify(tData).slice(0, 300));
-          transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
+          if (Array.isArray(tData.transcript)) {
+            // El transcript es un array de {speaker, text} — concatenar todo el texto
+            transcriptText = tData.transcript.map(t => `${t.speaker}: ${t.text}`).join('\n').slice(0, 8000);
+          } else {
+            transcriptText = tData.transcript || tData.text || tData.content || '';
+          }
         }
       }
 
