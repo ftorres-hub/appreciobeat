@@ -91,8 +91,14 @@ Nombre reunión: ${m.name || ''}
 Fecha: ${m.scheduled_at || m.created_at || ''}
 Ejecutivo Apprecio: ${sellers}
 Contactos cliente: ${customers}
-Resumen/análisis: ${summary.slice(0, 2000)}
-Transcript: ${transcriptText.slice(0, 2000)}
+Resumen/análisis: ${summary.slice(0, 4000)}
+Transcript: ${transcriptText.slice(0, 4000)}
+
+INSTRUCCIONES PARA EXTRAER DOLORES:
+- Extrae entre 4 y 6 dolores o necesidades ESPECÍFICAS mencionadas en la reunión
+- Usa lenguaje textual y concreto — NO paráfrasis genéricas como "necesitan motivar al equipo"
+- Cada dolor debe reflejar algo real que dijo el cliente: un problema operativo, una limitación, un objetivo concreto, una preocupación específica
+- Si el cliente mencionó contexto de negocio relevante (quiénes son los participantes, cómo opera, qué quieren lograr), inclúyelo en el contexto
 
 Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
@@ -100,10 +106,10 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
   "contacto": "nombre y cargo del contacto cliente principal",
   "fecha": "fecha legible en español",
   "tipo": "exploracion o mantencion",
-  "dotacion": "número aproximado colaboradores si se menciona, si no null",
+  "dotacion": "número aproximado colaboradores o participantes si se menciona, si no null",
   "paises": "países mencionados, si no null",
-  "dolores": ["necesidad o dolor 1", "necesidad 2", "necesidad 3"],
-  "contexto": "resumen de 2-3 oraciones del contexto y necesidad del cliente"
+  "dolores": ["dolor específico 1", "dolor específico 2", "dolor específico 3", "dolor específico 4", "dolor específico 5"],
+  "contexto": "resumen de 3-4 oraciones del contexto real del cliente: quiénes son, qué quieren lograr, qué los trajo a esta reunión"
 }`;
 
       const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
@@ -115,7 +121,7 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
+          max_tokens: 1500,
           messages: [{ role: 'user', content: extractPrompt }]
         })
       });
