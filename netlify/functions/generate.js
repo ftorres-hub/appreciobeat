@@ -77,6 +77,8 @@ exports.handler = async function(event) {
         });
         if (tRes.ok) {
           const tData = await tRes.json();
+          console.log('TRANSCRIPT KEYS:', JSON.stringify(Object.keys(tData)));
+console.log('TRANSCRIPT SAMPLE:', JSON.stringify(tData).slice(0, 300));
           transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
         }
       }
