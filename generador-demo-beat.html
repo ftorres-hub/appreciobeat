@@ -259,44 +259,6 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 </div><!-- /main -->
 
 <script>
-// ── API Key ──
-  // ── Config ──
-  const ANTHROPIC_KEY = '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';
-  const DIIO_BASE = 'https://apprecio.diio.com/api/external';
-
-  async function getDiioToken() {
-    const res = await fetch(`${DIIO_BASE}/refresh_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        client_id: '5b4df826-ec35-4d96-9dd3-90311504ef71',
-        client_secret: '871714aa-995e-4da8-9d5a-754c32caa303',
-        refresh_token: '1104ade4-ca47-45a7-816b-21f55975460d'
-      })
-    });
-    const data = await res.json();
-    return data.access_token;
-  }
-
-  async function callClaude(messages, maxTokens = 1500) {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: maxTokens,
-        messages
-      })
-    });
-    const data = await res.json();
-    return data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
-  }
-
 // ── Estado global ──
 let meetingData = null;
 let contextAnswers = {};
@@ -385,11 +347,7 @@ function toggleOption(btn, type, qid) {
 // ── PASO 1: Buscar reunión ──
 async function buscarReunion() {
   const linkDiio = document.getElementById('f-link').value.trim();
-
-  if (!linkDiio) {
-    alert('Por favor ingresa el link de la reunión en Diio.');
-    return;
-  }
+  if (!linkDiio) { alert('Por favor ingresa el link de la reunión en Diio.'); return; }
 
   document.getElementById('loading1').classList.remove('hidden');
   document.getElementById('btn-buscar').disabled = true;
@@ -400,7 +358,6 @@ async function buscarReunion() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'buscar', linkDiio })
     });
-
     const result = await response.json();
 
     document.getElementById('loading1').classList.add('hidden');
@@ -503,7 +460,6 @@ async function generarPropuesta() {
   const m = meetingData;
   const a = contextAnswers;
   const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
-  const contacto = m.contacto || '';
 
   const mensajes = [
     'Analizando necesidades del cliente…',
@@ -517,38 +473,14 @@ async function generarPropuesta() {
     document.getElementById('loading4-text').textContent = mensajes[mi];
   }, 2500);
 
-
   try {
-    const genPrompt = `Eres especialista en Apprecio Beat. Genera propuesta comercial basada en esta reunión.
-
-Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
-Tipo: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
-Contexto: ${m.contexto}
-Dolores: ${(m.dolores || []).join(', ')}
-Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
-Comportamientos: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
-Operación: ${a.operacion || '?'} | Admin: ${a.admin || '?'} | Experiencia: ${a.experiencia || '?'}
-Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
-
-RESTRICCIONES: Spot Rewards=entrega directa manager→colaborador NO campañas. Aceleradores→Retos. Insignias sin lógica automática. Ligas no detallar. Puntos económicos inviables multi-país. Inferencias: marcar (inferencia—verificar con producto).
-
-Devuelve SOLO este JSON (sin backticks):
-{
-  "tipo_doc": "${m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa'}",
-  "edition": "Apprecio Beat o Beat Performance",
-  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
-  "modulos_base": [{"modulo":"nombre","por_que":"razón","accion":"acción concreta","configuracion":"cómo configurar"}],
-  "modulos_performance": [],
-  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
-}`;
-
-    // Llamar al Cloudflare Worker para generación
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 40000);
-    const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
+
+    const workerRes = await fetch('/.netlify/functions/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ meetingInfo: m, contextAnswers: a }),
+      body: JSON.stringify({ action: 'generar', meetingInfo: m, contextAnswers: a }),
       signal: controller.signal
     });
     clearTimeout(timeout);
@@ -557,7 +489,7 @@ Devuelve SOLO este JSON (sin backticks):
 
     if (workerData.error) throw new Error(workerData.error);
     const propuesta = workerData.propuesta;
-    let html = renderPropuesta(propuesta, m, a);
+    const html = renderPropuesta(propuesta, m, a);
 
     document.getElementById('loading4').classList.add('hidden');
     document.getElementById('steps-container').classList.add('hidden');
@@ -575,71 +507,70 @@ Devuelve SOLO este JSON (sin backticks):
   }
 }
 
+function renderPropuesta(p, m, a) {
+  const dotacion = m.dotacion || (a && a.colaboradores) || '—';
+  const paises = m.paises || '—';
+  const necesidadesHTML = (p.necesidades || []).map(n => `<li>${n}</li>`).join('');
+  const modBaseHTML = (p.modulos_base || []).map(mod => `
+    <div class="mod-card">
+      <div class="mod-card-header">
+        <span class="mod-badge base">Beat base</span>
+        <div class="mod-card-title">${mod.modulo}</div>
+      </div>
+      <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
+      <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
+      <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+    </div>`).join('');
+  const modPerfHTML = (p.modulos_performance || []).length > 0 ? `
+    <div class="doc-section">
+      <div class="doc-section-title">Módulos Beat Performance</div>
+      ${(p.modulos_performance || []).map(mod => `
+        <div class="mod-card">
+          <div class="mod-card-header">
+            <span class="mod-badge performance">Beat Performance</span>
+            <div class="mod-card-title">${mod.modulo}</div>
+          </div>
+          <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
+          <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
+          <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+        </div>`).join('')}
+    </div>` : '';
+  const pasosHTML = (p.pasos_demo || []).map((paso, i) => `
+    <div class="doc-step">
+      <div class="doc-step-num">${i+1}</div>
+      <div class="doc-step-content">${paso}</div>
+    </div>`).join('');
+  const tipoLabel = m.tipo === 'exploracion' ? 'Exploración' : 'Mantención';
+  const pasosLabel = m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración';
+  return `
+    <div class="doc-portada">
+      <div class="doc-portada-label">${p.tipo_doc}</div>
+      <h1>${m.empresa}</h1>
+      <div class="doc-portada-meta">
+        <div class="doc-meta-item"><strong>Contacto</strong>${m.contacto || '—'}</div>
+        <div class="doc-meta-item"><strong>Fecha</strong>${m.fecha}</div>
+        <div class="doc-meta-item"><strong>Dotación</strong>${dotacion}</div>
+        <div class="doc-meta-item"><strong>Países</strong>${paises}</div>
+        <div class="doc-meta-item"><strong>Tipo de reunión</strong>${tipoLabel}</div>
+      </div>
+      <div class="doc-edition">Edición sugerida: ${p.edition}</div>
+    </div>
+    <div class="doc-section">
+      <div class="doc-section-title">Contexto y necesidades</div>
+      <ul class="doc-bullets">${necesidadesHTML}</ul>
+    </div>
+    <div class="doc-section">
+      <div class="doc-section-title">Módulos Beat base recomendados</div>
+      ${modBaseHTML}
+    </div>
+    ${modPerfHTML}
+    <div class="doc-section">
+      <div class="doc-section-title">${pasosLabel}</div>
+      <div class="doc-steps">${pasosHTML}</div>
+    </div>`;
+}
 
-  function renderPropuesta(p, m, a) {
-    const dotacion = m.dotacion || (a && a.colaboradores) || '—';
-    const paises = m.paises || '—';
-    const necesidadesHTML = (p.necesidades || []).map(n => `<li>${n}</li>`).join('');
-    const modBaseHTML = (p.modulos_base || []).map(mod => `
-      <div class="mod-card">
-        <div class="mod-card-header">
-          <span class="mod-badge base">Beat base</span>
-          <div class="mod-card-title">${mod.modulo}</div>
-        </div>
-        <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
-        <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
-        <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
-      </div>`).join('');
-    const modPerfHTML = (p.modulos_performance || []).length > 0 ? `
-      <div class="doc-section">
-        <div class="doc-section-title">Módulos Beat Performance</div>
-        ${(p.modulos_performance || []).map(mod => `
-          <div class="mod-card">
-            <div class="mod-card-header">
-              <span class="mod-badge performance">Beat Performance</span>
-              <div class="mod-card-title">${mod.modulo}</div>
-            </div>
-            <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
-            <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
-            <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
-          </div>`).join('')}
-      </div>` : '';
-    const pasosHTML = (p.pasos_demo || []).map((paso, i) => `
-      <div class="doc-step">
-        <div class="doc-step-num">${i+1}</div>
-        <div class="doc-step-content">${paso}</div>
-      </div>`).join('');
-    const tipoLabel = m.tipo === 'exploracion' ? 'Exploración' : 'Mantención';
-    const pasosLabel = m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración';
-    return `
-      <div class="doc-portada">
-        <div class="doc-portada-label">${p.tipo_doc}</div>
-        <h1>${m.empresa}</h1>
-        <div class="doc-portada-meta">
-          <div class="doc-meta-item"><strong>Contacto</strong>${m.contacto || '—'}</div>
-          <div class="doc-meta-item"><strong>Fecha</strong>${m.fecha}</div>
-          <div class="doc-meta-item"><strong>Dotación</strong>${dotacion}</div>
-          <div class="doc-meta-item"><strong>Países</strong>${paises}</div>
-          <div class="doc-meta-item"><strong>Tipo de reunión</strong>${tipoLabel}</div>
-        </div>
-        <div class="doc-edition">Edición sugerida: ${p.edition}</div>
-      </div>
-      <div class="doc-section">
-        <div class="doc-section-title">Contexto y necesidades</div>
-        <ul class="doc-bullets">${necesidadesHTML}</ul>
-      </div>
-      <div class="doc-section">
-        <div class="doc-section-title">Módulos Beat base recomendados</div>
-        ${modBaseHTML}
-      </div>
-      ${modPerfHTML}
-      <div class="doc-section">
-        <div class="doc-section-title">${pasosLabel}</div>
-        <div class="doc-steps">${pasosHTML}</div>
-      </div>`;
-  }
-
-  function resetTodo() {
+function resetTodo() {
   meetingData = null;
   contextAnswers = {};
   document.getElementById('result-container').style.display = 'none';
