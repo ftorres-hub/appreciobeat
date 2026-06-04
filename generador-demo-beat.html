@@ -1,655 +1,306 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generador de Propuesta · Apprecio Beat</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1B; min-height: 100vh; }
+const DIIO_CLIENT_ID = '5b4df826-ec35-4d96-9dd3-90311504ef71';
+const DIIO_CLIENT_SECRET = '871714aa-995e-4da8-9d5a-754c32caa303';
+const DIIO_REFRESH_TOKEN = '1104ade4-ca47-45a7-816b-21f55975460d';
+const DIIO_BASE = 'https://apprecio.diio.com/api/external';
+const ANTHROPIC_KEY = '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';
 
-/* TOPBAR */
-.topbar { background: #fff; border-bottom: 0.5px solid #E8E8E8; padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.topbar-left { display: flex; align-items: center; gap: 10px; }
-.iso { background: #FA345E; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: 5px; }
-.iso-inner { background: #fff; border-radius: 2px; position: relative; width: 14px; height: 14px; }
-.iso-inner::after { content: ''; display: block; background: #FA345E; border-radius: 1px; position: absolute; width: 6px; height: 6px; top: 4px; left: 4px; }
-.brand { font-weight: 800; color: #1B1B1B; letter-spacing: -0.5px; font-size: 14px; }
-.brand span { color: #FA345E; }
-.topbar-pill { font-size: 10px; font-weight: 700; background: #F0F0F0; color: #888; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.5px; text-transform: uppercase; }
-.back-home-btn { font-size: 11px; font-weight: 600; color: #888; cursor: pointer; background: none; border: none; font-family: 'Montserrat', sans-serif; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
-.back-home-btn:hover { color: #1B1B1B; }
-.back-home-btn svg { width: 12px; height: 12px; }
-
-/* LAYOUT */
-.main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
-.page-hero { margin-bottom: 32px; }
-.page-hero h1 { font-size: 20px; font-weight: 800; color: #1B1B1B; }
-.page-hero p { font-size: 12px; color: #999; margin-top: 5px; }
-
-/* STEPS */
-.step { background: #fff; border: 0.5px solid #E8E8E8; border-radius: 12px; padding: 28px; margin-bottom: 16px; }
-.step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-.step-num { width: 24px; height: 24px; border-radius: 50%; background: #FA345E; color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.step-num.done { background: #45C1AD; }
-.step-num.inactive { background: #E0E0E0; color: #999; }
-.step-title { font-size: 14px; font-weight: 700; color: #1B1B1B; }
-.step-subtitle { font-size: 11px; color: #999; margin-top: 2px; }
-
-/* FORM */
-.field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-.field-group.single { grid-template-columns: 1fr; }
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.6px; text-transform: uppercase; }
-.field input { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; color: #1B1B1B; border: 1.5px solid #E0E0E0; border-radius: 8px; padding: 11px 14px; outline: none; transition: border-color 0.15s; background: #FAFAFA; }
-.field input:focus { border-color: #FA345E; background: #fff; }
-
-/* CONTEXT QUESTIONS */
-.q-block { margin-bottom: 18px; }
-.q-label { font-size: 12px; font-weight: 700; color: #1B1B1B; margin-bottom: 8px; }
-.q-options { display: flex; flex-wrap: wrap; gap: 7px; }
-.q-opt { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: #666; background: #F5F5F5; border: 1.5px solid #E8E8E8; border-radius: 6px; padding: 7px 13px; cursor: pointer; transition: all 0.12s; }
-.q-opt:hover { border-color: #FA345E; color: #FA345E; }
-.q-opt.selected { background: #FFF0F3; border-color: #FA345E; color: #FA345E; }
-.q-opt.multi.selected { background: #FFF0F3; border-color: #FA345E; color: #FA345E; }
-.q-input { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; color: #1B1B1B; border: 1.5px solid #E0E0E0; border-radius: 8px; padding: 10px 14px; width: 100%; outline: none; margin-top: 4px; transition: border-color 0.15s; }
-.q-input:focus { border-color: #FA345E; }
-
-/* BUTTONS */
-.btn-primary { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; background: #FA345E; border: none; border-radius: 8px; padding: 13px 24px; cursor: pointer; transition: background 0.15s; display: inline-flex; align-items: center; gap: 8px; }
-.btn-primary:hover { background: #D42A4E; }
-.btn-primary:disabled { background: #E0E0E0; color: #999; cursor: not-allowed; }
-.btn-secondary { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: #888; background: none; border: 1.5px solid #E0E0E0; border-radius: 8px; padding: 11px 20px; cursor: pointer; transition: all 0.15s; }
-.btn-secondary:hover { border-color: #1B1B1B; color: #1B1B1B; }
-
-/* LOADING */
-.loading-block { display: flex; align-items: center; gap: 12px; padding: 16px 0; }
-.spinner { width: 18px; height: 18px; border: 2.5px solid #E8E8E8; border-top-color: #FA345E; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text { font-size: 12px; color: #999; font-weight: 500; }
-
-/* MEETING FOUND */
-.meeting-card { background: #F8F8F8; border: 0.5px solid #E8E8E8; border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
-.meeting-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.meeting-card-title { font-size: 13px; font-weight: 700; color: #1B1B1B; }
-.meeting-card-date { font-size: 11px; color: #999; }
-.meeting-card-excerpt { font-size: 11px; color: #666; line-height: 1.6; }
-.meeting-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; margin-top: 8px; }
-.tag-exploracion { background: #E0F5F1; color: #0F6E56; }
-.tag-mantencion { background: #EAE7FB; color: #6C5FBF; }
-
-/* SUMMARY */
-.summary-block { background: #F8F8F8; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
-.summary-block h4 { font-size: 12px; font-weight: 700; color: #888; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 10px; }
-.summary-item { font-size: 12px; color: #1B1B1B; margin-bottom: 5px; display: flex; gap: 8px; }
-.summary-item-label { color: #999; font-weight: 600; min-width: 140px; }
-
-/* RESULT */
-#result-container { display: none; }
-.result-topbar { background: #1B1B1B; border-radius: 10px 10px 0 0; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
-.result-topbar span { font-size: 12px; font-weight: 700; color: #fff; }
-.result-actions { display: flex; gap: 8px; }
-.btn-print { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; color: #1B1B1B; background: #fff; border: none; border-radius: 5px; padding: 6px 14px; cursor: pointer; transition: opacity 0.15s; }
-.btn-print:hover { opacity: 0.85; }
-.result-body { background: #fff; border: 0.5px solid #E8E8E8; border-top: none; border-radius: 0 0 10px 10px; padding: 40px 48px; }
-
-/* DOCUMENT STYLES */
-.doc-portada { border-bottom: 2px solid #FF1F5B; padding-bottom: 28px; margin-bottom: 32px; }
-.doc-portada-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #FF1F5B; margin-bottom: 10px; }
-.doc-portada h1 { font-size: 24px; font-weight: 800; color: #1A1A2E; margin-bottom: 18px; line-height: 1.2; }
-.doc-portada-meta { display: flex; flex-wrap: wrap; gap: 20px; }
-.doc-meta-item { font-size: 11px; color: #555; }
-.doc-meta-item strong { color: #1A1A2E; display: block; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; }
-.doc-edition { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; background: #FFF0F3; color: #FF1F5B; border: 1px solid #FFCCD6; padding: 5px 12px; border-radius: 5px; margin-top: 12px; }
-
-.doc-section { margin-bottom: 32px; }
-.doc-section-title { font-size: 13px; font-weight: 800; color: #1A1A2E; letter-spacing: 0.5px; text-transform: uppercase; border-left: 3px solid #FF1F5B; padding-left: 10px; margin-bottom: 16px; }
-.doc-bullets { list-style: none; }
-.doc-bullets li { font-size: 12px; color: #555; line-height: 1.65; padding: 5px 0; padding-left: 16px; position: relative; }
-.doc-bullets li::before { content: '—'; position: absolute; left: 0; color: #FF1F5B; font-weight: 700; }
-
-.mod-card { border: 0.5px solid #E8E8E8; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
-.mod-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.mod-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
-.mod-badge.base { background: #FFF0F3; color: #FF1F5B; }
-.mod-badge.performance { background: #EAE7FB; color: #6C5FBF; }
-.mod-card-title { font-size: 13px; font-weight: 700; color: #1A1A2E; }
-.mod-why { font-size: 11px; color: #555; line-height: 1.6; margin-bottom: 10px; }
-.mod-why strong { color: #1A1A2E; }
-.mod-action-row { background: #F5F5F5; border-radius: 6px; padding: 10px 12px; margin-bottom: 6px; }
-.mod-action-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
-.mod-action-text { font-size: 12px; color: #1A1A2E; line-height: 1.5; }
-.mod-inference { font-size: 11px; color: #B2A8E7; font-style: italic; margin-top: 8px; }
-
-.doc-steps { counter-reset: steps; }
-.doc-step { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
-.doc-step-num { width: 24px; height: 24px; border-radius: 50%; background: #FF1F5B; color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.doc-step-content { font-size: 12px; color: #555; line-height: 1.6; }
-.doc-step-content strong { color: #1A1A2E; }
-
-/* HIDDEN/SHOWN states */
-.hidden { display: none !important; }
-
-@media print {
-  .topbar, #steps-container, .result-topbar { display: none; }
-  .main { padding: 0; max-width: 100%; }
-  .result-body { border: none; padding: 20px; }
-  #result-container { display: block !important; }
-}
-</style>
-</head>
-<body>
-
-<div class="topbar">
-  <div class="topbar-left">
-    <div class="iso"><div class="iso-inner"></div></div>
-    <div class="brand">apprecio <span>beat</span></div>
-    <div class="topbar-pill">Generador de propuesta</div>
-  </div>
-  <button class="back-home-btn" onclick="window.location.href='repositorioapprecio.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Todos los productos
-  </button>
-</div>
-
-<div class="main">
-  <div class="page-hero">
-    <h1>Generador de propuesta de demo</h1>
-    <p>Busca la reunión en Diio y genera una propuesta personalizada por módulo Beat.</p>
-  </div>
-
-  <div id="steps-container">
-
-    <!-- PASO 1: DATOS DE LA REUNIÓN -->
-    <div class="step" id="step1">
-      <div class="step-header">
-        <div class="step-num" id="num1">1</div>
-        <div>
-          <div class="step-title">Datos de la reunión</div>
-          <div class="step-subtitle">Para buscar la reunión correcta en Diio</div>
-        </div>
-      </div>
-      <div class="field-group single">
-        <div class="field">
-          <label>Link de la reunión en Diio</label>
-          <input type="text" id="f-link" placeholder="https://login.diio.com/meetings/..." />
-        </div>
-      </div>
-      <div style="margin-top:8px;">
-        <button class="btn-primary" id="btn-buscar" onclick="buscarReunion()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          Buscar en Diio
-        </button>
-      </div>
-      <div id="loading1" class="loading-block hidden">
-        <div class="spinner"></div>
-        <div class="loading-text">Buscando reunión en Diio…</div>
-      </div>
-    </div>
-
-    <!-- PASO 2: REUNIÓN ENCONTRADA -->
-    <div class="step hidden" id="step2">
-      <div class="step-header">
-        <div class="step-num" id="num2">2</div>
-        <div>
-          <div class="step-title">Reunión encontrada</div>
-          <div class="step-subtitle">Confirma que es la reunión correcta</div>
-        </div>
-      </div>
-      <div id="meeting-result"></div>
-      <div style="display:flex; gap:10px; margin-top:4px;">
-        <button class="btn-primary" onclick="confirmarReunion()">Sí, es esta reunión</button>
-        <button class="btn-secondary" onclick="resetStep2()">Buscar otra</button>
-      </div>
-    </div>
-
-    <!-- PASO 3: PREGUNTAS DE CONTEXTO -->
-    <div class="step hidden" id="step3">
-      <div class="step-header">
-        <div class="step-num" id="num3">3</div>
-        <div>
-          <div class="step-title">Contexto del programa</div>
-          <div class="step-subtitle">Completa lo que no estaba en la reunión</div>
-        </div>
-      </div>
-      <div id="context-questions"></div>
-      <div style="margin-top:8px;">
-        <button class="btn-primary" onclick="generarResumen()">Continuar</button>
-      </div>
-    </div>
-
-    <!-- PASO 4: CONFIRMAR Y GENERAR -->
-    <div class="step hidden" id="step4">
-      <div class="step-header">
-        <div class="step-num" id="num4">4</div>
-        <div>
-          <div class="step-title">Confirmar y generar</div>
-          <div class="step-subtitle">Revisa el resumen antes de generar la propuesta</div>
-        </div>
-      </div>
-      <div id="summary-content"></div>
-      <div id="loading4" class="loading-block hidden">
-        <div class="spinner"></div>
-        <div class="loading-text" id="loading4-text">Generando propuesta personalizada…</div>
-      </div>
-      <div style="display:flex; gap:10px;" id="btn-generar-row">
-        <button class="btn-primary" onclick="generarPropuesta()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Generar propuesta
-        </button>
-        <button class="btn-secondary" onclick="resetStep3()">Editar contexto</button>
-      </div>
-    </div>
-
-  </div><!-- /steps-container -->
-
-  <!-- RESULTADO -->
-  <div id="result-container">
-    <div class="result-topbar">
-      <span id="result-label">Propuesta generada</span>
-      <div class="result-actions">
-        <button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
-        <button class="btn-print" onclick="resetTodo()" style="background:#555; color:#fff;">Nueva propuesta</button>
-      </div>
-    </div>
-    <div class="result-body" id="result-body"></div>
-  </div>
-
-</div><!-- /main -->
-
-<script>
-// ── API Key ──
-  // ── Config ──
-  const ANTHROPIC_KEY = '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';
-  const DIIO_BASE = 'https://apprecio.diio.com/api/external';
-
-  async function getDiioToken() {
-    const res = await fetch(`${DIIO_BASE}/refresh_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        client_id: '5b4df826-ec35-4d96-9dd3-90311504ef71',
-        client_secret: '871714aa-995e-4da8-9d5a-754c32caa303',
-        refresh_token: '1104ade4-ca47-45a7-816b-21f55975460d'
-      })
-    });
-    const data = await res.json();
-    return data.access_token;
-  }
-
-  async function callClaude(messages, maxTokens = 1500) {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: maxTokens,
-        messages
-      })
-    });
-    const data = await res.json();
-    return data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
-  }
-
-// ── Estado global ──
-let meetingData = null;
-let contextAnswers = {};
-
-// ── Preguntas de contexto ──
-const QUESTIONS = [
-  {
-    id: 'roles',
-    label: '¿Quiénes participan en el programa?',
-    type: 'multi',
-    options: ['Colaboradores', 'Líderes / managers', 'Ejecutivos', 'Vendedores', 'Todos por igual']
-  },
-  {
-    id: 'se_conocen',
-    label: '¿Los participantes se conocen entre sí?',
-    type: 'single',
-    options: ['Sí, equipos cercanos', 'No, son distribuidos o no se conocen', 'Mixto']
-  },
-  {
-    id: 'colaboradores',
-    label: '¿Cuántos colaboradores aproximadamente?',
-    type: 'single',
-    options: ['Menos de 100', '100 – 500', '500 – 2.000', 'Más de 2.000']
-  },
-  {
-    id: 'comportamientos',
-    label: '¿Qué comportamientos quiere mover el cliente?',
-    type: 'multi',
-    options: ['Reconocimiento entre pares', 'Cumplimiento de metas', 'Adopción de valores', 'Ventas / resultados', 'Bienestar y trabajo en equipo', 'Otro']
-  },
-  {
-    id: 'operacion',
-    label: '¿Cómo opera el programa?',
-    type: 'single',
-    options: ['Always on (siempre activo)', 'Campañas puntuales', 'Ambos']
-  },
-  {
-    id: 'admin',
-    label: '¿El admin tiene tiempo o necesita que el sistema funcione solo?',
-    type: 'single',
-    options: ['Tiene tiempo para gestionar', 'Necesita que funcione solo', 'No lo sé aún']
-  },
-  {
-    id: 'experiencia',
-    label: '¿Han tenido programa de incentivos antes?',
-    type: 'single',
-    options: ['Sí, con buena experiencia', 'Sí, pero no funcionó bien', 'No, es primera vez', 'No sé']
-  },
-  {
-    id: 'reconocimiento',
-    label: '¿Qué tipo de reconocimiento tiene más sentido para este cliente?',
-    type: 'multi',
-    options: ['Reconocimiento social / visibilidad', 'Puntos / incentivos económicos', 'Insignias y logros', 'Ranking / competencia', 'Recompensas de bienestar']
-  }
-];
-
-function renderContextQuestions() {
-  const container = document.getElementById('context-questions');
-  container.innerHTML = QUESTIONS.map(q => `
-    <div class="q-block">
-      <div class="q-label">${q.label}</div>
-      <div class="q-options" id="opts-${q.id}">
-        ${q.options.map(o => `
-          <button class="q-opt ${q.type === 'multi' ? 'multi' : ''}"
-            data-qid="${q.id}" data-val="${o}"
-            onclick="toggleOption(this, '${q.type}', '${q.id}')">
-            ${o}
-          </button>`).join('')}
-      </div>
-    </div>
-  `).join('');
+async function getDiioToken() {
+  const res = await fetch(`${DIIO_BASE}/refresh_token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      client_id: DIIO_CLIENT_ID,
+      client_secret: DIIO_CLIENT_SECRET,
+      refresh_token: DIIO_REFRESH_TOKEN
+    })
+  });
+  const data = await res.json();
+  return data.access_token;
 }
 
-function toggleOption(btn, type, qid) {
-  if (type === 'single') {
-    document.querySelectorAll(`[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    contextAnswers[qid] = btn.dataset.val;
-  } else {
-    btn.classList.toggle('selected');
-    const selected = [...document.querySelectorAll(`[data-qid="${qid}"].selected`)].map(b => b.dataset.val);
-    contextAnswers[qid] = selected;
-  }
+function extraerIdDesdeLinkDiio(link) {
+  const match = link.match(/meetings\/([a-f0-9\-]{36})/i);
+  return match ? match[1] : null;
 }
 
-// ── PASO 1: Buscar reunión ──
-async function buscarReunion() {
-  const linkDiio = document.getElementById('f-link').value.trim();
-
-  if (!linkDiio) {
-    alert('Por favor ingresa el link de la reunión en Diio.');
-    return;
+exports.handler = async function(event) {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  document.getElementById('loading1').classList.remove('hidden');
-  document.getElementById('btn-buscar').disabled = true;
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  };
 
   try {
-    const response = await fetch('/.netlify/functions/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'buscar', linkDiio })
-    });
+    const body = JSON.parse(event.body);
+    const { action, linkDiio, contextAnswers, meetingInfo } = body;
 
-    const result = await response.json();
+    console.log('Action:', action);
 
-    document.getElementById('loading1').classList.add('hidden');
-    document.getElementById('btn-buscar').disabled = false;
+    // ── BUSCAR POR LINK ──
+    if (action === 'buscar') {
+      const meetingId = extraerIdDesdeLinkDiio(linkDiio || '');
+      console.log('Meeting ID extraído:', meetingId);
 
-    if (result.error || !result.encontrada) {
-      document.getElementById('meeting-result').innerHTML = `
-        <div style="padding:16px; background:#FFF5F7; border-radius:8px; border:1px solid #FFCCD6; font-size:12px; color:#D42A4E; font-weight:600;">
-          No se encontró la reunión. Verifica el link de Diio.
-        </div>`;
-      document.getElementById('step2').classList.remove('hidden');
-      return;
-    }
+      if (!meetingId) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ encontrada: false, error: 'No se pudo extraer el ID del link. Verifica que sea un link válido de Diio.' })
+        };
+      }
 
-    meetingData = result;
-    renderMeetingCard(result);
-    document.getElementById('step2').classList.remove('hidden');
-    document.getElementById('step2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const token = await getDiioToken();
 
-  } catch(e) {
-    document.getElementById('loading1').classList.add('hidden');
-    document.getElementById('btn-buscar').disabled = false;
-    alert('Error al conectar con Diio. Intenta nuevamente.');
-    console.error(e);
-  }
-}
+      const meetingRes = await fetch(`${DIIO_BASE}/v1/meetings/${meetingId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
 
-function renderMeetingCard(r) {
-  const tipoLabel = r.tipo === 'exploracion' ? 'Reunión de exploración' : 'Mantención / seguimiento';
-  const tipoClass = r.tipo === 'exploracion' ? 'tag-exploracion' : 'tag-mantencion';
-  document.getElementById('meeting-result').innerHTML = `
-    <div class="meeting-card">
-      <div class="meeting-card-header">
-        <div class="meeting-card-title">${r.empresa}</div>
-        <div class="meeting-card-date">${r.fecha}</div>
-      </div>
-      ${r.contacto ? `<div style="font-size:11px; color:#888; margin-bottom:6px;">${r.contacto}</div>` : ''}
-      <div class="meeting-card-excerpt">${r.contexto}</div>
-      ${r.dolores?.length ? `<div style="margin-top:10px; font-size:11px; color:#666;"><strong style="color:#1B1B1B;">Dolores identificados:</strong> ${r.dolores.join(' · ')}</div>` : ''}
-      <div class="meeting-tag ${tipoClass}">${tipoLabel}</div>
-    </div>`;
-}
+      console.log('Meeting status:', meetingRes.status);
+      if (!meetingRes.ok) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ encontrada: false, error: 'No se encontró la reunión. Verifica el link.' })
+        };
+      }
 
-function confirmarReunion() {
-  document.getElementById('step2').classList.add('hidden');
-  renderContextQuestions();
-  document.getElementById('step3').classList.remove('hidden');
-  document.getElementById('step3').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+      const m = await meetingRes.json();
+      console.log('Meeting name:', m.name);
 
-function resetStep2() {
-  document.getElementById('step2').classList.add('hidden');
-  meetingData = null;
-}
+      let transcriptText = '';
+      if (m.last_transcript_id) {
+        const tRes = await fetch(`${DIIO_BASE}/v1/transcripts/${m.last_transcript_id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (tRes.ok) {
+          const tData = await tRes.json();
+          transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
+        }
+      }
 
-function generarResumen() {
-  document.getElementById('step3').classList.add('hidden');
-  const m = meetingData;
-  const a = contextAnswers;
-  const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
+      const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
+      const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
+      const summary = m.summary || m.description || m.analysis || m.notes || '';
 
-  const rows = [
-    ['Empresa', m.empresa],
-    ['Contacto', m.contacto || '—'],
-    ['Fecha', m.fecha],
-    ['Tipo de documento', tipoDoc],
-    ['Dotación', m.dotacion || a.colaboradores || '—'],
-    ['Países', m.paises || '—'],
-    ['Participantes', Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '—')],
-    ['Comportamientos a mover', Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '—')],
-    ['Tipo de operación', a.operacion || '—'],
-    ['Reconocimiento preferido', Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '—')],
-  ];
+      const extractPrompt = `Analiza esta reunión de ventas de Apprecio y extrae los datos clave.
 
-  document.getElementById('summary-content').innerHTML = `
-    <div class="summary-block">
-      <h4>Resumen del documento a generar</h4>
-      ${rows.map(([l, v]) => `<div class="summary-item"><span class="summary-item-label">${l}</span><span>${v}</span></div>`).join('')}
-    </div>
-    <div class="summary-block">
-      <h4>Dolores identificados</h4>
-      ${(m.dolores || []).map(d => `<div class="summary-item">· ${d}</div>`).join('') || '<div class="summary-item" style="color:#999">No se identificaron dolores específicos</div>'}
-    </div>`;
+Nombre reunión: ${m.name || ''}
+Fecha: ${m.scheduled_at || m.created_at || ''}
+Ejecutivo Apprecio: ${sellers}
+Contactos cliente: ${customers}
+Resumen/análisis: ${summary.slice(0, 2000)}
+Transcript: ${transcriptText.slice(0, 2000)}
 
-  document.getElementById('step4').classList.remove('hidden');
-  document.getElementById('step4').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function resetStep3() {
-  document.getElementById('step4').classList.add('hidden');
-  document.getElementById('step3').classList.remove('hidden');
-  document.getElementById('step3').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// ── PASO 4: Generar propuesta ──
-async function generarPropuesta() {
-  document.getElementById('btn-generar-row').classList.add('hidden');
-  document.getElementById('loading4').classList.remove('hidden');
-
-  const m = meetingData;
-  const a = contextAnswers;
-  const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
-  const contacto = m.contacto || '';
-
-  const mensajes = [
-    'Analizando necesidades del cliente…',
-    'Seleccionando módulos Beat relevantes…',
-    'Armando recomendaciones por módulo…',
-    'Generando propuesta final…'
-  ];
-  let mi = 0;
-  const loadingInterval = setInterval(() => {
-    mi = (mi + 1) % mensajes.length;
-    document.getElementById('loading4-text').textContent = mensajes[mi];
-  }, 2500);
-
-
-  try {
-    const genPrompt = `Eres especialista en Apprecio Beat. Genera propuesta comercial basada en esta reunión.
-
-Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
-Tipo: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
-Contexto: ${m.contexto}
-Dolores: ${(m.dolores || []).join(', ')}
-Participantes: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
-Comportamientos: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
-Operación: ${a.operacion || '?'} | Admin: ${a.admin || '?'} | Experiencia: ${a.experiencia || '?'}
-Reconocimiento: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
-
-RESTRICCIONES: Spot Rewards=entrega directa manager→colaborador NO campañas. Aceleradores→Retos. Insignias sin lógica automática. Ligas no detallar. Puntos económicos inviables multi-país. Inferencias: marcar (inferencia—verificar con producto).
-
-Devuelve SOLO este JSON (sin backticks):
+Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
-  "tipo_doc": "${m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa'}",
-  "edition": "Apprecio Beat o Beat Performance",
-  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
-  "modulos_base": [{"modulo":"nombre","por_que":"razón","accion":"acción concreta","configuracion":"cómo configurar"}],
-  "modulos_performance": [],
-  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
+  "empresa": "nombre empresa cliente",
+  "contacto": "nombre y cargo del contacto cliente principal",
+  "fecha": "fecha legible en español",
+  "tipo": "exploracion o mantencion",
+  "dotacion": "número aproximado colaboradores si se menciona, si no null",
+  "paises": "países mencionados, si no null",
+  "dolores": ["necesidad o dolor 1", "necesidad 2", "necesidad 3"],
+  "contexto": "resumen de 2-3 oraciones del contexto y necesidad del cliente"
 }`;
 
-    // Llamar al Cloudflare Worker para generación
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 40000);
-    const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ meetingInfo: m, contextAnswers: a }),
-      signal: controller.signal
-    });
-    clearTimeout(timeout);
-    const workerData = await workerRes.json();
-    clearInterval(loadingInterval);
+      const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_KEY,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: extractPrompt }]
+        })
+      });
 
-    if (workerData.error) throw new Error(workerData.error);
-    const propuesta = workerData.propuesta;
-    let html = renderPropuesta(propuesta, m, a);
+      const claudeData = await claudeRes.json();
+      const text = claudeData.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('No se pudo parsear respuesta de Claude');
+      const extracted = JSON.parse(match[0]);
 
-    document.getElementById('loading4').classList.add('hidden');
-    document.getElementById('steps-container').classList.add('hidden');
-    document.getElementById('result-label').textContent = `${tipoDoc} · ${m.empresa}`;
-    document.getElementById('result-body').innerHTML = html;
-    document.getElementById('result-container').style.display = 'block';
-    document.getElementById('result-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ encontrada: true, meetingId, ...extracted })
+      };
+    }
 
-  } catch(e) {
-    clearInterval(loadingInterval);
-    document.getElementById('loading4').classList.add('hidden');
-    document.getElementById('btn-generar-row').classList.remove('hidden');
-    alert('Error al generar la propuesta. Intenta nuevamente.');
-    console.error(e);
-  }
+    // ── GENERAR PROPUESTA ──
+    if (action === 'generar') {
+      const m = meetingInfo;
+      const a = contextAnswers || {};
+      const tipoDoc = m.tipo === 'exploracion' ? 'Guía de Demo Personalizada' : 'Propuesta de Configuración del Programa';
+      const esExploracion = m.tipo === 'exploracion';
+      const esMultipais = m.paises && m.paises.split(',').length > 1;
+
+      const prompt = `Eres especialista en Apprecio Beat, la plataforma de transformación digital, activación cultural y gestión de productividad de Apprecio para colaboradores o vendedores tercerizados.
+
+## DATOS DE LA REUNIÓN
+Empresa: ${m.empresa} | Contacto: ${m.contacto || '—'} | Fecha: ${m.fecha}
+Tipo de reunión: ${m.tipo} | Dotación: ${m.dotacion || a.colaboradores || '?'} | Países: ${m.paises || '?'}
+Contexto: ${m.contexto}
+Dolores identificados: ${(m.dolores || []).join(', ')}
+
+## CONTEXTO ADICIONAL DEL KAM
+Participantes del programa: ${Array.isArray(a.roles) ? a.roles.join(', ') : (a.roles || '?')}
+Comportamientos a mover: ${Array.isArray(a.comportamientos) ? a.comportamientos.join(', ') : (a.comportamientos || '?')}
+Modelo de operación: ${a.operacion || '?'}
+Capacidad del admin: ${a.admin || '?'}
+Experiencia previa con incentivos: ${a.experiencia || '?'}
+Tipo de reconocimiento preferido: ${Array.isArray(a.reconocimiento) ? a.reconocimiento.join(', ') : (a.reconocimiento || '?')}
+Los participantes se conocen entre sí: ${a.se_conocen || '?'}
+
+## PRODUCTO: APPRECIO BEAT — MÓDULOS DISPONIBLES
+
+### EDICIÓN BASE (Apprecio Beat) — módulos disponibles:
+- **Home:** pantalla principal con "Para Ti" (acciones pendientes automáticas) y feed resumido. "Para Ti" NO es un módulo separado — es una sección del Home.
+- **Feed social:** muro de actividad. Reconocimientos, eventos automáticos, logros. Los colaboradores reaccionan y comentan.
+- **Reconocimientos personalizados:** el manager o un colaborador envía un reconocimiento con nombre predefinido vinculado a valores de la empresa. Configurable: límite de reconocimientos por mes y presupuesto de puntos por mes (son independientes). Se publican en feed si el colaborador activa "que todos lo vean".
+- **Spot Rewards:** entrega directa e inmediata de puntos de un manager a un colaborador específico. Sin reglas, sin KPI, sin duración. Es un gesto puntual — NO campañas ni aceleradores.
+- **Ocasiones:** reconocimientos de momentos especiales configurados por la empresa (bienvenida a nuevos, Navidad, año nuevo, fiestas patrias).
+- **eCards:** tarjetas digitales prediseñadas para ocasiones específicas. Pueden firmarse por varios colaboradores. Sin puntos vinculados.
+- **Eventos automáticos:** cubren cumpleaños y aniversarios laborales. Se publican solos en el feed usando eCards como formato visual. Sin acción del admin.
+- **Premios:** dinámicas de nominación, votación y resultado. Tres etapas: Nominación → Votación → Resultado. Mecánica flexible por ciclo.
+- **Recompensas (Work Life):** beneficios no monetarios — días libres, merchandise, beneficios corporativos. Configurable con o sin aprobación del manager.
+- **Recompensas (Catálogo de Apprecio):** marketplace de gift cards. Igual para todos — NO diferenciable por nivel de colaborador.
+- **Encuestas:** el admin crea encuestas de clima, cultura, satisfacción o engagement con periodicidad configurable. La IA ayuda a crear plantillas.
+- **Insignias:** badges simbólicos entre pares. Sin puntos ni límite de envío. Sin lógica automática de premiación — si se quiere destacar a quien más recibe, debe hacerse manualmente.
+- **Entrenamientos:** experiencias de aprendizaje tipo e-learning con contenidos, secciones, quizzes y misiones. Aparecen automáticamente en "Para Ti". La IA ayuda a crear contenido.
+- **Puntos y gamificación:** gestiona los tres tipos de puntos. XP: por acciones en la plataforma, suben de nivel. Reconocimiento: para canjear recompensas. Económicos: valor monetario real para el catálogo de Apprecio.
+
+### EDICIÓN PERFORMANCE (Beat Performance) — módulos adicionales:
+- **Retos / Scorecards:** desafíos con KPI, duración y premio definido. Individuales (con ranking) o de equipo. Dos modos de operación: (1) el colaborador sube evidencia —foto, PDF— solo si el reto se configura como necesario, el admin aprueba y los puntos se liberan; (2) el admin carga meta y resultado directamente, el colaborador solo revisa su avance y la scorecard se genera automáticamente según % de cumplimiento, generando alertas de avance. Incluye semáforos de desempeño en tiempo real. **Los aceleradores de corto plazo (48-72h con KPI) van AQUÍ, no en Spot Rewards.**
+- **Centro de evidencia:** centraliza registros y evidencias que los usuarios cargan para demostrar cumplimiento dentro de un reto. El admin revisa, aprueba o rechaza. Los puntos se liberan según la lógica del reto.
+- **Ligas:** dinámicas competitivas grupales. ⚠️ No están 100% activas — si se incluyen, marcarlas como módulo en desarrollo.
+
+## RESTRICCION CRITICA — NOMBRES DE MODULOS
+SOLO puedes usar los nombres EXACTOS de esta lista numerada. Cualquier otro nombre está PROHIBIDO.
+
+1. Home
+2. Feed social
+3. Reconocimientos personalizados
+4. Spot Rewards
+5. Ocasiones
+6. eCards
+7. Eventos automáticos
+8. Premios
+9. Recompensas (Work Life)
+10. Recompensas (Catálogo de Apprecio)
+11. Encuestas
+12. Insignias
+13. Puntos y gamificación
+14. Entrenamientos
+15. Retos / Scorecards
+16. Centro de evidencia
+17. Ligas
+
+ERRORES PROHIBIDOS — si te viene a la mente alguno de estos, reemplázalo por el correcto:
+- "Aceleradores" → se llama "Retos / Scorecards"
+- "Reconocimientos Automáticos" → se llama "Eventos automáticos" o "Reconocimientos personalizados"
+- "Sistema de Puntos" → se llama "Puntos y gamificación"
+- "Dashboard Always-On" → NO EXISTE como módulo
+- "Ranking y Competencia" → NO EXISTE. El ranking está DENTRO de Retos / Scorecards
+- "Analytics Avanzados", "Métricas de Ventas", "Análisis Predictivo" → NO EXISTEN
+- "Integración API" → NO EXISTE como módulo
+- "Automatización Always On" → NO EXISTE como módulo
+
+Si un dolor del cliente no se resuelve con un módulo de la lista, NO lo incluyas. Una propuesta de 4 módulos reales es mejor que una de 7 con módulos inventados.
+
+## RESTRICCIONES — NUNCA VIOLAR:
+1. **Spot Rewards ≠ aceleradores ni campañas.** Los aceleradores de corto plazo (48-72h con KPI) van en RETOS.
+2. **Insignias → sin lógica automática.** Si se quiere premiar al que más recibe, es manual.
+3. **Ligas → no están 100% activas.** Marcarlas como en desarrollo si aparecen.
+4. **Puntos económicos → inviables en programas multi-país** con distintas monedas. ${esMultipais ? 'ESTE CLIENTE OPERA EN MÚLTIPLES PAÍSES — no proponer puntos económicos. Usar puntos de reconocimiento.' : ''}
+5. **Catálogo de Apprecio → no diferenciable por nivel.** Work Life podría serlo pero es inferencia — marcarlo.
+6. **Notificaciones push creadas por admin → no disponibles.** Las automáticas del sistema sí.
+7. **"Para Ti" → sección automática del Home,** no módulo separado. No nombrarlo como módulo.
+8. **Dashboard → panel de admin,** no módulo de la app del colaborador.
+9. **Nombre correcto: "Eventos automáticos"** — nunca "Hitos automatizados".
+10. **Cualquier funcionalidad no confirmada → marcar:** *(inferencia — verificar con producto)*
+
+## INSTRUCCIONES DE GENERACIÓN
+
+Tipo de documento: ${tipoDoc}
+${esExploracion
+  ? '→ Es una EXPLORACIÓN: las acciones deben ser propuestas hipotéticas de cómo podría verse el programa. Usa lenguaje como "podría configurarse", "se podría crear", "permitiría".'
+  : '→ Es una MANTENCIÓN/SEGUIMIENTO: las acciones deben ser concretas y accionables — lo que el KAM debe crear HOY en la plataforma. Usa lenguaje imperativo: "crear", "configurar", "activar".'
 }
 
+Selecciona SOLO los módulos realmente relevantes para este cliente según sus dolores y contexto. No incluyas módulos por incluir.
+Justifica cada módulo conectando directamente con un dolor o necesidad identificada en la reunión.
+La configuración sugerida debe ser específica y realista — no genérica.
+Los pasos de demo deben narrar un flujo coherente que muestre el valor de Beat para este cliente específico.
 
-  function renderPropuesta(p, m, a) {
-    const dotacion = m.dotacion || (a && a.colaboradores) || '—';
-    const paises = m.paises || '—';
-    const necesidadesHTML = (p.necesidades || []).map(n => `<li>${n}</li>`).join('');
-    const modBaseHTML = (p.modulos_base || []).map(mod => `
-      <div class="mod-card">
-        <div class="mod-card-header">
-          <span class="mod-badge base">Beat base</span>
-          <div class="mod-card-title">${mod.modulo}</div>
-        </div>
-        <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
-        <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
-        <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
-      </div>`).join('');
-    const modPerfHTML = (p.modulos_performance || []).length > 0 ? `
-      <div class="doc-section">
-        <div class="doc-section-title">Módulos Beat Performance</div>
-        ${(p.modulos_performance || []).map(mod => `
-          <div class="mod-card">
-            <div class="mod-card-header">
-              <span class="mod-badge performance">Beat Performance</span>
-              <div class="mod-card-title">${mod.modulo}</div>
-            </div>
-            <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
-            <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
-            <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
-          </div>`).join('')}
-      </div>` : '';
-    const pasosHTML = (p.pasos_demo || []).map((paso, i) => `
-      <div class="doc-step">
-        <div class="doc-step-num">${i+1}</div>
-        <div class="doc-step-content">${paso}</div>
-      </div>`).join('');
-    const tipoLabel = m.tipo === 'exploracion' ? 'Exploración' : 'Mantención';
-    const pasosLabel = m.tipo === 'exploracion' ? 'Flujo de demo sugerido' : 'Pasos de configuración';
-    return `
-      <div class="doc-portada">
-        <div class="doc-portada-label">${p.tipo_doc}</div>
-        <h1>${m.empresa}</h1>
-        <div class="doc-portada-meta">
-          <div class="doc-meta-item"><strong>Contacto</strong>${m.contacto || '—'}</div>
-          <div class="doc-meta-item"><strong>Fecha</strong>${m.fecha}</div>
-          <div class="doc-meta-item"><strong>Dotación</strong>${dotacion}</div>
-          <div class="doc-meta-item"><strong>Países</strong>${paises}</div>
-          <div class="doc-meta-item"><strong>Tipo de reunión</strong>${tipoLabel}</div>
-        </div>
-        <div class="doc-edition">Edición sugerida: ${p.edition}</div>
-      </div>
-      <div class="doc-section">
-        <div class="doc-section-title">Contexto y necesidades</div>
-        <ul class="doc-bullets">${necesidadesHTML}</ul>
-      </div>
-      <div class="doc-section">
-        <div class="doc-section-title">Módulos Beat base recomendados</div>
-        ${modBaseHTML}
-      </div>
-      ${modPerfHTML}
-      <div class="doc-section">
-        <div class="doc-section-title">${pasosLabel}</div>
-        <div class="doc-steps">${pasosHTML}</div>
-      </div>`;
-  }
+## EDICIÓN A SUGERIR
+- Sugiere **Apprecio Beat** si los dolores se resuelven con los módulos base.
+- Sugiere **Beat Performance** si el cliente menciona: metas comerciales, KPIs, desempeño de vendedores, formación, aceleradores, cumplimiento de objetivos, o si tiene fuerza de ventas.
 
-  function resetTodo() {
-  meetingData = null;
-  contextAnswers = {};
-  document.getElementById('result-container').style.display = 'none';
-  document.getElementById('steps-container').classList.remove('hidden');
-  ['step2','step3','step4'].forEach(id => document.getElementById(id).classList.add('hidden'));
-  document.getElementById('f-link').value = '';
-  document.getElementById('btn-buscar').disabled = false;
-  document.getElementById('btn-generar-row').classList.remove('hidden');
-  window.scrollTo(0, 0);
+Devuelve SOLO este JSON (sin backticks, sin texto adicional):
+{
+  "tipo_doc": "${tipoDoc}",
+  "edition": "Apprecio Beat o Beat Performance (elige según los dolores del cliente)",
+  "necesidades": [
+    "necesidad concreta 1 basada en la reunión",
+    "necesidad concreta 2",
+    "necesidad concreta 3",
+    "necesidad concreta 4"
+  ],
+  "modulos_base": [
+    {
+      "modulo": "nombre exacto del módulo (ej: Reconocimientos personalizados)",
+      "por_que": "justificación conectada directamente a un dolor o necesidad de este cliente — nunca genérica",
+      "accion": "${esExploracion ? 'descripción hipotética de la acción: qué se podría configurar y cómo se vería' : 'acción concreta que el KAM debe crear en la plataforma'}",
+      "configuracion": "configuración específica y realista para este cliente (límites, tipos de puntos, aprobaciones, etc.)"
+    }
+  ],
+  "modulos_performance": [],
+  "pasos_demo": [
+    "paso 1 — qué mostrar primero y por qué conecta con el cliente",
+    "paso 2",
+    "paso 3",
+    "paso 4",
+    "paso 5"
+  ]
 }
-</script>
-</body>
-</html>
+
+modulos_performance: incluir SOLO si se sugiere edición Beat Performance, sino array vacío [].
+Para módulos con inferencias o funcionalidades no confirmadas, agregar al final del campo correspondiente: (inferencia — verificar con producto)`;
+
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_KEY,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2500,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await res.json();
+      const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('No se pudo parsear respuesta');
+      const propuesta = JSON.parse(match[0]);
+
+      return { statusCode: 200, headers, body: JSON.stringify({ propuesta, meetingInfo: m, contextAnswers: a }) };
+    }
+
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Acción no reconocida' }) };
+
+  } catch (e) {
+    console.log('Error:', e.message);
+    return { statusCode: 500, headers, body: JSON.stringify({ error: e.message }) };
+  }
+};
