@@ -181,13 +181,38 @@ Los participantes se conocen entre sí: ${a.se_conocen || '?'}
 - **Centro de evidencia:** centraliza registros y evidencias que los usuarios cargan para demostrar cumplimiento dentro de un reto. El admin revisa, aprueba o rechaza. Los puntos se liberan según la lógica del reto.
 - **Ligas:** dinámicas competitivas grupales. ⚠️ No están 100% activas — si se incluyen, marcarlas como módulo en desarrollo.
 
-## ⚠️ RESTRICCIÓN CRÍTICA — MÓDULOS
-SOLO puedes recomendar módulos con los nombres EXACTOS listados arriba. Está PROHIBIDO:
-- Inventar módulos que no están en la lista (ej: "Ranking y Competencia", "Automatización Always On", "Analytics Avanzados", "Integración API", "Puntos e Incentivos")
-- Combinar módulos o crear nombres nuevos
-- Renombrar módulos existentes
-Si un dolor del cliente no se resuelve con un módulo de la lista, NO lo incluyas. Es mejor una propuesta corta y precisa que una larga con módulos inventados.
-Los nombres válidos son ÚNICAMENTE: Home · Feed social · Reconocimientos personalizados · Spot Rewards · Ocasiones · eCards · Eventos automáticos · Premios · Recompensas (Work Life) · Recompensas (Catálogo de Apprecio) · Encuestas · Insignias · Puntos y gamificación · Entrenamientos · Retos / Scorecards · Centro de evidencia · Ligas
+## RESTRICCION CRITICA — NOMBRES DE MODULOS
+SOLO puedes usar los nombres EXACTOS de esta lista numerada. Cualquier otro nombre está PROHIBIDO.
+
+1. Home
+2. Feed social
+3. Reconocimientos personalizados
+4. Spot Rewards
+5. Ocasiones
+6. eCards
+7. Eventos automáticos
+8. Premios
+9. Recompensas (Work Life)
+10. Recompensas (Catálogo de Apprecio)
+11. Encuestas
+12. Insignias
+13. Puntos y gamificación
+14. Entrenamientos
+15. Retos / Scorecards
+16. Centro de evidencia
+17. Ligas
+
+ERRORES PROHIBIDOS — si te viene a la mente alguno de estos, reemplázalo por el correcto:
+- "Aceleradores" → se llama "Retos / Scorecards"
+- "Reconocimientos Automáticos" → se llama "Eventos automáticos" o "Reconocimientos personalizados"
+- "Sistema de Puntos" → se llama "Puntos y gamificación"
+- "Dashboard Always-On" → NO EXISTE como módulo
+- "Ranking y Competencia" → NO EXISTE. El ranking está DENTRO de Retos / Scorecards
+- "Analytics Avanzados", "Métricas de Ventas", "Análisis Predictivo" → NO EXISTEN
+- "Integración API" → NO EXISTE como módulo
+- "Automatización Always On" → NO EXISTE como módulo
+
+Si un dolor del cliente no se resuelve con un módulo de la lista, NO lo incluyas. Una propuesta de 4 módulos reales es mejor que una de 7 con módulos inventados.
 
 ## RESTRICCIONES — NUNCA VIOLAR:
 1. **Spot Rewards ≠ aceleradores ni campañas.** Los aceleradores de corto plazo (48-72h con KPI) van en RETOS.
