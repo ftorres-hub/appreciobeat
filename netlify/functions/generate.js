@@ -77,14 +77,26 @@ exports.handler = async function(event) {
         });
         if (tRes.ok) {
           const tData = await tRes.json();
-          console.log('TRANSCRIPT RAW:', JSON.stringify(tData).slice(0, 500));
           transcriptText = tData.transcript || tData.text || tData.content || JSON.stringify(tData).slice(0, 3000);
         }
       }
 
       const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
       const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
+
+      // Extraer todo el contenido disponible de Diio
       const summary = m.summary || m.description || m.analysis || m.notes || '';
+      const painPoints = Array.isArray(m.pain_points) ? m.pain_points.map(p => typeof p === 'string' ? p : p.text || p.content || JSON.stringify(p)).join('\n') : '';
+      const keyNotes = Array.isArray(m.key_notes) ? m.key_notes.map(n => typeof n === 'string' ? n : n.text || n.content || JSON.stringify(n)).join('\n') : '';
+      const commitments = Array.isArray(m.commitments) ? m.commitments.map(c => typeof c === 'string' ? c : c.text || c.description || JSON.stringify(c)).join('\n') : '';
+      const specificInfo = Array.isArray(m.specific_info) ? m.specific_info.map(i => typeof i === 'string' ? i : i.text || i.content || JSON.stringify(i)).join('\n') : '';
+      // Agregar campos extra que pueda tener Diio
+      const extraFields = ['insights', 'objections', 'next_steps', 'topics', 'highlights'].map(k => m[k] ? `${k}: ${JSON.stringify(m[k]).slice(0, 500)}` : '').filter(Boolean).join('\n');
+
+      console.log('Summary length:', summary.length);
+      console.log('PainPoints length:', painPoints.length);
+      console.log('KeyNotes length:', keyNotes.length);
+      console.log('All meeting keys:', JSON.stringify(Object.keys(m)));
 
       const extractPrompt = `Analiza esta reunión de ventas de Apprecio y extrae los datos clave.
 
@@ -92,8 +104,13 @@ Nombre reunión: ${m.name || ''}
 Fecha: ${m.scheduled_at || m.created_at || ''}
 Ejecutivo Apprecio: ${sellers}
 Contactos cliente: ${customers}
-Resumen/análisis: ${summary.slice(0, 4000)}
-Transcript: ${transcriptText.slice(0, 4000)}
+Resumen/análisis: ${summary.slice(0, 3000)}
+Dolores del cliente (si disponible): ${painPoints.slice(0, 2000)}
+Apuntes clave (si disponible): ${keyNotes.slice(0, 2000)}
+Compromisos (si disponible): ${commitments.slice(0, 1000)}
+Información específica (si disponible): ${specificInfo.slice(0, 1000)}
+Campos adicionales: ${extraFields.slice(0, 1000)}
+Transcript: ${transcriptText.slice(0, 2000)}
 
 INSTRUCCIONES PARA EXTRAER DOLORES:
 - Extrae entre 4 y 6 dolores o necesidades ESPECÍFICAS mencionadas en la reunión
