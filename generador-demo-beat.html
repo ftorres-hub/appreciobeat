@@ -269,13 +269,14 @@ const QUESTIONS = [
     id: 'roles',
     label: '¿Quiénes participan en el programa?',
     type: 'multi',
-    options: ['Colaboradores', 'Líderes / managers', 'Ejecutivos', 'Vendedores', 'Todos por igual']
+    options: ['Colaboradores', 'Líderes / managers', 'Ejecutivos', 'Vendedores', 'Todos por igual', 'Otro'],
+    otro: true
   },
   {
     id: 'se_conocen',
     label: '¿Los participantes se conocen entre sí?',
     type: 'single',
-    options: ['Sí, equipos cercanos', 'No, son distribuidos o no se conocen', 'Mixto']
+    options: ['Sí, todos se conocen', 'No, son distribuidos o no se conocen', 'Se conocen por equipos/zonas', 'Mixto']
   },
   {
     id: 'colaboradores',
@@ -287,7 +288,8 @@ const QUESTIONS = [
     id: 'comportamientos',
     label: '¿Qué comportamientos quiere mover el cliente?',
     type: 'multi',
-    options: ['Reconocimiento entre pares', 'Cumplimiento de metas', 'Adopción de valores', 'Ventas / resultados', 'Bienestar y trabajo en equipo', 'Otro']
+    options: ['Reconocimiento entre pares', 'Cumplimiento de metas', 'Adopción de valores', 'Ventas / resultados', 'Bienestar y trabajo en equipo', 'Otro'],
+    otro: true
   },
   {
     id: 'operacion',
@@ -311,7 +313,8 @@ const QUESTIONS = [
     id: 'reconocimiento',
     label: '¿Qué tipo de reconocimiento tiene más sentido para este cliente?',
     type: 'multi',
-    options: ['Reconocimiento social / visibilidad', 'Puntos / incentivos económicos', 'Insignias y logros', 'Ranking / competencia', 'Recompensas de bienestar']
+    options: ['Reconocimiento social / visibilidad', 'Puntos / incentivos económicos', 'Insignias y logros', 'Ranking / competencia', 'Recompensas de bienestar', 'Otro'],
+    otro: true
   }
 ];
 
@@ -328,6 +331,7 @@ function renderContextQuestions() {
             ${o}
           </button>`).join('')}
       </div>
+      ${q.otro ? `<input type="text" class="q-input q-otro hidden" id="otro-${q.id}" placeholder="Especifica aquí..." oninput="contextAnswers['${q.id}_otro'] = this.value" />` : ''}
     </div>
   `).join('');
 }
@@ -341,6 +345,13 @@ function toggleOption(btn, type, qid) {
     btn.classList.toggle('selected');
     const selected = [...document.querySelectorAll(`[data-qid="${qid}"].selected`)].map(b => b.dataset.val);
     contextAnswers[qid] = selected;
+  }
+  // Mostrar campo de texto si seleccionó "Otro"
+  const otroInput = document.getElementById(`otro-${qid}`);
+  if (otroInput) {
+    const otroSelected = [...document.querySelectorAll(`[data-qid="${qid}"].selected`)].some(b => b.dataset.val === 'Otro');
+    otroInput.classList.toggle('hidden', !otroSelected);
+    if (!otroSelected) { otroInput.value = ''; delete contextAnswers[`${qid}_otro`]; }
   }
 }
 
@@ -520,6 +531,7 @@ function renderPropuesta(p, m, a) {
       <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
       <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
       <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+      ${mod.prompt_ia ? `<div class="mod-action-row" style="background:#F0EDFC;"><div class="mod-action-label" style="color:#6C5FBF;">✦ Prompt para IA de la plataforma</div><div class="mod-action-text" style="font-style:italic; color:#3D3580;">${mod.prompt_ia}</div></div>` : ''}
     </div>`).join('');
   const modPerfHTML = (p.modulos_performance || []).length > 0 ? `
     <div class="doc-section">
@@ -533,6 +545,7 @@ function renderPropuesta(p, m, a) {
           <div class="mod-why"><strong>Por qué se recomienda:</strong> ${mod.por_que}</div>
           <div class="mod-action-row"><div class="mod-action-label">Acción a crear</div><div class="mod-action-text">${mod.accion}</div></div>
           <div class="mod-action-row"><div class="mod-action-label">Configuración sugerida</div><div class="mod-action-text">${mod.configuracion}</div></div>
+          ${mod.prompt_ia ? `<div class="mod-action-row" style="background:#F0EDFC;"><div class="mod-action-label" style="color:#6C5FBF;">✦ Prompt para IA de la plataforma</div><div class="mod-action-text" style="font-style:italic; color:#3D3580;">${mod.prompt_ia}</div></div>` : ''}
         </div>`).join('')}
     </div>` : '';
   const pasosHTML = (p.pasos_demo || []).map((paso, i) => `
