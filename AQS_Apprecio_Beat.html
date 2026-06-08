@@ -181,10 +181,16 @@ html,body{
   text-transform:uppercase; color:#FA345E; margin-bottom:5px;
 }
 .formula{
-  font-size:14px; font-weight:900; color:#1B1B1B;
-  line-height:1.4; margin-bottom:5px;
+  font-size:13px; font-weight:900; color:#1B1B1B;
+  line-height:1.4; margin-bottom:6px;
 }
 .formula-note{ font-size:9.5px; line-height:1.65; color:#4B5563; }
+.formula-example{
+  margin-top:8px; padding-top:8px;
+  border-top:1px solid rgba(250,52,94,0.2);
+  font-size:9px; line-height:1.7; color:#1B1B1B;
+}
+.formula-example strong{ color:#FA345E; }
 
 /* ── TABLAS ── */
 table{ width:100%; border-collapse:collapse; font-size:10px; }
@@ -244,7 +250,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div>
         <div class="pg-tag">Apprecio Beat · GTM Comercial</div>
         <div class="pg-title">AQS — Account Qualification Score</div>
-        <div class="pg-sub">Sistema estándar para calificar cuentas y oportunidades de Apprecio Beat dentro del funnel comercial. Define prioridad, tratamiento y edición recomendada.</div>
+        <div class="pg-sub">Sistema estándar para calificar y priorizar oportunidades de Apprecio Beat dentro del funnel comercial. Define tratamiento, edición recomendada y recursos a involucrar.</div>
       </div>
       <div class="pg-badge">
         <span class="val">AQS</span>
@@ -256,7 +262,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
   <div class="pg-body">
 
     <div class="intro-box">
-      <strong>Apprecio Beat</strong> es la plataforma de reconocimiento, recompensas y engagement de colaboradores de Apprecio. El AQS no mide precio ni complejidad aislada — mide la <strong>madurez comercial real</strong> de una oportunidad y su capacidad de transformarse en una relación SaaS recurrente. En simple: <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong>
+      El AQS no mide precio ni complejidad técnica aislada — mide la <strong>madurez comercial real de una oportunidad</strong> y su capacidad de convertirse en una relación SaaS recurrente con Apprecio Beat. Un score alto no significa que el cliente sea grande: significa que tiene el problema correcto, el sponsor adecuado y la intención de resolverlo.
     </div>
 
     <!-- PARA QUÉ Y PRINCIPIO -->
@@ -266,14 +272,14 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         <ul>
           <li>Priorizar oportunidades de Apprecio Beat con criterios objetivos.</li>
           <li>Distinguir si la necesidad corresponde a <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
-          <li>Definir el tratamiento comercial: 1:1, 1:few, educación o nurture.</li>
-          <li>Determinar qué recursos internos involucrar: KAM, BDM, PM, CM o Dirección Comercial.</li>
+          <li>Definir el tratamiento comercial: avance activo, maduración, educación o nurture.</li>
+          <li>Determinar qué recursos involucrar: KAM, BDM, PM, CM o Dirección Comercial.</li>
           <li>Evitar que oportunidades transaccionales consuman esfuerzo de solución SaaS.</li>
         </ul>
       </div>
       <div class="card soft">
         <h3>Principio de uso</h3>
-        <p>El AQS mide <strong>prioridad comercial y madurez SaaS</strong>. No reemplaza el criterio del ejecutivo ni define por sí solo el precio, pero sí ordena foco, cadencia y profundidad de venta.</p>
+        <p>El AQS mide <strong>prioridad comercial y madurez SaaS</strong>. No reemplaza el criterio del ejecutivo ni define por sí solo el precio, pero sí ordena foco, cadencia y profundidad de venta. Si no hay evidencia concreta para un factor, se puntúa hacia abajo.</p>
         <div class="pill-row">
           <div class="pill high">Avance activo</div>
           <div class="pill mid">Madurar</div>
@@ -287,7 +293,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div class="grid-2">
       <div class="card green">
         <h3>Apprecio Beat</h3>
-        <p>Plataforma de cultura, reconocimiento, engagement y recompensas. Aplica cuando el cliente busca activar participación, visibilidad cultural y conexión entre colaboradores.</p>
+        <p>Plataforma de cultura, reconocimiento, engagement y recompensas para colaboradores. Aplica cuando el cliente necesita activar participación, visibilidad cultural y conexión interna de forma continua.</p>
+        <p><strong>Buyer principal:</strong> Gerencias de Personas, Cultura o Comunicaciones Internas.</p>
         <div>
           <span class="tag beat">Reconocimientos</span>
           <span class="tag beat">eCards</span>
@@ -299,7 +306,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       </div>
       <div class="card blue">
         <h3>Beat Performance</h3>
-        <p>Versión de Apprecio Beat para equipos que además necesitan activar desempeño, formación, cumplimiento de metas, evidencia y competencia sana entre equipos.</p>
+        <p>Producto orientado a áreas que necesitan gestionar metas, medir cumplimiento y activar desempeño con evidencia y scorecards. No es una evolución de Apprecio Beat — responde a un objetivo y un buyer distintos.</p>
+        <p><strong>Buyer principal:</strong> Gerencias Comerciales, Operaciones o áreas con KPIs.</p>
         <div>
           <span class="tag perf">Scorecards</span>
           <span class="tag perf">KPIs</span>
@@ -316,46 +324,35 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="step s1">
         <div class="step-num">Paso 1</div>
         <h3>AQS sugerido post reunión de exploración</h3>
-        <p><strong>Disparador:</strong> cuando una reunión de exploración, upsell desde Rewards o levantamiento con cliente queda registrada en Diio.</p>
-        <p><strong>Proceso:</strong> el sistema analiza automáticamente las señales de la reunión y evalúa cinco factores:</p>
-        <ul>
-          <li><strong>Fit Beat:</strong> calce con colaboradores, cultura, reconocimiento, engagement o recompensas.</li>
-          <li><strong>Intent:</strong> urgencia, dolor explícito y voluntad de avanzar.</li>
-          <li><strong>Expansión SaaS:</strong> potencial de recurrencia más allá de una campaña puntual.</li>
-          <li><strong>Viabilidad operativa:</strong> disponibilidad de datos, responsables y capacidad de operar el programa.</li>
-          <li><strong>Patrocinio:</strong> sponsor funcional y acceso a decisores.</li>
-        </ul>
-        <p><strong>Resultado:</strong> se registra un AQS sugerido y una recomendación inicial: Apprecio Beat, Beat Performance, educación o nurture.</p>
+        <p><strong>Disparador:</strong> reunión de exploración, upsell desde Rewards o levantamiento con cliente registrado en Diio.</p>
+        <p><strong>Proceso:</strong> el sistema analiza automáticamente las señales de la reunión y evalúa cinco factores: Fit Beat, Intent, Expansión SaaS, Viabilidad operativa y Patrocinio.</p>
+        <p><strong>Resultado:</strong> AQS sugerido con recomendación inicial de edición — Apprecio Beat, Beat Performance, educación o nurture.</p>
       </div>
 
       <div class="step s2">
         <div class="step-num">Paso 2</div>
         <h3>Revisión comercial y ajuste de edición</h3>
-        <p><strong>Acción esperada:</strong> el KAM o BDM valida el AQS sugerido, corrige señales insuficientes y deja una justificación breve si ajusta el puntaje.</p>
-        <p><strong>Rol del PM:</strong> revisar si la necesidad detectada calza con la edición recomendada, si hay promesas implícitas fuera de alcance y si la oportunidad requiere demo, propuesta o educación previa.</p>
-        <p><strong>Resultado:</strong> la oportunidad queda clasificada con una ruta comercial clara: <strong>Apprecio Beat</strong>, <strong>Beat Performance</strong>, maduración o descarte.</p>
+        <p><strong>Acción esperada:</strong> el KAM o BDM valida el AQS sugerido, corrige señales insuficientes y justifica brevemente cualquier ajuste al puntaje.</p>
+        <p><strong>Rol del PM:</strong> revisar si la necesidad calza con la edición recomendada, si hay promesas fuera de alcance y si la oportunidad requiere demo, propuesta o educación previa.</p>
+        <p><strong>Resultado:</strong> oportunidad clasificada con ruta comercial clara: <strong>Apprecio Beat</strong>, <strong>Beat Performance</strong>, maduración o descarte.</p>
       </div>
 
       <div class="step s3">
         <div class="step-num">Paso 3</div>
         <h3>AQS validado al solicitar propuesta o demo avanzada</h3>
-        <p>El AQS se vuelve más confiable cuando el cliente entrega información concreta: población objetivo, problema a resolver, sponsor, timing, presupuesto estimado y módulos esperados. En esta instancia se valida:</p>
-        <ul>
-          <li>si el caso es solo reconocimiento/recompensas o también performance,</li>
-          <li>si existe intención de programa recurrente y no solo campaña puntual,</li>
-          <li>si hay responsables internos para administración y adopción,</li>
-          <li>si existe decision date y proceso de compra identificable,</li>
-          <li>si la oportunidad amerita acompañamiento PM o senior.</li>
-        </ul>
-        <p><strong>Resultado:</strong> se registra un AQS validado final en HubSpot, junto con edición recomendada, razón de avance y próximos pasos.</p>
+        <p>El score se vuelve más confiable cuando el cliente entrega información concreta: población objetivo, problema a resolver, sponsor, timing, presupuesto estimado y módulos esperados. Se valida si hay programa recurrente o solo campaña puntual, si existen responsables internos, si hay decision date identificable y si la oportunidad amerita acompañamiento PM o senior.</p>
+        <p><strong>Resultado:</strong> AQS validado final registrado en HubSpot con edición recomendada, razón de avance y próximos pasos.</p>
       </div>
     </div>
 
     <!-- FÓRMULA -->
     <div class="formula-box">
       <div class="formula-lbl">Modelo de scoring</div>
-      <div class="formula">AQS = 4 × (Fit Beat + Intent + Expansión SaaS + Viabilidad operativa + Patrocinio)</div>
-      <div class="formula-note">Cada factor se puntúa de <strong>0 a 5</strong>. El resultado final es un score entre <strong>0 y 100</strong>. Si hay duda entre dos valores, se elige el más bajo. Cada puntuación debe basarse en evidencia registrada en la reunión, CRM o formulario comercial.</div>
+      <div class="formula">AQS = (Fit Beat + Intent + Expansión SaaS + Viabilidad operativa + Patrocinio) × 4</div>
+      <div class="formula-note">Cada uno de los 5 factores se puntúa de <strong>0 a 5</strong>. La suma máxima es 25. Al multiplicar por 4 se obtiene un score final entre <strong>0 y 100</strong>. En caso de duda entre dos valores, siempre se elige el más bajo. Cada puntuación debe basarse en evidencia registrada — no en supuestos.</div>
+      <div class="formula-example">
+        <strong>Ejemplo:</strong> Fit Beat 4 + Intent 3 + Expansión SaaS 3 + Viabilidad 3 + Patrocinio 4 = 17 × 4 = <strong>AQS 68</strong> → Tratamiento: madurar necesidad y confirmar decision date antes de propuesta.
+      </div>
     </div>
 
     <!-- REGLAS Y AVANCE -->
@@ -363,10 +360,10 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="card">
         <h3>Reglas generales</h3>
         <ul>
-          <li>El score mide <strong>madurez de oportunidad Apprecio Beat</strong>.</li>
-          <li>No mide precio, margen ni dificultad técnica aislada.</li>
+          <li>El score mide <strong>madurez de oportunidad Apprecio Beat</strong>, no tamaño ni precio.</li>
           <li>Debe distinguir campaña puntual vs programa recurrente.</li>
-          <li>No debe inflarse si no hay sponsor, timing o evidencia.</li>
+          <li>No inflarse si no hay sponsor, timing o evidencia concreta.</li>
+          <li>Cada factor evalúa una dimensión distinta — no mezclar criterios entre factores.</li>
         </ul>
       </div>
       <div class="card soft">
@@ -375,7 +372,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <li><strong>AQS ≥ 70:</strong> avance activo y alta prioridad.</li>
           <li><strong>AQS 55–69:</strong> madurar con reunión, demo o educación.</li>
           <li><strong>AQS 40–54:</strong> oportunidad temprana o uso puntual.</li>
-          <li><strong>Sin decision date:</strong> no debería avanzar a propuesta final.</li>
+          <li><strong>AQS &lt; 40:</strong> nurture — no comprometer recursos senior.</li>
+          <li><strong>Sin decision date:</strong> no avanzar a propuesta final.</li>
         </ul>
       </div>
     </div>
@@ -399,7 +397,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div>
         <div class="pg-tag">Apprecio Beat · AQS</div>
         <div class="pg-title">Factores y rúbrica de evaluación</div>
-        <div class="pg-sub">Cada factor se puntúa de 0 a 5. La suma de los cinco factores multiplicada por 4 da el AQS final entre 0 y 100.</div>
+        <div class="pg-sub">Cada factor se puntúa de 0 a 5 de forma independiente. Cada uno mide una dimensión distinta — no mezclar criterios entre factores al puntuar.</div>
       </div>
       <div class="pg-badge">
         <span class="val">0 → 100</span>
@@ -412,76 +410,76 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 
     <!-- FACTOR 1 -->
     <div>
-      <div class="sec-title">1. Fit Beat</div>
-      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide qué tan bien calza la cuenta con los problemas que Apprecio Beat resuelve: cultura visible, reconocimiento, engagement, recompensas, retención o desempeño de colaboradores.</p>
+      <div class="sec-title">1. Fit Beat — ¿Calza el problema con lo que Apprecio Beat resuelve?</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide qué tan bien se alinea la necesidad del cliente con los problemas que Apprecio Beat resuelve: cultura interna, reconocimiento, engagement, recompensas o retención de colaboradores. No evalúa urgencia ni sponsor — solo el calce del problema.</p>
       <table>
         <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
-        <tr><td>0</td><td>Fuera de foco: no hay colaboradores objetivo ni necesidad de cultura, reconocimiento, engagement o performance.</td></tr>
-        <tr><td>1</td><td>Necesidad muy puntual, transaccional o limitada a entrega de beneficios sin programa.</td></tr>
-        <tr><td>2</td><td>Existe interés en recompensas o participación, pero sin dolor claro ni población relevante.</td></tr>
-        <tr><td>3</td><td>Calza con Apprecio Beat: reconocimiento, encuestas, recompensas, hitos o feed social para colaboradores.</td></tr>
-        <tr><td>4</td><td>Calce sólido: cultura/engagement recurrente, sponsor funcional y necesidad multi-área o multi-sede.</td></tr>
-        <tr><td>5</td><td>ICP ideal: necesidad transversal de engagement y/o desempeño, población relevante, recurrencia esperada y problema estratégico.</td></tr>
+        <tr><td>0</td><td>Sin foco en colaboradores. No hay necesidad de cultura, reconocimiento, engagement ni recompensas.</td></tr>
+        <tr><td>1</td><td>Necesidad muy puntual o transaccional: entrega de un beneficio o incentivo sin continuidad ni programa.</td></tr>
+        <tr><td>2</td><td>Hay interés en recompensas o participación, pero el problema no está bien definido ni hay población objetivo clara.</td></tr>
+        <tr><td>3</td><td>El problema calza con Apprecio Beat: reconocimiento entre pares o managers, encuestas, recompensas, hitos o feed social para colaboradores.</td></tr>
+        <tr><td>4</td><td>Calce sólido y transversal: necesidad de cultura o engagement recurrente en múltiples áreas, sedes o modalidades de trabajo.</td></tr>
+        <tr><td>5</td><td>ICP ideal: necesidad estratégica de cultura y engagement, población relevante y clara, con potencial de impacto medible y recurrencia esperada.</td></tr>
       </table>
     </div>
 
     <!-- FACTOR 2 -->
     <div>
-      <div class="sec-title">2. Intent</div>
-      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide el nivel de urgencia y voluntad real de resolver el problema con una solución digital, no solo el interés exploratorio en conocer la plataforma.</p>
+      <div class="sec-title">2. Intent — ¿Qué tan urgente y real es la voluntad de resolver el problema?</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide la urgencia y voluntad real de resolver el problema con una solución digital. No evalúa si el problema existe (eso es Fit Beat) — evalúa si el cliente quiere resolverlo ahora y con qué nivel de compromiso.</p>
       <table>
         <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
-        <tr><td>0</td><td>Sin señales de interés o necesidad.</td></tr>
-        <tr><td>1</td><td>Curiosidad vaga o conversación informativa sin dolor.</td></tr>
-        <tr><td>2</td><td>Interés exploratorio, sin timing ni siguiente paso definido.</td></tr>
-        <tr><td>3</td><td>Proyecto posible a 6–12 meses o necesidad reconocida sin prioridad inmediata.</td></tr>
-        <tr><td>4</td><td>Proyecto activo, búsqueda de alternativas o necesidad priorizada internamente.</td></tr>
-        <tr><td>5</td><td>Urgencia en ≤ 3 meses, dolor explícito y disposición a avanzar con demo o propuesta.</td></tr>
+        <tr><td>0</td><td>Sin señales de interés ni necesidad identificada.</td></tr>
+        <tr><td>1</td><td>Curiosidad pasiva: el cliente conoce la plataforma pero no tiene problema concreto ni intención de avanzar.</td></tr>
+        <tr><td>2</td><td>Interés exploratorio: hay conversación, pero sin dolor explícito, sin timing definido y sin siguiente paso acordado.</td></tr>
+        <tr><td>3</td><td>Necesidad reconocida internamente, pero sin prioridad inmediata. Proyecto posible en más de 6 meses o sujeto a aprobación pendiente.</td></tr>
+        <tr><td>4</td><td>Proyecto activo: el cliente está evaluando alternativas, tiene una necesidad priorizada y hay disposición a avanzar con demo o propuesta en los próximos meses.</td></tr>
+        <tr><td>5</td><td>Urgencia real: dolor explícito, proyecto con fecha de inicio en ≤ 3 meses y disposición clara a avanzar con propuesta o cierre.</td></tr>
       </table>
     </div>
 
     <!-- FACTOR 3 -->
     <div>
-      <div class="sec-title">3. Expansión SaaS</div>
-      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si la oportunidad puede transformarse en una relación recurrente de Apprecio Beat, especialmente desde clientes Rewards o campañas puntuales.</p>
+      <div class="sec-title">3. Expansión SaaS — ¿Puede convertirse en una relación recurrente?</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si la oportunidad tiene potencial de transformarse en un programa continuo de Apprecio Beat, en lugar de una compra o campaña puntual. Aplica especialmente para clientes que ya usan Rewards.</p>
       <table>
         <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
-        <tr><td>0</td><td>Uso único sin continuidad ni interés en plataforma.</td></tr>
-        <tr><td>1</td><td>Campaña aislada, incentivo puntual o beneficio ocasional.</td></tr>
-        <tr><td>2</td><td>Posible repetición, pero sin dueño interno ni programa definido.</td></tr>
-        <tr><td>3</td><td>Interés en programa recurrente de reconocimiento, encuestas o recompensas.</td></tr>
-        <tr><td>4</td><td>Necesidad clara de recurrencia, comunicación interna y seguimiento de adopción.</td></tr>
-        <tr><td>5</td><td>Oportunidad estratégica de expansión desde Rewards a Apprecio Beat, con uso diario, métricas e impacto medible.</td></tr>
+        <tr><td>0</td><td>Uso completamente puntual, sin ninguna señal de continuidad ni interés en plataforma.</td></tr>
+        <tr><td>1</td><td>Campaña aislada o incentivo de fecha específica. El cliente no ha mencionado recurrencia ni programa.</td></tr>
+        <tr><td>2</td><td>Hay alguna señal de repetición, pero sin dueño interno, sin presupuesto recurrente ni programa definido.</td></tr>
+        <tr><td>3</td><td>El cliente expresa interés en mantener un programa activo: menciona frecuencia, seguimiento de adopción o continuidad más allá de una campaña.</td></tr>
+        <tr><td>4</td><td>Necesidad clara de recurrencia con responsable interno identificado y disposición a comprometer presupuesto mensual o anual.</td></tr>
+        <tr><td>5</td><td>Expansión estratégica desde Rewards a Apprecio Beat: el cliente ya tiene relación activa con Apprecio, ve el valor de la plataforma continua y quiere medir impacto en el tiempo.</td></tr>
       </table>
     </div>
 
     <!-- FACTOR 4 -->
     <div>
-      <div class="sec-title">4. Viabilidad operativa</div>
-      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si el cliente puede implementar y sostener el programa con información, responsables y operación suficiente. Para Beat Performance, también considera KPIs, evidencias, entrenamientos o reglas de scorecard.</p>
+      <div class="sec-title">4. Viabilidad operativa — ¿Puede el cliente implementar y sostener el programa?</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide si el cliente tiene la información, los responsables y la capacidad operativa para lanzar y mantener el programa. No evalúa voluntad (eso es Intent) — evalúa si tiene las condiciones mínimas para operar.</p>
       <table>
         <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
-        <tr><td>0</td><td>Sin base de usuarios, responsables ni datos mínimos.</td></tr>
-        <tr><td>1</td><td>Alta fragilidad operativa: información desordenada o sin ownership interno.</td></tr>
-        <tr><td>2</td><td>Existe población objetivo, pero faltan responsables, reglas o datos confiables.</td></tr>
-        <tr><td>3</td><td>Viable para Apprecio Beat: usuarios definidos, responsable interno y mecánica inicial clara.</td></tr>
-        <tr><td>4</td><td>Viabilidad sólida: datos accesibles, comunicación interna y capacidad de administrar campañas.</td></tr>
-        <tr><td>5</td><td>Viabilidad alta para Beat Performance: KPIs, scorecards, evidencias o contenidos listos para operar.</td></tr>
+        <tr><td>0</td><td>Sin base de usuarios, sin responsables definidos ni datos mínimos disponibles.</td></tr>
+        <tr><td>1</td><td>Alta fragilidad operativa: información desordenada, sin ownership interno claro ni capacidad de administrar un programa.</td></tr>
+        <tr><td>2</td><td>Existe una población objetivo identificada, pero faltan responsables, reglas de participación o datos confiables para operar.</td></tr>
+        <tr><td>3</td><td>Viable para Apprecio Beat: hay un responsable interno, la población objetivo está definida y existe una mecánica inicial posible de implementar.</td></tr>
+        <tr><td>4</td><td>Viabilidad sólida: datos accesibles, comunicación interna activa, capacidad de administrar campañas y hacer seguimiento de adopción.</td></tr>
+        <tr><td>5</td><td>Viabilidad alta: operación robusta con todos los elementos listos — o, en caso de Beat Performance, también con KPIs, scorecards y evidencias definidos para operar.</td></tr>
       </table>
     </div>
 
     <!-- FACTOR 5 -->
     <div>
-      <div class="sec-title">5. Patrocinio</div>
-      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide el nivel de sponsor, influencia y capacidad real para movilizar la decisión dentro de la empresa.</p>
+      <div class="sec-title">5. Patrocinio — ¿Quién impulsa la decisión y con qué nivel de influencia?</div>
+      <p style="font-size:10px;color:#4B5563;margin-bottom:6px;line-height:1.6;">Mide el nivel de sponsor, acceso a decisores y capacidad real de movilizar la compra dentro de la organización. No evalúa el problema ni la urgencia — evalúa quién está detrás de la decisión.</p>
       <table>
         <tr><th style="width:14%;">Puntaje</th><th>Criterio</th></tr>
-        <tr><td>0</td><td>Contacto frío o sin vínculo con el problema.</td></tr>
-        <tr><td>1</td><td>Usuario sin influencia ni acceso a sponsor.</td></tr>
-        <tr><td>2</td><td>Manager medio o contacto operativo con interés limitado.</td></tr>
-        <tr><td>3</td><td>Champion funcional con capacidad de impulsar conversación interna.</td></tr>
-        <tr><td>4</td><td>Sponsor senior accesible: RRHH, Cultura, Comercial, Operaciones, Marketing Interno o Transformación.</td></tr>
-        <tr><td>5</td><td>Decisor y champion activos, con proceso de compra y decision date identificados.</td></tr>
+        <tr><td>0</td><td>Contacto frío o sin ningún vínculo con el problema ni con decisores internos.</td></tr>
+        <tr><td>1</td><td>Usuario operativo sin influencia ni acceso a sponsor. No puede impulsar la conversación internamente.</td></tr>
+        <tr><td>2</td><td>Manager medio con interés, pero sin acceso directo a quien aprueba ni capacidad de generar urgencia.</td></tr>
+        <tr><td>3</td><td>Champion funcional con influencia interna: puede impulsar la conversación y tiene acceso a quien decide, aunque no es el decisor.</td></tr>
+        <tr><td>4</td><td>Sponsor senior accesible y comprometido: RRHH, Cultura, Comercial, Operaciones o Transformación, con capacidad real de aprobar o influir en el presupuesto.</td></tr>
+        <tr><td>5</td><td>Decisor y champion activos, con proceso de compra identificado, presupuesto disponible y decision date definida.</td></tr>
       </table>
     </div>
 
@@ -520,10 +518,10 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="sec-title">Tratamiento según AQS</div>
       <table>
         <tr><th style="width:18%;">AQS</th><th style="width:22%;">Tratamiento</th><th>Acción recomendada</th></tr>
-        <tr class="td-highlight"><td><strong>70 o más</strong></td><td>Prioridad alta</td><td>Avance activo con demo o propuesta. Involucrar PM si hay definición de edición, alcance o Beat Performance.</td></tr>
+        <tr class="td-highlight"><td><strong>70 o más</strong></td><td>Prioridad alta</td><td>Avance activo con demo o propuesta. Involucrar PM si hay definición de edición, alcance o señales de Beat Performance.</td></tr>
         <tr><td><strong>55 a 69</strong></td><td>Prioridad media</td><td>Madurar necesidad, confirmar sponsor, definir edición y conseguir decision date antes de propuesta final.</td></tr>
-        <tr><td><strong>40 a 54</strong></td><td>Oportunidad temprana</td><td>Educar, enviar asset, agendar follow-up o explorar si viene desde Rewards como futura expansión.</td></tr>
-        <tr><td><strong>39 o menos</strong></td><td>Nurture</td><td>No comprometer recursos senior. Mantener contacto, contenido educativo o campaña de reactivación.</td></tr>
+        <tr><td><strong>40 a 54</strong></td><td>Oportunidad temprana</td><td>Educar, enviar asset comercial, agendar follow-up o explorar si viene desde Rewards como futura expansión.</td></tr>
+        <tr><td><strong>39 o menos</strong></td><td>Nurture</td><td>No comprometer recursos senior. Mantener contacto con contenido educativo o campaña de reactivación.</td></tr>
       </table>
     </div>
 
@@ -531,17 +529,18 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div>
       <div class="sec-title">Lectura esperada por edición</div>
       <table>
-        <tr><th style="width:24%;">Ruta</th><th>Criterio de recomendación</th></tr>
-        <tr><td><strong>Apprecio Beat</strong></td><td>Recomendar cuando el dolor principal sea cultura visible, reconocimiento, hitos, encuestas, recompensas, feed social, engagement o fidelización de colaboradores.</td></tr>
-        <tr><td><strong>Beat Performance</strong></td><td>Recomendar cuando además existan metas, KPIs, entrenamientos, evidencia, scorecards, ligas, cumplimiento o desempeño medible.</td></tr>
-        <tr><td><strong>Rewards → Apprecio Beat</strong></td><td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, gestión de colaboradores o interés en medir impacto más allá de redenciones.</td></tr>
-        <tr><td><strong>Nurture / educación</strong></td><td>Usar cuando el cliente solo busca una entrega puntual, no tiene sponsor, no tiene timing o aún no reconoce el problema como programa recurrente.</td></tr>
+        <tr><th style="width:26%;">Ruta</th><th>Criterio de recomendación</th></tr>
+        <tr><td><strong>Apprecio Beat</strong></td><td>Recomendar cuando el dolor principal sea cultura visible, reconocimiento entre pares o managers, hitos, encuestas, recompensas, feed social, engagement o fidelización de colaboradores.</td></tr>
+        <tr><td><strong>Beat Performance</strong></td><td>Recomendar cuando además existan metas, KPIs, entrenamientos, evidencia, scorecards, ligas o cumplimiento medible — y el buyer sea un área comercial u operativa, no solo personas o cultura.</td></tr>
+        <tr><td><strong>Rewards → Apprecio Beat</strong></td><td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, interés en gestionar colaboradores o querer medir impacto más allá de redenciones puntuales.</td></tr>
+        <tr><td><strong>Nurture / educación</strong></td><td>Usar cuando el cliente solo busca una entrega puntual, no tiene sponsor, no tiene timing claro o aún no reconoce el problema como un programa recurrente.</td></tr>
       </table>
     </div>
 
     <!-- AQS POR TIER -->
     <div>
       <div class="sec-title">AQS esperado por Tier</div>
+      <p style="font-size:9.5px;color:#4B5563;margin-bottom:7px;line-height:1.6;">El Tier define el potencial estructural de la cuenta (tamaño, valor estratégico). El AQS define la madurez de la oportunidad dentro de ese Tier. Ver documento de Tiering para definición completa de cada nivel.</p>
       <table>
         <tr><th style="width:20%;">Tier</th><th>AQS esperado para Apprecio Beat</th></tr>
         <tr>
@@ -554,7 +553,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         </tr>
         <tr>
           <td><strong>Tier C</strong></td>
-          <td>Entrada válida: <strong>≥ 45</strong> · Tratamiento principal: educación, paquetes simples y maduración · Excepción: <strong>≥ 65</strong> si hay sponsor activo, recurrencia y urgencia real</td>
+          <td>Entrada válida: <strong>≥ 45</strong> · Tratamiento principal: educación, paquetes simples y maduración · Excepción: <strong>≥ 65</strong> si hay sponsor activo, recurrencia clara y urgencia real</td>
         </tr>
       </table>
     </div>
@@ -563,15 +562,15 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div class="closing">
       <h3>Sistema de registro y uso del AQS</h3>
       <p>
-        El AQS puede calcularse automáticamente desde el flujo integrado con Diio, pero el puntaje final debe quedar validado en <strong>HubSpot</strong>. La ficha de oportunidad debe registrar: AQS sugerido, AQS validado, edición recomendada, fuente de la oportunidad, sponsor, decision date, justificación de ajustes, próximos pasos y estado de avance. Esto permite usar el AQS para priorización comercial, seguimiento del pipeline, análisis de conversión Rewards → Apprecio Beat y aprendizaje posterior sobre cierres o descartes.
+        El AQS puede calcularse automáticamente desde el flujo integrado con Diio, pero el puntaje final debe quedar validado en <strong>HubSpot</strong>. La ficha de oportunidad debe registrar: AQS sugerido, AQS validado, edición recomendada, fuente de la oportunidad, sponsor, decision date, justificación de ajustes y próximos pasos. Esto permite usar el AQS para priorización comercial, seguimiento del pipeline, análisis de conversión Rewards → Apprecio Beat y aprendizaje sobre cierres o descartes.
       </p>
     </div>
 
     <!-- ACLARACIÓN FINAL -->
     <div class="closing">
-      <h3>Tier vs AQS — aclaración final</h3>
+      <h3>Tier vs AQS vs Edición — aclaración final</h3>
       <p>
-        El <strong>Tier</strong> define el tipo de cuenta desde una mirada estructural: tamaño, potencial y valor estratégico. El <strong>AQS</strong> define qué tan madura y prioritaria es una oportunidad específica de Apprecio Beat dentro de ese universo. En simple: <strong>Tier = potencial de cuenta · AQS = prioridad comercial real · edición recomendada = mejor camino de solución.</strong>
+        El <strong>Tier</strong> define el potencial estructural de la cuenta: tamaño, industria y valor estratégico. El <strong>AQS</strong> define qué tan madura y prioritaria es la oportunidad específica de Apprecio Beat dentro de ese universo. La <strong>edición recomendada</strong> define el mejor camino de solución según el buyer y el problema identificado. En simple: <strong>Tier = potencial de cuenta · AQS = prioridad comercial real · Edición = solución correcta para ese problema.</strong>
       </p>
     </div>
 
