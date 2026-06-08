@@ -27,217 +27,66 @@ html,body{
   break-after:page;
 }
 .page:last-child{ page-break-after:auto; break-after:auto; }
-
-/* ── TOPBAR ── */
-.topbar{
-  height:6px;
-  background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%);
-  flex-shrink:0;
-}
-
-/* ── HEADER ── */
-.pg-header{
-  background:#FA345E;
-  padding:18px 20px 16px;
-  position:relative;
-  overflow:hidden;
-  flex-shrink:0;
-}
-.pg-header-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
-.orn{
-  position:absolute; z-index:1; opacity:0.12;
-  background:#FFFFFF; border-radius:3px;
-}
+.topbar{ height:6px; background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%); flex-shrink:0; }
+.pg-header{ background:#FA345E; padding:18px 20px 16px; position:relative; overflow:hidden; flex-shrink:0; }
+.pg-header-inner{ display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+.orn{ position:absolute; z-index:1; opacity:0.12; background:#FFFFFF; border-radius:3px; }
 .orn-1{ width:48px; height:48px; top:-14px; right:180px; }
 .orn-2{ width:24px; height:24px; top:34px; right:158px; }
 .orn-3{ width:32px; height:32px; bottom:-10px; right:90px; }
 .orn-4{ width:16px; height:64px; top:0; right:64px; }
-.pg-tag{
-  font-size:9px; font-weight:700; letter-spacing:1.8px;
-  text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
-}
+.pg-tag{ font-size:9px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px; }
 .pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
-.pg-sub{
-  font-size:10.5px; color:rgba(255,255,255,0.82);
-  margin-top:5px; line-height:1.55; max-width:80%;
-}
-.pg-badge{
-  background:rgba(255,255,255,0.15);
-  border:1.5px solid rgba(255,255,255,0.3);
-  border-radius:12px; padding:10px 16px;
-  text-align:center; white-space:nowrap; flex-shrink:0;
-}
+.pg-sub{ font-size:10.5px; color:rgba(255,255,255,0.82); margin-top:5px; line-height:1.55; max-width:80%; }
+.pg-badge{ background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3); border-radius:12px; padding:10px 16px; text-align:center; white-space:nowrap; flex-shrink:0; }
 .pg-badge .val{ font-size:13px; font-weight:900; color:#FFFFFF; display:block; line-height:1.3; }
 .pg-badge .lbl{ font-size:8.5px; font-weight:600; color:rgba(255,255,255,0.75); display:block; margin-top:2px; }
-
-/* ── CUERPO ── */
-.pg-body{
-  flex:1;
-  padding:14px 20px 12px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* ── INTRO BOX ── */
-.intro-box{
-  background:#FFE6E8;
-  border-left:4px solid #FA345E;
-  border-radius:0 10px 10px 0;
-  padding:10px 13px;
-  font-size:10.5px; line-height:1.68; color:#1B1B1B;
-}
+.pg-body{ flex:1; padding:14px 20px 12px; display:flex; flex-direction:column; gap:12px; }
+.intro-box{ background:#FFE6E8; border-left:4px solid #FA345E; border-radius:0 10px 10px 0; padding:10px 13px; font-size:10.5px; line-height:1.68; color:#1B1B1B; }
 .intro-box strong{ color:#FA345E; }
-
-/* ── TÍTULO DE SECCIÓN ── */
-.sec-title{
-  font-size:12px; font-weight:900; color:#1B1B1B;
-  display:flex; align-items:center; gap:8px;
-  margin-bottom:7px;
-}
-.sec-title::before{
-  content:'';
-  display:inline-block; width:3px; height:14px;
-  background:#FA345E; border-radius:2px; flex-shrink:0;
-}
-
-/* ── PLANES GRID ── */
-.plans-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-.plan{
-  border:1px solid #EEE;
-  border-radius:14px;
-  padding:14px;
-  background:#FFFFFF;
-  display:flex;
-  flex-direction:column;
-  page-break-inside:avoid;
-  break-inside:avoid;
-}
+.sec-title{ font-size:12px; font-weight:900; color:#1B1B1B; display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.sec-title::before{ content:''; display:inline-block; width:3px; height:14px; background:#FA345E; border-radius:2px; flex-shrink:0; }
+.plans-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.plan{ border:1px solid #EEE; border-radius:14px; padding:14px; background:#FFFFFF; display:flex; flex-direction:column; page-break-inside:avoid; break-inside:avoid; }
 .plan.beat{ border-top:3px solid #FA345E; }
 .plan.perf{ border-top:3px solid #B2A8E7; }
 .plan.rewards{ border-top:3px solid #45C1AD; }
-
-.plan-icon{
-  width:36px; height:36px; border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:18px; margin-bottom:9px;
-}
+.plan-icon{ width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:9px; }
 .plan.rewards .plan-icon{ background:#E8F9F6; }
-.plan.beat    .plan-icon{ background:#FFE6E8; }
-.plan.perf    .plan-icon{ background:#EDE9FC; }
-
+.plan.beat .plan-icon{ background:#FFE6E8; }
+.plan.perf .plan-icon{ background:#EDE9FC; }
 .plan-name{ font-size:14px; font-weight:900; color:#1B1B1B; margin-bottom:2px; }
-.plan-label{
-  font-size:8px; font-weight:800; text-transform:uppercase;
-  letter-spacing:0.8px; margin-bottom:7px;
-}
+.plan-label{ font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:7px; }
 .plan.rewards .plan-label{ color:#45C1AD; }
-.plan.beat    .plan-label{ color:#FA345E; }
-.plan.perf    .plan-label{ color:#6B5CC4; }
-
-.plan-desc{
-  font-size:9.5px; line-height:1.6; color:#4A4A4A;
-  margin-bottom:10px;
-}
-.plan-price{
-  display:flex; align-items:baseline; gap:4px;
-  margin-bottom:2px;
-}
+.plan.beat .plan-label{ color:#FA345E; }
+.plan.perf .plan-label{ color:#6B5CC4; }
+.plan-desc{ font-size:9.5px; line-height:1.6; color:#4A4A4A; margin-bottom:10px; }
+.plan-price{ display:flex; align-items:baseline; gap:4px; margin-bottom:2px; }
 .plan-price strong{ font-size:26px; font-weight:900; color:#1B1B1B; line-height:1; }
 .plan-price span{ font-size:10px; font-weight:700; color:#6A6A6A; }
-.plan-price-note{
-  font-size:8.5px; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.4px; color:#999; margin-bottom:10px;
-}
-.plan ul{
-  list-style:none; flex:1;
-  padding:0; margin:0;
-  border-top:1px solid #F5F5F5;
-  padding-top:9px;
-}
-.plan li{
-  position:relative; padding-left:14px;
-  font-size:9px; line-height:1.55; color:#3F3F3F;
-  margin-bottom:6px;
-}
-.plan li::before{
-  content:"✓"; position:absolute; left:0; top:0;
-  font-weight:900; font-size:9px;
-}
+.plan-price-note{ font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; color:#999; margin-bottom:10px; }
+.plan ul{ list-style:none; flex:1; padding:0; margin:0; border-top:1px solid #F5F5F5; padding-top:9px; }
+.plan li{ position:relative; padding-left:14px; font-size:9px; line-height:1.55; color:#3F3F3F; margin-bottom:6px; }
+.plan li::before{ content:"✓"; position:absolute; left:0; top:0; font-weight:900; font-size:9px; }
 .plan.rewards li::before{ color:#45C1AD; }
-.plan.beat    li::before{ color:#FA345E; }
-.plan.perf    li::before{ color:#6B5CC4; }
-
-/* ── REGLAS GRID ── */
+.plan.beat li::before{ color:#FA345E; }
+.plan.perf li::before{ color:#6B5CC4; }
 .rules-grid{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-.box{
-  border:1px solid #EEE; border-radius:11px;
-  padding:11px 12px; background:#FAFAFA;
-}
-.box.pink  { background:#FFF7F8; border-color:#FFD5DD; }
+.box{ border:1px solid #EEE; border-radius:11px; padding:11px 12px; background:#FAFAFA; }
+.box.pink{ background:#FFF7F8; border-color:#FFD5DD; }
 .box.purple{ background:#F8F6FF; border-color:#DCD8F5; }
-.box.green { background:#F4FBF9; border-color:#C9EADF; }
-.box.blue  { background:#F0FAFC; border-color:#CDEFF4; }
-.box h3{
-  font-size:9.5px; font-weight:800; text-transform:uppercase;
-  letter-spacing:0.4px; margin-bottom:5px; color:#45C1AD;
-}
+.box.green{ background:#F4FBF9; border-color:#C9EADF; }
+.box.blue{ background:#F0FAFC; border-color:#CDEFF4; }
+.box h3{ font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px; color:#45C1AD; }
 .box p{ font-size:9.5px; line-height:1.65; color:#3F3F3F; }
 .box ul{ padding-left:13px; margin-top:4px; }
 .box li{ font-size:9.5px; line-height:1.55; color:#374151; margin-bottom:3px; }
-
-/* ── TABLA ── */
-table{ width:100%; border-collapse:collapse; font-size:9.5px; }
-th{
-  background:#B2A8E7; color:#1B1B1B;
-  text-align:left; padding:6px 9px;
-  font-weight:800; font-size:9px;
-}
-th:first-child{ border-radius:8px 0 0 0; }
-th:last-child{ border-radius:0 8px 0 0; }
-td{
-  border-bottom:1px solid #F0F0F0;
-  padding:6px 9px; vertical-align:top;
-  line-height:1.5; color:#374151;
-  background:#FFFFFF;
-}
-tr:nth-child(even) td{ background:#FAFAFA; }
-
-/* ── CLOSING ── */
-.closing{
-  background:#FFE6E8;
-  border:1px solid #FA345E;
-  border-radius:12px;
-  padding:12px 14px;
-  page-break-inside:avoid; break-inside:avoid;
-}
+.closing{ background:#FFE6E8; border:1px solid #FA345E; border-radius:12px; padding:12px 14px; page-break-inside:avoid; break-inside:avoid; }
 .closing h3{ font-size:12px; font-weight:900; color:#FA345E; margin-bottom:5px; }
 .closing p{ font-size:10px; line-height:1.7; color:#1B1B1B; }
-
-/* ── FOOTER ── */
-.pg-footer{
-  padding:7px 20px;
-  border-top:1px solid #F0F0F0;
-  display:flex; justify-content:space-between;
-  font-size:9px; color:#B0BEC8; font-weight:500;
-  flex-shrink:0;
-}
+.pg-footer{ padding:7px 20px; border-top:1px solid #F0F0F0; display:flex; justify-content:space-between; font-size:9px; color:#B0BEC8; font-weight:500; flex-shrink:0; }
 .pg-footer span:first-child{ color:#FA345E; font-weight:700; }
-
-@media print{
-  body{ background:#fff; }
-  .page{ margin:0; width:100%; }
-}
+@media print{ body{ background:#fff; } .page{ margin:0; width:100%; } }
 </style>
 </head>
 <body>
@@ -308,7 +157,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <div class="plan-icon">⚡</div>
           <div class="plan-name">Beat Performance</div>
           <div class="plan-label">KPIs · Retos · Evidencia · Desempeño</div>
-          <div class="plan-desc">Para empresas que quieren conectar cultura y recompensas con metas, scorecards, entrenamientos, evidencia e incentivos por resultado.</div>
+          <div class="plan-desc">Para empresas que quieren conectar recompensas con metas, scorecards, entrenamientos, evidencia e incentivos por resultado.</div>
           <div class="plan-price"><strong>US$6</strong><span>PEPM</span></div>
           <div class="plan-price-note">Precio de software · sin bolsa de puntos</div>
           <ul>
@@ -345,49 +194,6 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <p>Cuando el cliente solo quiere comprar y distribuir puntos de forma puntual, sin programa, cultura, reportes ni gestión recurrente.</p>
         </div>
       </div>
-    </div>
-
-    <!-- TABLA COMPARATIVA -->
-    <div>
-      <div class="sec-title">Comparación rápida de planes</div>
-      <table>
-        <tr>
-          <th style="width:20%;">Dimensión</th>
-          <th>Rewards</th>
-          <th>Apprecio Beat</th>
-          <th>Beat Performance</th>
-        </tr>
-        <tr>
-          <td><strong>Rol comercial</strong></td>
-          <td>Entrada transaccional</td>
-          <td>SaaS recurrente de cultura</td>
-          <td>Expansión hacia desempeño</td>
-        </tr>
-        <tr>
-          <td><strong>Problema que resuelve</strong></td>
-          <td>Entrega y redención de puntos</td>
-          <td>Cultura visible, reconocimiento y engagement</td>
-          <td>Metas, KPIs, evidencia e incentivos por resultado</td>
-        </tr>
-        <tr>
-          <td><strong>Modelo económico</strong></td>
-          <td>Sin fee de software</td>
-          <td>US$4 PEPM + puntos separados</td>
-          <td>US$6 PEPM + puntos separados</td>
-        </tr>
-        <tr>
-          <td><strong>Mejor fit</strong></td>
-          <td>Campañas puntuales o beneficios transaccionales</td>
-          <td>RRHH, Cultura, Comunicaciones, Engagement</td>
-          <td>Comercial, Operaciones, equipos con metas</td>
-        </tr>
-        <tr>
-          <td><strong>Prueba de valor</strong></td>
-          <td>Canje y uso de puntos</td>
-          <td>Adopción D+14, reconocimiento, participación</td>
-          <td>Cumplimiento, ranking, evidencia, mejora de KPI</td>
-        </tr>
-      </table>
     </div>
 
     <!-- GUARDRAILS Y ADD-ONS -->
