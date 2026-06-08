@@ -106,7 +106,7 @@ html,body{
   border:1px solid #EEE; border-radius:10px;
   padding:10px 11px; background:#FAFAFA;
 }
-.mini-card h4{ font-size:10px; font-weight:800; color:#45C1AD; margin-bottom:4px; }
+.mini-card h4{ font-size:10px; font-weight:800; color:#FA345E; margin-bottom:4px; }
 .mini-card p{ font-size:9.5px; line-height:1.6; color:#4A4A4A; }
 
 /* ── RULE BOX ── */
@@ -166,6 +166,16 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 .demo-head.intel   { background:#F8F6FF; border-left:4px solid #B2A8E7; }
 .demo-head h3{ font-size:13px; font-weight:900; color:#1B1B1B; margin-bottom:2px; }
 .demo-head p{ font-size:9px; color:#6B7A88; font-weight:500; }
+.demo-head .buyer-note{
+  display:inline-block; margin-top:5px;
+  font-size:8.5px; font-weight:800; color:#FFFFFF;
+  padding:3px 8px; border-radius:999px;
+}
+.demo-head.beat    .buyer-note{ background:#FA345E; }
+.demo-head.puntos  .buyer-note{ background:#B2A8E7; color:#1B1B1B; }
+.demo-head.voz     .buyer-note{ background:#45C1AD; color:#1B1B1B; }
+.demo-head.perf    .buyer-note{ background:#1B1B1B; }
+.demo-head.intel   .buyer-note{ background:#B2A8E7; color:#1B1B1B; }
 
 .demo-body{ padding:11px 13px; }
 .demo-meta{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:9px; }
@@ -177,6 +187,14 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 .meta-box p{ font-size:9px; line-height:1.55; color:#4A4A4A; }
 .meta-box ul{ padding-left:12px; margin-top:3px; }
 .meta-box li{ font-size:9px; line-height:1.5; color:#374151; margin-bottom:2px; }
+
+/* ── ALERTA MÓDULO ── */
+.mod-alert{
+  font-size:8.5px; font-weight:700; color:#B27A00;
+  background:#FFF8E1; border:1px solid #F5D58D;
+  border-radius:6px; padding:4px 8px; margin-top:6px;
+  display:inline-block;
+}
 
 /* ── FLOW STEPS ── */
 .flow-grid{
@@ -210,12 +228,17 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 }
 .decision-card h4{ font-size:10.5px; font-weight:800; color:#1B1B1B; margin-bottom:5px; }
 .decision-card p{ font-size:9.5px; line-height:1.6; color:#4A4A4A; }
+.decision-card .buyer-line{
+  font-size:9px; font-weight:700; color:#FA345E;
+  margin-top:5px; margin-bottom:5px;
+}
 .pill-row{ display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
 .pill{ border-radius:999px; padding:4px 8px; font-size:8.5px; font-weight:800; }
 .pill.red   { background:#FFE6E8; color:#B4234A; }
 .pill.blue  { background:#EDF9F6; color:#0F6E56; }
 .pill.green { background:#E8F9F6; color:#187363; }
 .pill.purple{ background:#EDE9FC; color:#6B5CC4; }
+.pill.dark  { background:#EBEBEB; color:#1B1B1B; }
 
 /* ── CLOSING ── */
 .closing{
@@ -251,7 +274,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div>
         <div class="pg-tag">Apprecio Beat · GTM Comercial · Sistema de demos</div>
         <div class="pg-title">Demos guiadas por hipótesis de valor</div>
-        <div class="pg-sub">Las demos no son recorridos completos del producto. Se activan según el dolor dominante, el rol que decide y la edición que mejor calza con la oportunidad.</div>
+        <div class="pg-sub">Este documento define qué demo usar según el dolor del cliente, el rol que decide y la edición que mejor calza. No es un recorrido del producto — es un sistema de selección y ejecución.</div>
       </div>
       <div class="pg-badge">
         <span class="val">5 demos</span>
@@ -263,28 +286,24 @@ tr:nth-child(even) td{ background:#FAFAFA; }
   <div class="pg-body">
 
     <div class="intro-box">
-      <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong> Cada demo debe conectar el reconocimiento y la participación diaria con un sistema recurrente de valor: puntos, recompensas, feed social, visibilidad cultural y medición. La demo no vende funcionalidades sueltas — demuestra cómo Apprecio Beat instala una experiencia continua para colaboradores y una herramienta gestionable para la empresa.
+      Cada demo parte de un dolor concreto, se dirige a un interlocutor específico y termina con un siguiente paso claro. <strong>Una reunión, una hipótesis principal, una demo dominante.</strong> Mostrar todo al mismo tiempo reduce el foco y la probabilidad de avance. La selección correcta de demo es tan importante como la ejecución.
     </div>
 
     <!-- PRINCIPIOS -->
     <div>
-      <div class="sec-title">Principio general</div>
-      <div class="rule-box" style="margin-bottom:8px;">
-        <h4>Regla operativa</h4>
-        Una reunión, una hipótesis principal, una demo dominante y un siguiente paso claro. Si el ejecutivo intenta mostrar cultura, performance, recompensas, IA y administración al mismo tiempo, pierde foco y reduce la probabilidad de avance.
-      </div>
+      <div class="sec-title">Tres variables para elegir la demo correcta</div>
       <div class="grid-3">
         <div class="mini-card">
           <h4>Dolor principal</h4>
-          <p>La demo parte del problema dominante: bajo reconocimiento, cultura poco visible, baja participación, beneficios sin trazabilidad, necesidad de mover KPIs o poca evidencia de impacto.</p>
+          <p>¿Qué problema concreto trajo al cliente a esta reunión? Baja participación, cultura poco visible, beneficios sin trazabilidad, KPIs desconectados del incentivo, necesidad de entrenar equipos.</p>
         </div>
         <div class="mini-card">
-          <h4>Rol del cliente</h4>
-          <p>Un CHRO necesita ver cultura y adopción; un CCO o COO necesita desempeño y ejecución; un equipo de Compensaciones necesita control presupuestario y reglas claras.</p>
+          <h4>Rol del interlocutor</h4>
+          <p>Un CHRO o Gerente de Personas necesita ver cultura y adopción. Un CCO o COO necesita ver desempeño, ejecución y evidencia. El rol define qué producto mostrar — no solo el dolor.</p>
         </div>
         <div class="mini-card">
-          <h4>Edición adecuada</h4>
-          <p>Apprecio Beat cubre reconocimiento, participación y recompensas. Beat Performance se muestra cuando la oportunidad exige scorecards, retos, entrenamientos, evidencia o ligas.</p>
+          <h4>Producto correcto</h4>
+          <p>Apprecio Beat es para organizaciones que necesitan cultura, reconocimiento y engagement. Beat Performance es para áreas que necesitan gestionar metas y medir cumplimiento. Son productos distintos para compradores distintos.</p>
         </div>
       </div>
     </div>
@@ -293,19 +312,20 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div>
       <div class="sec-title">Estructura estándar de todas las demos — 12 minutos</div>
       <div class="timeline">
-        <div class="tl-step"><div class="tl-time">1 min</div><h4>1. Apertura</h4><p>Confirmar dolor, rol decisor y promesa de la demo.</p></div>
-        <div class="tl-step"><div class="tl-time">2–3 min</div><h4>2. Momento WOW</h4><p>Mostrar valor visible: feed, reconocimiento, puntos, scorecard o recompensa.</p></div>
+        <div class="tl-step"><div class="tl-time">1 min</div><h4>1. Apertura</h4><p>Confirmar dolor, rol decisor y promesa concreta de la demo.</p></div>
+        <div class="tl-step"><div class="tl-time">2–3 min</div><h4>2. Momento WOW</h4><p>Mostrar valor visible de inmediato: feed, reconocimiento, puntos, scorecard o recompensa.</p></div>
         <div class="tl-step"><div class="tl-time">5–6 min</div><h4>3. Flujo principal</h4><p>Recorrer el caso de uso dominante sin abrir módulos secundarios.</p></div>
         <div class="tl-step"><div class="tl-time">2 min</div><h4>4. Control</h4><p>Explicar reglas, roles, presupuesto, validaciones y trazabilidad.</p></div>
-        <div class="tl-step"><div class="tl-time">1–2 min</div><h4>5. Evidencia</h4><p>Aterrizar qué se puede medir en 14 a 30 días.</p></div>
-        <div class="tl-step"><div class="tl-time">1 min</div><h4>6. Cierre</h4><p>Definir piloto, propuesta, taller o validación interna.</p></div>
+        <div class="tl-step"><div class="tl-time">1–2 min</div><h4>5. Evidencia</h4><p>Aterrizar qué se puede medir en 14 a 30 días desde el lanzamiento.</p></div>
+        <div class="tl-step"><div class="tl-time">1 min</div><h4>6. Cierre</h4><p>Definir el siguiente paso: piloto, propuesta, taller o validación interna.</p></div>
       </div>
       <div class="rule-box" style="margin-top:8px;">
-        <h4>Lógica transversal obligatoria</h4>
+        <h4>Reglas transversales obligatorias</h4>
         <ul>
-          <li>Toda demo debe conectar con <strong>Puntos Apprecio</strong> como mecanismo de motivación y valor tangible.</li>
+          <li>Toda demo debe conectar con <strong>Puntos Apprecio</strong> como mecanismo de motivación y valor tangible para el colaborador.</li>
           <li>Debe existir al menos un momento donde el cliente vea cómo la participación puede terminar en <strong>recompensa, canje, beneficio o experiencia</strong>.</li>
           <li>La narrativa debe reforzar que Apprecio Beat no es una campaña puntual, sino una plataforma de uso recurrente.</li>
+          <li>Toda demo debe cerrar con un <strong>siguiente paso concreto y acordado</strong> en la misma reunión — sin siguiente paso definido, la demo no tuvo cierre.</li>
         </ul>
       </div>
     </div>
@@ -316,14 +336,15 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <table>
         <tr>
           <th style="width:24%;">Demo</th>
-          <th style="width:30%;">Cuándo usarla</th>
-          <th>Edición sugerida</th>
+          <th style="width:22%;">Momento de uso</th>
+          <th style="width:28%;">Cuándo usarla</th>
+          <th>Edición</th>
         </tr>
-        <tr><td><strong>Cultura &amp; Reconocimiento</strong></td><td>Baja visibilidad cultural, reconocimiento informal, necesidad de activar participación.</td><td><strong>Apprecio Beat</strong></td></tr>
-        <tr><td><strong>Puntos &amp; Recompensas</strong></td><td>Interés en beneficios, premios, canjes, campañas internas o valorización del reconocimiento.</td><td><strong>Apprecio Beat</strong></td></tr>
-        <tr><td><strong>Voz &amp; Engagement</strong></td><td>Necesidad de feedback, encuestas, participación, comunicación y lectura de adopción.</td><td><strong>Apprecio Beat</strong></td></tr>
-        <tr><td><strong>Beat Performance</strong></td><td>Metas, KPIs, scorecards, cumplimiento, entrenamiento, evidencia o rankings.</td><td><strong>Beat Performance</strong></td></tr>
-        <tr><td><strong>Intelligence Layer</strong></td><td>Cliente maduro, segunda reunión o necesidad de escalar gestión con apoyo de IA.</td><td><strong>Apprecio Beat / Beat Performance</strong> según alcance</td></tr>
+        <tr><td><strong>1. Cultura &amp; Reconocimiento</strong></td><td>Primera reunión</td><td>Baja visibilidad cultural, reconocimiento informal o necesidad de activar participación.</td><td><strong>Apprecio Beat</strong></td></tr>
+        <tr><td><strong>2. Puntos &amp; Recompensas</strong></td><td>Primera reunión</td><td>Interés en beneficios, premios, canjes o cliente que ya usa Rewards puntualmente.</td><td><strong>Apprecio Beat</strong></td></tr>
+        <tr><td><strong>3. Voz &amp; Engagement</strong></td><td>Primera reunión</td><td>Necesidad de feedback, encuestas, participación o lectura de adopción.</td><td><strong>Apprecio Beat</strong></td></tr>
+        <tr><td><strong>4. Beat Performance</strong></td><td>Primera reunión — buyer distinto</td><td>Metas, KPIs, scorecards, cumplimiento, entrenamiento o evidencia. Buyer: área comercial u operativa.</td><td><strong>Beat Performance</strong></td></tr>
+        <tr><td><strong>5. Intelligence Layer</strong></td><td>Segunda reunión o cliente maduro</td><td>Cliente que ya conoce la plataforma y necesita escalar gestión o explorar insights.</td><td><strong>Ambas ediciones</strong></td></tr>
       </table>
     </div>
 
@@ -332,28 +353,29 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="demo-head beat">
         <h3>1. Cultura &amp; Reconocimiento</h3>
         <p>Activation Layer · Reconocimientos personalizados · eCards · Insignias · Hitos · Feed social</p>
+        <span class="buyer-note">Buyer: Gerencia de Personas · Cultura · Comunicaciones Internas</span>
       </div>
       <div class="demo-body">
         <div class="demo-meta">
           <div class="meta-box">
             <h4>Cuándo usarla</h4>
             <ul>
-              <li>Bajo engagement o cultura poco visible.</li>
+              <li>Bajo engagement o cultura poco visible en el día a día.</li>
               <li>Reconocimiento informal, manual o inconsistente.</li>
               <li>Necesidad de activar líderes y participación transversal.</li>
             </ul>
           </div>
           <div class="meta-box">
             <h4>Objetivo</h4>
-            <p>Demostrar cómo Apprecio Beat convierte el reconocimiento en una experiencia visible, frecuente y medible para colaboradores.</p>
+            <p>Demostrar cómo Apprecio Beat convierte el reconocimiento en una experiencia visible, frecuente y medible para colaboradores y para la organización.</p>
           </div>
         </div>
         <div class="flow-grid">
-          <div class="flow-step red"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"El reconocimiento existe, pero no se ve, se repite ni genera cultura compartida."</p></div>
-          <div class="flow-step red"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Cultura visible</div><p>Home y Feed social con reconocimientos, hitos e interacciones reales.</p></div>
+          <div class="flow-step red"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"El reconocimiento existe, pero no se ve, no se repite ni genera cultura compartida."</p></div>
+          <div class="flow-step red"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Cultura visible</div><p>Home y Feed social con reconocimientos, hitos e interacciones reales en la plataforma.</p></div>
           <div class="flow-step red"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se activa</div><ul><li>Reconocimiento personalizado con puntos.</li><li>eCards, insignias e hitos automáticos.</li><li>Conexión con feed, perfil e historial.</li></ul></div>
-          <div class="flow-step red"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Gobernanza</div><p>Motivos configurables, reglas de puntos, visibilidad y límites de uso.</p></div>
-          <div class="flow-step red"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Participación D+14, reconocimientos, líderes activos y puntos movilizados.</p></div>
+          <div class="flow-step red"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Gobernanza</div><p>Motivos configurables, reglas de puntos, visibilidad y límites de uso por manager.</p></div>
+          <div class="flow-step red"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Participación D+14, reconocimientos enviados, líderes activos y puntos movilizados.</p></div>
           <div class="flow-step red"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Piloto con un área o campaña de reconocimiento inicial con Puntos Apprecio.</p></div>
         </div>
       </div>
@@ -364,6 +386,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="demo-head puntos">
         <h3>2. Puntos &amp; Recompensas</h3>
         <p>Value Layer · Puntos y gamificación · Premios · Recompensas · Perfil · Canjes</p>
+        <span class="buyer-note">Buyer: Gerencia de Personas · Compensaciones · Beneficios</span>
       </div>
       <div class="demo-body">
         <div class="demo-meta">
@@ -371,22 +394,22 @@ tr:nth-child(even) td{ background:#FAFAFA; }
             <h4>Cuándo usarla</h4>
             <ul>
               <li>Cliente interesado en beneficios, premios o incentivos.</li>
-              <li>Uso previo de Rewards como campaña puntual.</li>
-              <li>Necesidad de transformar presupuesto en valor percibido.</li>
+              <li>Uso previo de Rewards como campaña puntual sin plataforma.</li>
+              <li>Necesidad de transformar presupuesto en valor percibido y trazable.</li>
             </ul>
           </div>
           <div class="meta-box">
             <h4>Objetivo</h4>
-            <p>Mostrar cómo Apprecio Beat convierte acciones y reconocimientos en una economía de puntos con valor tangible para colaboradores.</p>
+            <p>Mostrar cómo Apprecio Beat convierte acciones y reconocimientos en una economía de puntos con valor tangible y seguimiento real para colaboradores.</p>
           </div>
         </div>
         <div class="flow-grid">
-          <div class="flow-step purple"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"El desafío no es solo entregar premios; es que las personas entiendan qué pueden ganar y por qué participar."</p></div>
+          <div class="flow-step purple"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"No basta entregar premios: las personas deben entender qué pueden ganar y por qué vale participar."</p></div>
           <div class="flow-step purple"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Valor tangible</div><p>Puntos disponibles, perfil, historial, catálogo de recompensas y recorrido hacia canje.</p></div>
-          <div class="flow-step purple"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se mueve el valor</div><ul><li>Puntos de reconocimiento cultural.</li><li>Puntos monetarios redimibles.</li><li>Puntos de experiencia y niveles.</li></ul></div>
-          <div class="flow-step purple"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Presupuesto</div><p>Bolsas, reglas de asignación, aprobaciones, límites y trazabilidad financiera.</p></div>
+          <div class="flow-step purple"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se mueve el valor</div><ul><li>Puntos de reconocimiento cultural.</li><li>Puntos económicos redimibles en catálogo.</li><li>Puntos XP de experiencia y niveles.</li></ul></div>
+          <div class="flow-step purple"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Presupuesto</div><p>Bolsas, reglas de asignación, aprobaciones, límites por área y trazabilidad financiera.</p></div>
           <div class="flow-step purple"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Puntos asignados, canjes, recompensas más demandadas y participación por área.</p></div>
-          <div class="flow-step purple"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Primera campaña de reconocimiento o incentivo recurrente con recompensas.</p></div>
+          <div class="flow-step purple"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Primera campaña de reconocimiento o incentivo recurrente con recompensas definidas.</p></div>
         </div>
       </div>
     </div>
@@ -410,7 +433,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div>
         <div class="pg-tag">Apprecio Beat · GTM Comercial · Sistema de demos</div>
         <div class="pg-title">Demos guiadas — Voz, Performance e IA</div>
-        <div class="pg-sub">Demos 3, 4 y 5 — engagement, desempeño e Intelligence Layer. Más criterio final de selección.</div>
+        <div class="pg-sub">Demos 3, 4 y 5 — engagement, desempeño e Intelligence Layer. Más criterio final de selección por buyer y caso de uso.</div>
       </div>
       <div class="pg-badge">
         <span class="val">Demos 3–5</span>
@@ -426,29 +449,30 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="demo-head voz">
         <h3>3. Voz &amp; Engagement</h3>
         <p>Engagement Layer · Encuestas · Home · Feed social · Participación · Perfil</p>
+        <span class="buyer-note">Buyer: Gerencia de Personas · Cultura · Comunicaciones Internas</span>
       </div>
       <div class="demo-body">
         <div class="demo-meta">
           <div class="meta-box">
             <h4>Cuándo usarla</h4>
             <ul>
-              <li>Baja participación o programas poco valorados.</li>
-              <li>Necesidad de escuchar colaboradores.</li>
+              <li>Baja participación o programas internos poco valorados.</li>
+              <li>Necesidad de escuchar colaboradores con datos reales.</li>
               <li>Equipos con poca información sobre adopción o clima.</li>
             </ul>
           </div>
           <div class="meta-box">
             <h4>Objetivo</h4>
-            <p>Demostrar cómo Apprecio Beat combina participación, feedback y recompensas para sostener engagement en el tiempo.</p>
+            <p>Demostrar cómo Apprecio Beat combina participación activa, feedback y recompensas para sostener engagement en el tiempo — no solo en fechas puntuales.</p>
           </div>
         </div>
         <div class="flow-grid">
-          <div class="flow-step teal"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"No basta con lanzar iniciativas; necesitamos saber quién participa y dónde se pierde la adopción."</p></div>
+          <div class="flow-step teal"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"No basta lanzar iniciativas; necesitamos saber quién participa y dónde se pierde la adopción."</p></div>
           <div class="flow-step teal"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Participación accionable</div><p>Encuesta activa, participación desde Home, incentivo en puntos y actividad en perfil.</p></div>
           <div class="flow-step teal"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se escucha</div><ul><li>Encuestas de clima y cultura.</li><li>Incentivo por participación con puntos.</li><li>Lectura de adopción por área o campaña.</li></ul></div>
-          <div class="flow-step teal"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Reglas</div><p>Frecuencia, segmentación, privacidad y seguimiento de respuestas.</p></div>
-          <div class="flow-step teal"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Tasa de respuesta, participación por segmento y evolución de engagement.</p></div>
-          <div class="flow-step teal"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Encuesta o campaña inicial con puntos y lectura de resultados a 14 días.</p></div>
+          <div class="flow-step teal"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Reglas</div><p>Frecuencia, segmentación, privacidad de respuestas y seguimiento de participación.</p></div>
+          <div class="flow-step teal"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Tasa de respuesta, participación por segmento y evolución de engagement en el tiempo.</p></div>
+          <div class="flow-step teal"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Encuesta o campaña inicial con puntos y lectura de resultados a D+14.</p></div>
         </div>
       </div>
     </div>
@@ -458,30 +482,32 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div class="demo-head perf">
         <h3>4. Beat Performance</h3>
         <p>Execution Layer · Entrenamientos · Retos / Scorecards · Centro de evidencia · Ligas</p>
+        <span class="buyer-note">Buyer: Gerencia Comercial · Operaciones · Áreas con KPIs — no es la misma conversación que Apprecio Beat</span>
       </div>
       <div class="demo-body">
         <div class="demo-meta">
           <div class="meta-box">
             <h4>Cuándo usarla</h4>
             <ul>
-              <li>Metas o KPIs poco visibles.</li>
+              <li>Metas o KPIs poco visibles o desconectados del incentivo.</li>
               <li>Necesidad de entrenar, medir cumplimiento o validar evidencia.</li>
-              <li>Incentivos desconectados del desempeño real.</li>
+              <li>Buyer del área comercial, operativa o de formación — no solo personas.</li>
             </ul>
           </div>
           <div class="meta-box">
             <h4>Objetivo</h4>
-            <p>Demostrar cómo Beat Performance convierte desempeño, aprendizaje y cumplimiento en avance visible, evidencia y puntos.</p>
+            <p>Demostrar cómo Beat Performance convierte desempeño, aprendizaje y cumplimiento en avance visible, evidencia trazable y puntos — para un área que necesita gestionar resultados, no solo cultura.</p>
           </div>
         </div>
         <div class="flow-grid">
           <div class="flow-step blue"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"El problema no es solo medir resultados; es activar comportamientos antes de que sea tarde."</p></div>
-          <div class="flow-step blue"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Performance visible</div><p>Scorecard, ranking/liga, avance de retos y vínculo entre cumplimiento y puntos.</p></div>
-          <div class="flow-step blue"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se moviliza</div><ul><li>Entrenamientos con quizzes y avance.</li><li>Retos y scorecards con metas.</li><li>Centro de evidencia y ligas.</li></ul></div>
+          <div class="flow-step blue"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Performance visible</div><p>Scorecard, ranking de avance de retos y vínculo directo entre cumplimiento y puntos.</p></div>
+          <div class="flow-step blue"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo se moviliza</div><ul><li>Entrenamientos con quizzes y avance.</li><li>Retos y scorecards con metas definidas.</li><li>Centro de evidencia con aprobación.</li></ul></div>
           <div class="flow-step blue"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Integridad</div><p>Reglas de medición, aprobación de evidencia, liberación de puntos y prevención de errores.</p></div>
           <div class="flow-step blue"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Avance de metas, cumplimiento por equipo, entrenamientos aprobados y ranking.</p></div>
           <div class="flow-step blue"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Piloto con un equipo, KPI o desafío específico con medición, evidencia y recompensa.</p></div>
         </div>
+        <div class="mod-alert">Ligas: módulo en desarrollo — no detallar funcionamiento ni comprometer plazos de activación.</div>
       </div>
     </div>
 
@@ -489,54 +515,59 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div class="demo-card">
       <div class="demo-head intel">
         <h3>5. Intelligence Layer</h3>
-        <p>IA para administración, insights y mejora continua del programa</p>
+        <p>IA para administración, insights y mejora continua del programa · Disponible en ambas ediciones</p>
+        <span class="buyer-note">Buyer: mismo de la edición · Usar en segunda reunión o cuando el cliente ya conoce la plataforma</span>
       </div>
       <div class="demo-body">
         <div class="demo-meta">
           <div class="meta-box">
             <h4>Cuándo usarla</h4>
             <ul>
-              <li>Segunda reunión o cliente más maduro.</li>
+              <li>Segunda reunión o cliente que ya conoce Apprecio Beat.</li>
               <li>Necesidad de escalar gestión sin aumentar carga operativa.</li>
               <li>Interés en datos, adopción, patrones e insights accionables.</li>
             </ul>
           </div>
           <div class="meta-box">
             <h4>Objetivo</h4>
-            <p>Mostrar cómo la capa inteligente ayuda al administrador a leer comportamientos, detectar oportunidades y proponer acciones concretas.</p>
+            <p>Mostrar cómo la capa de IA ayuda al administrador a leer comportamientos, detectar baja participación y proponer acciones concretas — disponible en Apprecio Beat y en Beat Performance.</p>
           </div>
         </div>
         <div class="flow-grid">
           <div class="flow-step blue"><div class="flow-lbl">0–1 · Apertura</div><div class="flow-title">Problema visible</div><p>"El problema no es tener datos; es convertirlos en acciones concretas para mejorar participación."</p></div>
-          <div class="flow-step blue"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Insight accionable</div><p>Recomendación automática: campaña sugerida o segmento con baja participación.</p></div>
+          <div class="flow-step blue"><div class="flow-lbl">1–3 · WOW</div><div class="flow-title">Insight accionable</div><p>Recomendación automática: campaña sugerida o segmento con baja participación detectado.</p></div>
           <div class="flow-step blue"><div class="flow-lbl">3–8 · Flujo</div><div class="flow-title">Cómo escala</div><ul><li>Lectura de comportamiento y patrones.</li><li>Sugerencia de acciones y campañas.</li><li>Optimización de puntos y participación.</li></ul></div>
-          <div class="flow-step blue"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Límites</div><p>La IA recomienda, pero la empresa conserva decisión, configuración y aprobación final.</p></div>
-          <div class="flow-step blue"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Tiempo ahorrado, acciones sugeridas, campañas activadas y mejora de adopción.</p></div>
-          <div class="flow-step blue"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Incorporar Intelligence Layer como fase 2 o argumento diferencial en oportunidades maduras.</p></div>
+          <div class="flow-step blue"><div class="flow-lbl">8–10 · Control</div><div class="flow-title">Límites</div><p>La IA recomienda — la empresa conserva decisión, configuración y aprobación final siempre.</p></div>
+          <div class="flow-step blue"><div class="flow-lbl">10–11 · Evidencia</div><div class="flow-title">Qué se mide</div><p>Tiempo ahorrado en gestión, campañas activadas por sugerencia y mejora de adopción.</p></div>
+          <div class="flow-step blue"><div class="flow-lbl">11–12 · Cierre</div><div class="flow-title">Siguiente paso</div><p>Incorporar como fase 2 del programa o como diferenciador en propuesta de cliente maduro.</p></div>
         </div>
       </div>
     </div>
 
     <!-- CRITERIO FINAL -->
     <div>
-      <div class="sec-title">Criterio final de selección</div>
+      <div class="sec-title">Criterio final de selección — por buyer y caso de uso</div>
       <div class="grid-2">
         <div class="decision-card">
           <h4>Usar Apprecio Beat cuando...</h4>
-          <p>El cliente busca reconocimiento, engagement, cultura visible, recompensas, participación, encuestas, puntos o una evolución desde campañas Rewards hacia una plataforma recurrente.</p>
+          <div class="buyer-line">Interlocutor: Gerencia de Personas, Cultura, Beneficios o Comunicaciones Internas</div>
+          <p>El cliente busca reconocimiento, engagement, cultura visible, recompensas, participación, encuestas o una evolución desde campañas Rewards hacia una plataforma de cultura continua.</p>
           <div class="pill-row">
             <span class="pill red">Reconocimiento</span>
             <span class="pill purple">Cultura</span>
             <span class="pill green">Recompensas</span>
+            <span class="pill dark">Encuestas</span>
           </div>
         </div>
         <div class="decision-card">
           <h4>Usar Beat Performance cuando...</h4>
-          <p>El cliente necesita mover indicadores, entrenar equipos, validar evidencia, comparar desempeño, activar retos o conectar incentivos con metas y KPIs.</p>
+          <div class="buyer-line">Interlocutor: Gerencia Comercial, Operaciones o áreas con KPIs — buyer distinto a Apprecio Beat</div>
+          <p>El cliente necesita mover indicadores, entrenar equipos, validar evidencia, comparar desempeño o conectar incentivos con metas y resultados medibles. Una empresa grande puede necesitar Apprecio Beat y no necesitar nunca Beat Performance.</p>
           <div class="pill-row">
             <span class="pill blue">KPIs</span>
             <span class="pill green">Retos</span>
             <span class="pill purple">Evidencia</span>
+            <span class="pill dark">Scorecards</span>
           </div>
         </div>
       </div>
@@ -544,11 +575,11 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 
     <!-- REGISTRO -->
     <div class="rule-box">
-      <h4>Registro y trazabilidad</h4>
+      <h4>Registro y trazabilidad post-demo</h4>
       <ul>
         <li>La reunión debe quedar <strong>grabada y analizada en Diio</strong>.</li>
-        <li>Debe registrarse la <strong>demo dominante</strong> utilizada y el dolor principal abordado.</li>
-        <li>Debe quedar definido el <strong>siguiente paso</strong>: propuesta, taller, piloto, validación con sponsor o descarte.</li>
+        <li>Registrar la <strong>demo dominante</strong> utilizada, el dolor principal abordado y el rol del interlocutor.</li>
+        <li>Dejar definido el <strong>siguiente paso acordado en la reunión</strong>: propuesta, taller, piloto, validación con sponsor o descarte.</li>
         <li>El aprendizaje debe alimentar el <strong>AQS</strong>, la priorización comercial y la calidad futura de demos.</li>
       </ul>
     </div>
