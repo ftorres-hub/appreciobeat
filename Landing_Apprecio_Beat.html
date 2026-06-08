@@ -63,9 +63,9 @@ html,body{
   font-size:9px; font-weight:700; letter-spacing:1.8px;
   text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
 }
-.pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
+.pg-title{ font-size:21px; font-weight:900; color:#FFFFFF; line-height:1.15; }
 .pg-sub{
-  font-size:10.5px; color:rgba(255,255,255,0.82);
+  font-size:10px; color:rgba(255,255,255,0.82);
   margin-top:5px; line-height:1.55; max-width:80%;
 }
 .pg-badge{
@@ -80,25 +80,81 @@ html,body{
 /* ── CUERPO ── */
 .pg-body{
   flex:1;
-  padding:16px 20px 14px;
+  padding:14px 20px 12px;
   display:flex;
   flex-direction:column;
-  gap:13px;
+  gap:11px;
 }
 
-/* ── INTRO BOX ── */
+/* ── INTRO / DOLOR BOX ── */
 .intro-box{
   background:#FFE6E8;
   border-left:4px solid #FA345E;
   border-radius:0 10px 10px 0;
   padding:10px 13px;
-  font-size:10.5px; line-height:1.68; color:#1B1B1B;
 }
-.intro-box strong{ color:#FA345E; }
+.intro-box .intro-lead{
+  font-size:10.5px; font-weight:700; color:#FA345E;
+  margin-bottom:5px; line-height:1.4;
+}
+.dolor-grid{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:4px 14px;
+}
+.dolor-item{
+  font-size:9.5px; line-height:1.5; color:#1B1B1B;
+  display:flex; align-items:flex-start; gap:5px;
+}
+.dolor-item::before{
+  content:'';
+  display:inline-block; width:5px; height:5px;
+  background:#FA345E; border-radius:50%;
+  margin-top:4px; flex-shrink:0;
+}
 
-/* ── TÍTULO DE SECCIÓN ── */
+/* ── DIFERENCIACIÓN REWARDS vs BEAT ── */
+.diff-vs{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; border-radius:12px; overflow:hidden;
+  border:1px solid #EEE;
+}
+.vs-col{ padding:11px 13px; }
+.vs-col.rewards{ background:#F9F9F9; border-right:1px solid #EEE; }
+.vs-col.beat{ background:#FFF7F8; }
+.vs-eyebrow{
+  font-size:8px; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; margin-bottom:4px;
+}
+.vs-col.rewards .vs-eyebrow{ color:#999; }
+.vs-col.beat .vs-eyebrow{ color:#FA345E; }
+.vs-name{ font-size:12px; font-weight:900; color:#1B1B1B; margin-bottom:6px; }
+.vs-list{ display:flex; flex-direction:column; gap:3px; }
+.vs-item{
+  font-size:9.5px; line-height:1.45; color:#4A4A4A;
+  display:flex; align-items:flex-start; gap:5px;
+}
+.vs-col.rewards .vs-item::before{
+  content:'';
+  display:inline-block; width:5px; height:5px;
+  background:#CCC; border-radius:50%;
+  margin-top:4px; flex-shrink:0;
+}
+.vs-col.beat .vs-item::before{
+  content:'';
+  display:inline-block; width:5px; height:5px;
+  background:#FA345E; border-radius:50%;
+  margin-top:4px; flex-shrink:0;
+}
+.vs-bridge{
+  margin-top:8px; padding-top:8px;
+  border-top:1px solid rgba(250,52,94,0.15);
+  font-size:9px; font-weight:700; color:#FA345E; line-height:1.4;
+  grid-column: 1 / -1;
+}
+
+/* ── SECCIÓN TÍTULO ── */
 .sec-title{
-  font-size:12px; font-weight:900; color:#1B1B1B;
+  font-size:11.5px; font-weight:900; color:#1B1B1B;
   margin-bottom:7px;
   display:flex; align-items:center; gap:8px;
 }
@@ -120,34 +176,36 @@ html,body{
 .edition-card.base .edition-eyebrow{ color:#FA345E; }
 .edition-card.pro  .edition-eyebrow{ color:#B2A8E7; }
 .edition-name{ font-size:14px; font-weight:900; color:#1B1B1B; margin-bottom:4px; }
-.edition-desc{ font-size:10px; line-height:1.6; color:#4A4A4A; margin-bottom:7px; }
+.edition-buyer{
+  font-size:9px; font-weight:700; color:#777;
+  margin-bottom:5px; line-height:1.4;
+}
+.edition-buyer strong{ color:#1B1B1B; }
+.edition-desc{ font-size:9.5px; line-height:1.6; color:#4A4A4A; margin-bottom:7px; }
 .edition-tags{ display:flex; flex-wrap:wrap; gap:4px; }
 .etag{ display:inline-block; font-size:8.5px; font-weight:700; padding:2px 7px; border-radius:999px; }
 .edition-card.base .etag{ background:#FFE6E8; color:#FA345E; }
 .edition-card.pro  .etag{ background:#EDE9FC; color:#6B5CC4; }
 
-/* ── FLUJO ── */
-.flow-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:7px; }
-.flow-box{
+/* ── PARA QUÉ EMPRESA ── */
+.fit-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.fit-box{
   background:#FAFAFA; border:1px solid #EEE;
-  border-radius:11px; padding:10px 8px; text-align:center;
+  border-radius:10px; padding:10px 12px;
 }
-.flow-num{
-  width:20px; height:20px; border-radius:50%;
-  background:#FA345E; color:#FFFFFF;
-  font-size:9.5px; font-weight:900; line-height:20px;
-  margin:0 auto 6px; display:block;
-}
-.flow-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
-.flow-box p{ font-size:9px; line-height:1.45; color:#555; }
+.fit-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
+.fit-box p{ font-size:9px; line-height:1.5; color:#555; }
 
 /* ── DIFERENCIADORES ── */
-.diff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-.diff-box{ background:#FFFFFF; border:1px solid #EEE; border-radius:11px; padding:11px 12px; }
-.diff-box h4{ font-size:10.5px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
-.diff-box p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
-.diff-box.ai{ background:#F8F6FF; border-color:#DCD8F5; }
-.diff-box.ai h4{ color:#6B5CC4; }
+.difprod-grid{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.difprod-box{
+  background:#FFFFFF; border:1px solid #EEE;
+  border-radius:11px; padding:11px 12px;
+}
+.difprod-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
+.difprod-box p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
+.difprod-box.ai{ background:#F8F6FF; border-color:#DCD8F5; }
+.difprod-box.ai h4{ color:#6B5CC4; }
 
 /* ── IMPACTO ── */
 .impact-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
@@ -158,20 +216,13 @@ html,body{
 .impact-day{ font-size:20px; font-weight:900; color:#FA345E; display:block; margin-bottom:4px; }
 .impact-card p{ font-size:9.5px; line-height:1.5; color:#4A4A4A; }
 
-/* ── CASOS DE USO ── */
-.usecase-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
-.usecase-box{ background:#FAFAFA; border:1px solid #EEE; border-radius:10px; padding:10px; }
-.usecase-icon{ font-size:15px; margin-bottom:4px; display:block; }
-.usecase-box h4{ font-size:10px; font-weight:800; color:#1B1B1B; margin-bottom:3px; }
-.usecase-box p{ font-size:9px; line-height:1.45; color:#555; }
-
 /* ── CTA ── */
 .cta{
   background:#FFE6E8; border:1px solid #FA345E;
-  border-radius:12px; padding:14px 16px;
+  border-radius:12px; padding:13px 16px;
   display:flex; justify-content:space-between; align-items:center; gap:14px;
 }
-.cta-left h2{ font-size:13px; font-weight:900; color:#1B1B1B; margin-bottom:3px; line-height:1.3; }
+.cta-left h2{ font-size:12.5px; font-weight:900; color:#1B1B1B; margin-bottom:3px; line-height:1.3; }
 .cta-left p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
 .cta-btn{
   flex-shrink:0;
@@ -210,8 +261,8 @@ html,body{
     <div class="pg-header-inner">
       <div>
         <div class="pg-tag">Apprecio Beat · Cultura, reconocimiento y recompensas</div>
-        <div class="pg-title">Cultura visible, reconocimiento recurrente<br>y recompensas reales para tus colaboradores</div>
-        <div class="pg-sub">Apprecio Beat ayuda a las organizaciones a activar cultura, reconocer comportamientos clave y transformar la participación de los colaboradores en puntos, recompensas y experiencias medibles.</div>
+        <div class="pg-title">Cuando premiar no es suficiente:<br>cultura viva, reconocimiento real y engagement continuo</div>
+        <div class="pg-sub">Apprecio Beat es la plataforma de cultura interna que convierte el reconocimiento en un hábito organizacional — no en una campaña aislada.</div>
       </div>
       <div class="pg-badge">
         <span class="val">Apprecio Beat</span>
@@ -222,18 +273,58 @@ html,body{
 
   <div class="pg-body">
 
+    <!-- DOLORES -->
     <div class="intro-box">
-      Muchas empresas ya entregan beneficios, premios o incentivos, pero lo hacen de forma aislada: campañas sueltas, baja visibilidad y poco aprendizaje sobre qué moviliza realmente a las personas. <strong>Apprecio Beat</strong> ordena esas iniciativas en una plataforma continua, donde cada reconocimiento, campaña o logro se convierte en valor tangible para el colaborador y en información accionable para la empresa.
+      <div class="intro-lead">¿Alguno de estos escenarios le suena familiar a tu organización?</div>
+      <div class="dolor-grid">
+        <div class="dolor-item">Alta rotación, especialmente en los primeros 6 a 12 meses de un colaborador.</div>
+        <div class="dolor-item">Equipos híbridos o distribuidos donde la cultura se fragmenta y el reconocimiento desaparece.</div>
+        <div class="dolor-item">Programas de beneficios activos, pero con baja participación y nulo sentido de pertenencia.</div>
+        <div class="dolor-item">Necesidad de digitalizar la experiencia del colaborador en una organización en transformación.</div>
+        <div class="dolor-item">Cultura que existe en el papel pero que no se vive en el día a día de las personas.</div>
+        <div class="dolor-item">Sin datos claros sobre qué iniciativas internas realmente mueven comportamientos.</div>
+      </div>
+    </div>
+
+    <!-- REWARDS vs BEAT -->
+    <div>
+      <div class="sec-title">Rewards y Apprecio Beat: dos roles distintos en tu estrategia</div>
+      <div class="diff-vs">
+        <div class="vs-col rewards">
+          <div class="vs-eyebrow">Ya lo tienes</div>
+          <div class="vs-name">Rewards de Apprecio</div>
+          <div class="vs-list">
+            <div class="vs-item">Entrega de puntos como incentivo o aguinaldo</div>
+            <div class="vs-item">Campañas puntuales por fechas o metas</div>
+            <div class="vs-item">Sin plataforma de participación continua</div>
+            <div class="vs-item">El colaborador recibe — pero no interactúa</div>
+          </div>
+        </div>
+        <div class="vs-col beat">
+          <div class="vs-eyebrow">Lo que agrega Apprecio Beat</div>
+          <div class="vs-name">Apprecio Beat</div>
+          <div class="vs-list">
+            <div class="vs-item">Reconocimiento entre pares, managers y equipos en tiempo real</div>
+            <div class="vs-item">Cultura visible y activa en el día a día de la organización</div>
+            <div class="vs-item">Participación continua: encuestas, feed social, insignias, eventos</div>
+            <div class="vs-item">Datos reales sobre qué mueve y qué no mueve a las personas</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:5px; font-size:9px; font-weight:700; color:#FA345E; text-align:center; letter-spacing:0.3px;">
+        Rewards abre la puerta. Apprecio Beat permite quedarse dentro.
+      </div>
     </div>
 
     <!-- EDICIONES -->
     <div>
-      <div class="sec-title">Una plataforma que crece con tu organización</div>
+      <div class="sec-title">Dos productos para dos necesidades distintas</div>
       <div class="edition-grid">
         <div class="edition-card base">
-          <div class="edition-eyebrow">Edición base</div>
+          <div class="edition-eyebrow">Cultura y engagement</div>
           <div class="edition-name">Apprecio Beat</div>
-          <div class="edition-desc">La base para construir cultura visible, participación y reconocimiento recurrente dentro de la organización.</div>
+          <div class="edition-buyer">Para: <strong>Gerencias de Personas, Cultura y Comunicaciones Internas</strong></div>
+          <div class="edition-desc">Plataforma continua de reconocimiento, cultura y participación. Ideal para organizaciones que necesitan construir o sostener cultura interna, reducir rotación y hacer visible el reconocimiento a escala.</div>
           <div class="edition-tags">
             <span class="etag">Reconocimientos</span>
             <span class="etag">eCards</span>
@@ -246,14 +337,14 @@ html,body{
           </div>
         </div>
         <div class="edition-card pro">
-          <div class="edition-eyebrow">Versión Pro</div>
+          <div class="edition-eyebrow">Desempeño y resultados</div>
           <div class="edition-name">Beat Performance</div>
-          <div class="edition-desc">La expansión natural de Apprecio Beat para conectar cultura con ejecución, metas y resultados de negocio.</div>
+          <div class="edition-buyer">Para: <strong>Gerencias Comerciales, Operaciones y áreas con KPIs</strong></div>
+          <div class="edition-desc">Diseñado para áreas que necesitan gestionar metas, medir cumplimiento y activar comportamientos de alto rendimiento con evidencia y scorecards en tiempo real. No es una evolución de Apprecio Beat — es un producto para un objetivo diferente.</div>
           <div class="edition-tags">
             <span class="etag">Scorecards</span>
-            <span class="etag">Retos</span>
+            <span class="etag">Retos con KPIs</span>
             <span class="etag">Ligas</span>
-            <span class="etag">KPIs</span>
             <span class="etag">Entrenamientos</span>
             <span class="etag">Centro de evidencia</span>
           </div>
@@ -261,34 +352,25 @@ html,body{
       </div>
     </div>
 
-    <!-- FLUJO -->
+    <!-- PARA QUÉ EMPRESA -->
     <div>
-      <div class="sec-title">Cómo funciona Apprecio Beat</div>
-      <div class="flow-grid">
-        <div class="flow-box">
-          <span class="flow-num">1</span>
-          <h4>Diseñar</h4>
-          <p>Comportamientos, campañas, públicos y reglas de participación.</p>
+      <div class="sec-title">¿Para qué tipo de organización es Apprecio Beat?</div>
+      <div class="fit-grid">
+        <div class="fit-box">
+          <h4>Empresas con alta rotación</h4>
+          <p>Donde la cultura y el reconocimiento temprano son clave para retener talento en los primeros meses de vida del colaborador.</p>
         </div>
-        <div class="flow-box">
-          <span class="flow-num">2</span>
-          <h4>Activar</h4>
-          <p>Lanzar reconocimientos, retos, encuestas o campañas internas.</p>
+        <div class="fit-box">
+          <h4>Organizaciones en transformación digital</h4>
+          <p>Que necesitan llevar su experiencia de colaborador a canales digitales y construir nuevos hábitos organizacionales.</p>
         </div>
-        <div class="flow-box">
-          <span class="flow-num">3</span>
-          <h4>Reconocer</h4>
-          <p>Hacer visibles los logros y reforzar acciones alineadas a la cultura.</p>
+        <div class="fit-box">
+          <h4>Equipos híbridos o distribuidos</h4>
+          <p>Donde el reconocimiento informal desaparece y la cultura se fragmenta entre oficinas, regiones o modalidades de trabajo.</p>
         </div>
-        <div class="flow-box">
-          <span class="flow-num">4</span>
-          <h4>Recompensar</h4>
-          <p>Convertir participación y logros en puntos, beneficios y experiencias.</p>
-        </div>
-        <div class="flow-box">
-          <span class="flow-num">5</span>
-          <h4>Medir</h4>
-          <p>Adopción, actividad, uso de puntos e impacto del programa.</p>
+        <div class="fit-box">
+          <h4>Empresas con cultura que no se vive</h4>
+          <p>Que tienen valores declarados pero sin mecanismos concretos para reforzarlos en el día a día de sus colaboradores.</p>
         </div>
       </div>
     </div>
@@ -296,22 +378,22 @@ html,body{
     <!-- DIFERENCIADORES -->
     <div>
       <div class="sec-title">Diferenciales de Apprecio Beat</div>
-      <div class="diff-grid">
-        <div class="diff-box">
-          <h4>Cultura visible, no solo beneficios</h4>
-          <p>El reconocimiento deja de ser informal o invisible y se transforma en una experiencia recurrente que refuerza comportamientos alineados a la organización.</p>
+      <div class="difprod-grid">
+        <div class="difprod-box">
+          <h4>Cultura visible, no solo declarada</h4>
+          <p>El reconocimiento deja de ser informal o invisible y se convierte en una experiencia recurrente que refuerza comportamientos alineados a los valores de la organización.</p>
         </div>
-        <div class="diff-box ai">
-          <h4>Intelligence Layer — IA para administradores</h4>
-          <p>Copiloto de IA que analiza comportamientos, detecta baja participación y propone campañas y acciones concretas para mejorar resultados sin aumentar la carga operativa de RR.HH.</p>
+        <div class="difprod-box ai">
+          <h4>Intelligence Layer — IA para el administrador</h4>
+          <p>Copiloto de IA que analiza comportamientos, detecta baja participación y propone acciones concretas para mejorar resultados sin aumentar la carga operativa de RR.HH.</p>
         </div>
-        <div class="diff-box">
-          <h4>Puntos como motor de valor</h4>
-          <p>Los puntos conectan participación, reconocimiento e incentivos con recompensas reales, aumentando la percepción de valor del programa.</p>
+        <div class="difprod-box">
+          <h4>Participación continua, no campañas aisladas</h4>
+          <p>Feed social, insignias entre pares, encuestas y eventos automáticos mantienen la plataforma activa todos los días — no solo en fechas puntuales.</p>
         </div>
-        <div class="diff-box">
-          <h4>Escalabilidad hacia desempeño</h4>
-          <p>La empresa comienza con cultura y reconocimiento, y puede avanzar hacia metas, retos, entrenamientos y desempeño con Beat Performance.</p>
+        <div class="difprod-box">
+          <h4>Datos sobre lo que realmente importa</h4>
+          <p>Métricas de adopción, participación y uso a D+14, D+30 y D+90 permiten entender qué mueve a las personas y optimizar el programa en el tiempo.</p>
         </div>
       </div>
     </div>
@@ -322,42 +404,15 @@ html,body{
       <div class="impact-grid">
         <div class="impact-card">
           <span class="impact-day">D+14</span>
-          <p>Primeras señales de actividad, participación y reconocimiento visible en la plataforma.</p>
+          <p>Primeras señales de actividad, reconocimientos enviados y participación visible en la plataforma.</p>
         </div>
         <div class="impact-card">
           <span class="impact-day">D+30</span>
-          <p>Lectura inicial de adopción, uso de puntos y campañas con mayor tracción.</p>
+          <p>Lectura inicial de adopción, uso de puntos y campañas con mayor tracción en la organización.</p>
         </div>
         <div class="impact-card">
           <span class="impact-day">D+90</span>
-          <p>Aprendizaje sobre comportamientos, segmentos activos y oportunidades de mejora del programa.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CASOS DE USO -->
-    <div>
-      <div class="sec-title">Casos de uso habituales</div>
-      <div class="usecase-grid">
-        <div class="usecase-box">
-          <span class="usecase-icon">🏅</span>
-          <h4>Reconocimiento cultural</h4>
-          <p>Valores, logros, hitos y comportamientos que la empresa quiere reforzar.</p>
-        </div>
-        <div class="usecase-box">
-          <span class="usecase-icon">📣</span>
-          <h4>Campañas internas</h4>
-          <p>Activaciones por fechas, focos de negocio, participación o engagement.</p>
-        </div>
-        <div class="usecase-box">
-          <span class="usecase-icon">🎁</span>
-          <h4>Beneficios e incentivos</h4>
-          <p>Uso de puntos, recompensas y experiencias como valor tangible para colaboradores.</p>
-        </div>
-        <div class="usecase-box">
-          <span class="usecase-icon">🎯</span>
-          <h4>Metas y desempeño</h4>
-          <p>Retos, scorecards y KPIs para movilizar resultados. Disponible en Beat Performance.</p>
+          <p>Aprendizaje profundo sobre comportamientos, segmentos activos y oportunidades de mejora del programa.</p>
         </div>
       </div>
     </div>
@@ -365,10 +420,10 @@ html,body{
     <!-- CTA -->
     <div class="cta">
       <div class="cta-left">
-        <h2>Rewards abre la puerta. Apprecio Beat permite quedarse dentro.</h2>
-        <p>Agenda una demo para ver cómo activar cultura, reconocimiento y recompensas en una experiencia continua para tus colaboradores.</p>
+        <h2>Tu empresa ya premia. Ahora es momento de construir cultura.</h2>
+        <p>Apprecio Beat activa reconocimiento continuo, participación real y datos accionables — sobre la base de Rewards que ya tienes funcionando.</p>
       </div>
-      <a href="#" class="cta-btn">Solicitar demo</a>
+
     </div>
 
   </div>
