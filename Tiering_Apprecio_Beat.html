@@ -27,212 +27,75 @@ html,body{
   break-after:page;
 }
 .page:last-child{ page-break-after:auto; break-after:auto; }
-
-/* ── TOPBAR ── */
-.topbar{
-  height:6px;
-  background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%);
-  flex-shrink:0;
-}
-
-/* ── HEADER ── */
-.pg-header{
-  background:#FA345E;
-  padding:18px 20px 16px;
-  position:relative;
-  overflow:hidden;
-  flex-shrink:0;
-}
-.pg-header-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
-.orn{
-  position:absolute; z-index:1; opacity:0.12;
-  background:#FFFFFF; border-radius:3px;
-}
+.topbar{ height:6px; background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%); flex-shrink:0; }
+.pg-header{ background:#FA345E; padding:18px 20px 16px; position:relative; overflow:hidden; flex-shrink:0; }
+.pg-header-inner{ display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+.orn{ position:absolute; z-index:1; opacity:0.12; background:#FFFFFF; border-radius:3px; }
 .orn-1{ width:48px; height:48px; top:-14px; right:180px; }
 .orn-2{ width:24px; height:24px; top:34px; right:158px; }
 .orn-3{ width:32px; height:32px; bottom:-10px; right:90px; }
 .orn-4{ width:16px; height:64px; top:0; right:64px; }
-.pg-tag{
-  font-size:9px; font-weight:700; letter-spacing:1.8px;
-  text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
-}
+.pg-tag{ font-size:9px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px; }
 .pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
-.pg-sub{
-  font-size:10.5px; color:rgba(255,255,255,0.82);
-  margin-top:5px; line-height:1.55; max-width:80%;
-}
-.pg-badge{
-  background:rgba(255,255,255,0.15);
-  border:1.5px solid rgba(255,255,255,0.3);
-  border-radius:12px; padding:10px 16px;
-  text-align:center; white-space:nowrap; flex-shrink:0;
-}
+.pg-sub{ font-size:10.5px; color:rgba(255,255,255,0.82); margin-top:5px; line-height:1.55; max-width:80%; }
+.pg-badge{ background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3); border-radius:12px; padding:10px 16px; text-align:center; white-space:nowrap; flex-shrink:0; }
 .pg-badge .val{ font-size:13px; font-weight:900; color:#FFFFFF; display:block; line-height:1.3; }
 .pg-badge .lbl{ font-size:8.5px; font-weight:600; color:rgba(255,255,255,0.75); display:block; margin-top:2px; }
-
-/* ── CUERPO ── */
-.pg-body{
-  flex:1;
-  padding:14px 20px 12px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* ── INTRO BOX ── */
-.intro-box{
-  background:#FFE6E8;
-  border-left:4px solid #FA345E;
-  border-radius:0 10px 10px 0;
-  padding:10px 13px;
-  font-size:10.5px; line-height:1.68; color:#1B1B1B;
-}
+.pg-body{ flex:1; padding:14px 20px 12px; display:flex; flex-direction:column; gap:12px; }
+.intro-box{ background:#FFE6E8; border-left:4px solid #FA345E; border-radius:0 10px 10px 0; padding:10px 13px; font-size:10.5px; line-height:1.68; color:#1B1B1B; }
 .intro-box strong{ color:#FA345E; }
-
-/* ── TÍTULO DE SECCIÓN ── */
-.sec-title{
-  font-size:13px; font-weight:900; color:#1B1B1B;
-  display:flex; align-items:center; gap:8px;
-  margin-bottom:7px;
-}
-.sec-title::before{
-  content:'';
-  display:inline-block; width:3px; height:16px;
-  background:#FA345E; border-radius:2px; flex-shrink:0;
-}
-
-/* ── GRIDS ── */
+.sec-title{ font-size:13px; font-weight:900; color:#1B1B1B; display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.sec-title::before{ content:''; display:inline-block; width:3px; height:16px; background:#FA345E; border-radius:2px; flex-shrink:0; }
 .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-
-/* ── PRINCIPIOS ── */
 .principle-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; }
-.principle{
-  border:1px solid #EEE; border-radius:11px;
-  padding:11px 12px; background:#FAFAFA;
-}
+.principle{ border:1px solid #EEE; border-radius:11px; padding:11px 12px; background:#FAFAFA; }
 .principle h3{ font-size:10px; font-weight:800; color:#45C1AD; margin-bottom:4px; line-height:1.3; }
 .principle p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
-
-/* ── EDITION CARD ── */
-.edition-card{
-  border:1px solid #EEE; border-radius:14px;
-  padding:13px 14px; background:#FFFFFF;
-  page-break-inside:avoid; break-inside:avoid;
-}
+.edition-card{ border:1px solid #EEE; border-radius:14px; padding:13px 14px; background:#FFFFFF; page-break-inside:avoid; break-inside:avoid; }
 .edition-card.beat{ border-top:3px solid #FA345E; }
 .edition-card.perf{ border-top:3px solid #B2A8E7; }
-.edition-header{
-  display:flex; justify-content:space-between;
-  align-items:flex-start; gap:12px; margin-bottom:6px;
-}
+.edition-header{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:6px; }
 .edition-name{ font-size:15px; font-weight:900; color:#1B1B1B; }
-.edition-etag{
-  display:inline-block; padding:4px 10px;
-  border-radius:999px; font-size:8.5px; font-weight:800;
-  white-space:nowrap; flex-shrink:0;
-}
+.edition-etag{ display:inline-block; padding:4px 10px; border-radius:999px; font-size:8.5px; font-weight:800; white-space:nowrap; flex-shrink:0; }
 .edition-card.beat .edition-etag{ background:#FFE6E8; color:#FA345E; }
 .edition-card.perf .edition-etag{ background:#EDE9FC; color:#6B5CC4; }
 .edition-desc{ font-size:10px; line-height:1.6; color:#4A4A4A; margin-bottom:10px; }
-
-/* ── INFO BOXES ── */
-.info-box{
-  border:1px solid #EEE; border-radius:10px;
-  padding:10px 11px; background:#FAFAFA;
-}
+.info-box{ border:1px solid #EEE; border-radius:10px; padding:10px 11px; background:#FAFAFA; }
 .info-box.pink  { background:#FFF7F8; border-color:#FFD5DD; }
 .info-box.purple{ background:#F8F6FF; border-color:#DCD8F5; }
 .info-box.green { background:#F4FBF9; border-color:#C9EADF; }
 .info-box.blue  { background:#F0FAFC; border-color:#CDEFF4; }
 .info-box.amber { background:#FFFBF0; border-color:#F5E099; }
-.box-title{
-  font-size:8.5px; font-weight:800; text-transform:uppercase;
-  letter-spacing:0.6px; margin-bottom:5px; color:#45C1AD;
-}
+.box-title{ font-size:8.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:5px; color:#45C1AD; }
 .info-box p{ font-size:9.5px; line-height:1.6; color:#4A4A4A; }
 .info-box ul{ padding-left:13px; margin-top:3px; }
 .info-box li{ font-size:9.5px; line-height:1.5; color:#374151; margin-bottom:3px; }
-
-/* ── TIERS GRID ── */
 .tiers-grid{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-.tier-card{
-  border-radius:11px; padding:11px 12px;
-  border:1px solid #EEE; background:#FFFFFF;
-  page-break-inside:avoid; break-inside:avoid;
-}
+.tier-card{ border-radius:11px; padding:11px 12px; border:1px solid #EEE; background:#FFFFFF; page-break-inside:avoid; break-inside:avoid; }
 .tier-card.ap{ border-top:4px solid #FA345E; background:#FFF7F8; }
 .tier-card.a { border-top:4px solid #B2A8E7; background:#F8F6FF; }
 .tier-card.b { border-top:4px solid #45C1AD; background:#F4FBF9; }
 .tier-card.c { border-top:4px solid #97E89F; background:#F5FFF8; }
 .tier-name{ font-size:11.5px; font-weight:900; color:#1B1B1B; margin-bottom:7px; }
-.meta-item{
-  background:rgba(255,255,255,0.85);
-  border:1px solid rgba(0,0,0,0.05);
-  border-radius:8px; padding:7px 9px;
-  font-size:9px; line-height:1.55; color:#374151;
-  margin-bottom:5px;
-}
-.define-block{
-  margin-top:7px; padding:9px 10px;
-  border-radius:8px; background:rgba(255,255,255,0.9);
-  border:1px dashed rgba(27,27,27,0.1);
-}
-.define-title{
-  font-size:8px; font-weight:800; text-transform:uppercase;
-  letter-spacing:0.6px; margin-bottom:5px; color:#45C1AD;
-}
+.meta-item{ background:rgba(255,255,255,0.85); border:1px solid rgba(0,0,0,0.05); border-radius:8px; padding:7px 9px; font-size:9px; line-height:1.55; color:#374151; margin-bottom:5px; }
+.define-block{ margin-top:7px; padding:9px 10px; border-radius:8px; background:rgba(255,255,255,0.9); border:1px dashed rgba(27,27,27,0.1); }
+.define-title{ font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:5px; color:#45C1AD; }
 .define-block ul{ padding-left:12px; }
 .define-block li{ font-size:9px; line-height:1.5; color:#374151; margin-bottom:3px; }
-
-/* ── TABLA ── */
 table{ width:100%; border-collapse:collapse; font-size:10px; }
-th{
-  background:#B2A8E7; color:#1B1B1B;
-  text-align:left; padding:6px 9px;
-  font-weight:800; font-size:9.5px;
-}
+th{ background:#B2A8E7; color:#1B1B1B; text-align:left; padding:6px 9px; font-weight:800; font-size:9.5px; }
 th:first-child{ border-radius:8px 0 0 0; }
 th:last-child{ border-radius:0 8px 0 0; }
-td{
-  border-bottom:1px solid #F0F0F0;
-  padding:7px 9px; vertical-align:top;
-  line-height:1.5; color:#374151;
-  background:#FFFFFF;
-}
+td{ border-bottom:1px solid #F0F0F0; padding:7px 9px; vertical-align:top; line-height:1.5; color:#374151; background:#FFFFFF; }
 tr:nth-child(even) td{ background:#FAFAFA; }
-
-/* ── CLOSING ── */
-.closing{
-  background:#FFE6E8;
-  border:1px solid #FA345E;
-  border-radius:12px;
-  padding:12px 14px;
-  page-break-inside:avoid; break-inside:avoid;
-}
+.closing{ background:#FFE6E8; border:1px solid #FA345E; border-radius:12px; padding:12px 14px; page-break-inside:avoid; break-inside:avoid; }
 .closing h3{ font-size:12px; font-weight:900; color:#FA345E; margin-bottom:5px; }
 .closing p{ font-size:10px; line-height:1.7; color:#1B1B1B; }
-
-/* ── FOOTER ── */
-.pg-footer{
-  padding:7px 20px;
-  border-top:1px solid #F0F0F0;
-  display:flex; justify-content:space-between;
-  font-size:9px; color:#B0BEC8; font-weight:500;
-  flex-shrink:0;
-}
+.closing p + p{ margin-top:6px; }
+.pg-footer{ padding:7px 20px; border-top:1px solid #F0F0F0; display:flex; justify-content:space-between; font-size:9px; color:#B0BEC8; font-weight:500; flex-shrink:0; }
 .pg-footer span:first-child{ color:#FA345E; font-weight:700; }
-
-@media print{
-  body{ background:#fff; }
-  .page{ margin:0; width:100%; }
-}
+@media print{ body{ background:#fff; } .page{ margin:0; width:100%; } }
 </style>
 </head>
 <body>
@@ -259,22 +122,22 @@ tr:nth-child(even) td{ background:#FAFAFA; }
   <div class="pg-body">
 
     <div class="intro-box">
-      <strong>Regla general:</strong> el <strong>Tier</strong> se define por escala, complejidad operativa y potencial estratégico — no depende del AQS. El <strong>AQS</strong> mide madurez y prioridad comercial de una oportunidad; el <strong>Tier</strong> define el tipo de cuenta, el tratamiento esperado y el nivel de recursos internos que podría justificar.
+      <strong>Regla general:</strong> el <strong>Tier</strong> se define por escala, complejidad operativa y potencial estratégico — no depende del AQS. El <strong>AQS</strong> mide madurez y prioridad comercial de una oportunidad; el <strong>Tier</strong> define el tipo de cuenta, el tratamiento esperado y el nivel de recursos internos que podría justificar. Ver documento AQS para criterios de scoring y reglas de avance.
     </div>
 
     <!-- PRINCIPIOS -->
     <div class="principle-grid">
       <div class="principle">
-        <h3>Apprecio Beat no es solo puntos</h3>
-        <p>Ordena cultura, reconocimiento, participación y recompensas en un sistema recurrente para colaboradores.</p>
+        <h3>Apprecio Beat: cultura y reconocimiento continuo</h3>
+        <p>Para empresas que quieren un sistema recurrente de reconocimiento, participación y recompensas — no campañas aisladas ni entrega puntual de puntos.</p>
       </div>
       <div class="principle">
-        <h3>Beat Performance para otro dolor</h3>
-        <p>Aplica cuando el dolor principal está en desempeño, KPIs, evidencia, retos, entrenamientos o equipos con metas medibles.</p>
+        <h3>Beat Performance: un producto para otro objetivo</h3>
+        <p>Para organizaciones que necesitan gestionar metas, medir cumplimiento y activar desempeño con evidencia. Responde a un problema distinto y a un comprador distinto que Apprecio Beat.</p>
       </div>
       <div class="principle">
         <h3>Rewards como señal de entrada</h3>
-        <p>Rewards puede identificar clientes con potencial de expansión hacia Apprecio Beat como programa continuo y recurrente.</p>
+        <p>Rewards identifica clientes con potencial de expansión hacia Apprecio Beat — cuando hay recurrencia, sponsor y necesidad de programa continuo, no solo entrega de puntos.</p>
       </div>
     </div>
 
@@ -284,16 +147,16 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         <div class="edition-name">Apprecio Beat</div>
         <span class="edition-etag">Cultura · Reconocimiento · Engagement</span>
       </div>
-      <div class="edition-desc">Para empresas que necesitan activar cultura visible, reconocimiento recurrente, participación, comunicación interna y recompensas a través de puntos. Es la opción natural cuando el dolor dominante está en clima, cohesión, reconocimiento, beneficios o engagement.</div>
+      <div class="edition-desc">Para empresas que quieren instalar un sistema continuo de reconocimiento, participación y recompensas. La diferencia clave con Rewards: el cliente no quiere solo entregar puntos — quiere que esos puntos formen parte de una experiencia de cultura visible, con reconocimiento entre personas, campañas recurrentes y datos de adopción.</div>
 
       <div class="grid-2" style="margin-bottom:9px;">
         <div class="info-box pink">
-          <div class="box-title">Dolor principal</div>
-          <p>Reconocimiento disperso, baja visibilidad cultural, iniciativas aisladas, beneficios poco valorados o participación débil.</p>
+          <div class="box-title">Dolor principal — lo que distingue a Beat de Rewards</div>
+          <p>El cliente ya entrega beneficios o puntos, pero lo hace de forma aislada, sin visibilidad, sin que el colaborador entienda por qué los recibe ni qué comportamiento refuerza. Quiere pasar de una entrega puntual a un programa que construya cultura, reconozca personas de forma recurrente y permita medir qué funciona.</p>
         </div>
         <div class="info-box purple">
           <div class="box-title">Objetivo del cliente</div>
-          <p>Unificar reconocimiento, puntos, recompensas, comunicación y campañas internas en una experiencia simple y medible.</p>
+          <p>Unificar reconocimiento, puntos, recompensas, comunicación y campañas internas en una experiencia simple, recurrente y medible para colaboradores y administradores.</p>
         </div>
       </div>
 
@@ -306,8 +169,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <div class="box-title">Firmografía mínima</div>
           <ul>
             <li>Ideal desde 150 colaboradores.</li>
-            <li>RRHH, cultura o comunicaciones con sponsor funcional.</li>
-            <li>Necesidad de ordenar acciones recurrentes, no solo campañas aisladas.</li>
+            <li>Sponsor funcional en personas, cultura o comunicaciones.</li>
+            <li>Intención de programa recurrente, no solo campaña puntual.</li>
           </ul>
         </div>
         <div class="info-box blue">
@@ -324,19 +187,19 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         <div class="info-box pink">
           <div class="box-title">Triggers comerciales</div>
           <ul>
-            <li>Cliente usa Rewards para fechas puntuales y quiere recurrencia.</li>
-            <li>Necesidad de reconocer valores, hitos, logros o comportamientos.</li>
-            <li>Clima laboral, engagement o pertenencia en agenda de RRHH.</li>
-            <li>Beneficios o puntos gestionados de forma manual o poco visible.</li>
+            <li>Cliente usa Rewards para fechas puntuales y quiere recurrencia y visibilidad.</li>
+            <li>Necesidad de reconocer valores, hitos, logros o comportamientos de forma sistemática.</li>
+            <li>Clima laboral, engagement o sentido de pertenencia en agenda de personas.</li>
+            <li>Beneficios o puntos gestionados manualmente, sin trazabilidad ni cultura asociada.</li>
           </ul>
         </div>
         <div class="info-box amber">
           <div class="box-title">Anti-ICP</div>
           <ul>
-            <li>Solo busca compra puntual de puntos sin intención de programa.</li>
+            <li>Solo busca compra puntual de puntos sin intención de programa continuo.</li>
             <li>No existe sponsor funcional interno.</li>
             <li>Menos de 150 colaboradores sin potencial de crecimiento.</li>
-            <li>Necesita únicamente catálogo de gift cards, sin cultura ni engagement.</li>
+            <li>Necesita únicamente catálogo de gift cards sin interés en cultura, reconocimiento ni participación.</li>
           </ul>
         </div>
       </div>
@@ -352,7 +215,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
             <ul>
               <li>Alta escala y dispersión organizacional.</li>
               <li>Necesidad de gobernanza y reporting ejecutivo.</li>
-              <li>Alto potencial de expansión a Beat Performance.</li>
+              <li>Potencial de expansión a múltiples áreas o países.</li>
             </ul>
           </div>
         </div>
@@ -417,7 +280,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <div>
         <div class="pg-tag">Apprecio Beat · GTM Comercial</div>
         <div class="pg-title">Beat Performance y reglas de lectura</div>
-        <div class="pg-sub">Tiering para la versión de Apprecio Beat orientada a desempeño, KPIs y metas. Más reglas de lectura comercial para distinguir Tier, AQS y edición.</div>
+        <div class="pg-sub">Tiering para Beat Performance y reglas de lectura comercial para distinguir Tier, AQS y edición correcta según el problema del cliente.</div>
       </div>
       <div class="pg-badge">
         <span class="val">Tiering</span>
@@ -434,30 +297,30 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         <div class="edition-name">Beat Performance</div>
         <span class="edition-etag">KPIs · Retos · Evidencia · Desempeño</span>
       </div>
-      <div class="edition-desc">Versión de Apprecio Beat para empresas que además necesitan conectar acciones, metas, evidencia y recompensas con desempeño. Aplica cuando el dolor dominante está en seguimiento de KPIs, ligas, retos, entrenamientos, cumplimiento o incentivos por resultado.</div>
+      <div class="edition-desc">Producto orientado a organizaciones que necesitan gestionar metas, medir cumplimiento y activar desempeño con evidencia y scorecards. No es una evolución de Apprecio Beat — responde a un problema distinto y a un comprador distinto. El Tier se mide por el universo de participantes del programa, no por la dotación total de la empresa: una empresa de 3.000 personas puede tener un programa Performance para 300 vendedores.</div>
 
       <div class="grid-2" style="margin-bottom:9px;">
         <div class="info-box pink">
           <div class="box-title">Dolor principal</div>
-          <p>Metas poco visibles, incentivos desconectados, baja adherencia a entrenamientos, evidencia dispersa o seguimiento manual del desempeño.</p>
+          <p>Metas poco visibles, incentivos desconectados del resultado, baja adherencia a entrenamientos, evidencia dispersa o seguimiento manual del desempeño de equipos críticos.</p>
         </div>
         <div class="info-box purple">
           <div class="box-title">Objetivo del cliente</div>
-          <p>Movilizar resultados con scorecards, retos, entrenamientos, centro de evidencia, ligas e incentivos conectados a puntos.</p>
+          <p>Movilizar resultados con scorecards, retos, entrenamientos, centro de evidencia e incentivos conectados directamente a puntos y metas medibles.</p>
         </div>
       </div>
 
       <div class="grid-3" style="margin-bottom:9px;">
         <div class="info-box">
           <div class="box-title">Cliente ideal</div>
-          <p>Empresas con equipos críticos de venta, operación, atención, distribución o terreno donde el desempeño se puede medir y reforzar.</p>
+          <p>Empresas con equipos críticos de venta, operación, atención, distribución o terreno donde el desempeño se puede medir y reforzar con incentivos.</p>
         </div>
         <div class="info-box green">
           <div class="box-title">Firmografía mínima</div>
           <ul>
-            <li>Ideal desde 150 participantes.</li>
+            <li>Ideal desde 150 participantes en el programa.</li>
             <li>Equipos con metas recurrentes o comportamientos medibles.</li>
-            <li>Al menos un área dueña del resultado.</li>
+            <li>Al menos un área dueña del resultado con sponsor activo.</li>
           </ul>
         </div>
         <div class="info-box blue">
@@ -476,22 +339,23 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <ul>
             <li>Necesidad de incentivar fuerza de venta, canal, tiendas o equipos operativos.</li>
             <li>Solicitud de scorecards, ligas, retos, entrenamientos o rankings.</li>
-            <li>Dolor por baja visibilidad de cumplimiento o resultados.</li>
-            <li>Necesidad de convertir performance en puntos y recompensas.</li>
+            <li>Dolor por baja visibilidad de cumplimiento o resultados de equipos críticos.</li>
+            <li>Necesidad de convertir desempeño en puntos y recompensas trazables.</li>
           </ul>
         </div>
         <div class="info-box amber">
           <div class="box-title">Anti-ICP</div>
           <ul>
-            <li>No existen KPIs ni voluntad de definir una lógica mínima.</li>
-            <li>Datos inaccesibles o imposibles de validar.</li>
-            <li>Se busca solo reconocimiento cultural, sin componente de desempeño.</li>
-            <li>No hay sponsor con poder de empuje en área comercial u operacional.</li>
+            <li>No existen KPIs ni voluntad de definir una lógica mínima de medición.</li>
+            <li>Datos inaccesibles o imposibles de validar periódicamente.</li>
+            <li>No hay sponsor con poder de decisión en área comercial u operativa.</li>
+            <li>La necesidad es solo cultura y reconocimiento — en ese caso corresponde Apprecio Beat, no Performance.</li>
           </ul>
         </div>
       </div>
 
       <div class="sec-title">Tiering — Beat Performance</div>
+      <p style="font-size:9px; color:#777; margin-bottom:8px; font-style:italic;">El Tier se mide por participantes en el programa, no por dotación total de la empresa.</p>
       <div class="tiers-grid">
         <div class="tier-card ap">
           <div class="tier-name">Tier A+ · 1.000+ participantes</div>
@@ -508,12 +372,12 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         </div>
         <div class="tier-card a">
           <div class="tier-name">Tier A · 500–999 participantes</div>
-          <div class="meta-item"><strong>Perfil:</strong> empresa con KPIs claros, equipos críticos y necesidad de seguimiento más profesionalizado.</div>
+          <div class="meta-item"><strong>Perfil:</strong> empresa con KPIs claros, equipos críticos y necesidad de seguimiento profesionalizado.</div>
           <div class="meta-item"><strong>Tratamiento:</strong> demo Performance, validación técnica básica y propuesta con reglas de medición.</div>
           <div class="define-block">
             <div class="define-title">Se define por</div>
             <ul>
-              <li>KPIs o metas ya existentes.</li>
+              <li>KPIs o metas ya existentes y validables.</li>
               <li>Necesidad real de automatización y control.</li>
               <li>Potencial de crecimiento por módulos y audiencias.</li>
             </ul>
@@ -526,7 +390,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
           <div class="define-block">
             <div class="define-title">Se define por</div>
             <ul>
-              <li>Un caso de uso dominante.</li>
+              <li>Un caso de uso dominante bien definido.</li>
               <li>Datos manejables vía planillas o cargas periódicas.</li>
               <li>Escalamiento gradual si el piloto demuestra impacto.</li>
             </ul>
@@ -535,11 +399,11 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         <div class="tier-card c">
           <div class="tier-name">Tier C · 150–249 participantes</div>
           <div class="meta-item"><strong>Perfil:</strong> oportunidad con intención real, pero baja escala o madurez inicial en KPIs.</div>
-          <div class="meta-item"><strong>Tratamiento:</strong> nurture, educación o mini-piloto si el dolor es muy concreto.</div>
+          <div class="meta-item"><strong>Tratamiento:</strong> nurture, educación o mini-piloto si el dolor es muy concreto y los datos están disponibles.</div>
           <div class="define-block">
             <div class="define-title">Se define por</div>
             <ul>
-              <li>Escala mínima y pocos KPIs.</li>
+              <li>Escala mínima y pocos KPIs definidos.</li>
               <li>Necesidad puntual y presupuesto acotado.</li>
               <li>Implementación simple, sin alta personalización.</li>
             </ul>
@@ -550,7 +414,7 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 
     <!-- REGLAS DE LECTURA -->
     <div>
-      <div class="sec-title">Reglas de lectura comercial — Tier ≠ AQS</div>
+      <div class="sec-title">Reglas de lectura comercial — Tier, AQS y edición</div>
       <table>
         <tr>
           <th style="width:20%;">Concepto</th>
@@ -559,28 +423,33 @@ tr:nth-child(even) td{ background:#FAFAFA; }
         </tr>
         <tr>
           <td><strong>Tier</strong></td>
-          <td>Clasifica el tipo de cuenta por escala, complejidad y potencial estratégico.</td>
+          <td>Clasifica la cuenta por escala, complejidad y potencial estratégico.</td>
           <td>Define nivel de atención, seniority, esfuerzo y tratamiento esperado.</td>
         </tr>
         <tr>
           <td><strong>AQS</strong></td>
-          <td>Mide madurez y prioridad real de una oportunidad específica.</td>
+          <td>Mide madurez y prioridad real de una oportunidad específica dentro del Tier. Ver documento AQS.</td>
           <td>Define si se trabaja activamente, se madura o queda en nurture.</td>
         </tr>
         <tr>
           <td><strong>Apprecio Beat</strong></td>
-          <td>Se activa cuando el dolor principal es cultura, reconocimiento, engagement, beneficios o recompensas.</td>
+          <td>Se activa cuando el dolor es querer un sistema continuo de cultura, reconocimiento, participación y recompensas — no solo entrega puntual de puntos.</td>
           <td>Demo Apprecio Beat, propuesta y foco en adopción cultural D+14.</td>
         </tr>
         <tr>
           <td><strong>Beat Performance</strong></td>
-          <td>Se activa cuando el dolor principal es desempeño, metas, KPIs, evidencia, retos o incentivos por resultado.</td>
+          <td>Se activa cuando el dolor principal es desempeño, metas, KPIs, evidencia o incentivos por resultado en equipos críticos. Buyer distinto a Apprecio Beat.</td>
           <td>Demo Performance, validación de datos y propuesta con reglas de medición.</td>
         </tr>
         <tr>
+          <td><strong>Ambas ediciones</strong></td>
+          <td>Una empresa puede necesitar Apprecio Beat para cultura y Beat Performance para un área comercial o de operaciones. Son conversaciones y contratos independientes.</td>
+          <td>Identificar el dolor y el buyer de cada necesidad por separado. No mezclar en una sola propuesta sin claridad.</td>
+        </tr>
+        <tr>
           <td><strong>Rewards transaccional</strong></td>
-          <td>Puede ser una señal de entrada, pero no equivale automáticamente a oportunidad Apprecio Beat.</td>
-          <td>Evaluar si existe recurrencia, sponsor y necesidad de programa continuo.</td>
+          <td>Puede ser señal de entrada, pero no equivale automáticamente a oportunidad Apprecio Beat.</td>
+          <td>Evaluar si existe recurrencia, sponsor y necesidad de programa continuo antes de avanzar.</td>
         </tr>
       </table>
     </div>
@@ -588,9 +457,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <!-- CLOSING -->
     <div class="closing">
       <h3>Resumen</h3>
-      <p>
-        Apprecio Beat debe priorizar cuentas con necesidad recurrente de cultura, reconocimiento y recompensas. Beat Performance debe reservarse para oportunidades donde exista un caso claro de desempeño medible. El <strong>Tier</strong> ordena el potencial de la cuenta; el <strong>AQS</strong> decide la prioridad de la oportunidad; la <strong>edición</strong> define el mejor camino de solución.
-      </p>
+      <p>El <strong>Tier</strong> ordena el potencial de la cuenta. El <strong>AQS</strong> decide la prioridad de la oportunidad. La <strong>edición</strong> define el mejor camino de solución según el problema y el comprador.</p>
+      <p>Apprecio Beat es para quien quiere construir cultura y reconocimiento continuo. Beat Performance es para quien necesita mover indicadores y medir desempeño. Una empresa puede necesitar ambas — pero son conversaciones distintas, con interlocutores distintos y propuestas independientes.</p>
     </div>
 
   </div>
