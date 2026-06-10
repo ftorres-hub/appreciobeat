@@ -2,7 +2,7 @@ const DIIO_CLIENT_ID = '5b4df826-ec35-4d96-9dd3-90311504ef71';
 const DIIO_CLIENT_SECRET = '871714aa-995e-4da8-9d5a-754c32caa303';
 const DIIO_REFRESH_TOKEN = '1104ade4-ca47-45a7-816b-21f55975460d';
 const DIIO_BASE = 'https://apprecio.diio.com/api/external';
-const ANTHROPIC_KEY = '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';
+const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 
 async function getDiioToken() {
   const res = await fetch(`${DIIO_BASE}/refresh_token`, {
