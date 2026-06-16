@@ -144,7 +144,7 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-5',
+          model: 'claude-sonnet-4-6',
           max_tokens: 1500,
           messages: [{ role: 'user', content: extractPrompt }]
         })
@@ -312,7 +312,7 @@ Para módulos con inferencias o funcionalidades no confirmadas, agregar al final
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-5',
+          model: 'claude-sonnet-4-6',
           max_tokens: 2500,
           messages: [{ role: 'user', content: prompt }]
         })
