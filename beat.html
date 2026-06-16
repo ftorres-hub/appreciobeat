@@ -74,6 +74,10 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 .section-header-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .section-header h2 { font-size: 18px; font-weight: 800; color: #1B1B1B; }
 
+/* ── SUBLABEL DE GRUPO ── */
+.group-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #BBB; margin: 0 0 10px; }
+.group-block { margin-bottom: 24px; }
+
 /* ── CARDS INTERNAS ── */
 .cards-grid   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .cards-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -159,7 +163,7 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
     <div class="topbar-pill">Portal comercial</div>
   </div>
   <div class="topbar-right">
-    <span class="topbar-count">15 recursos disponibles</span>
+    <span class="topbar-count">17 recursos disponibles</span>
     <button class="feedback-btn-top" onclick="openModal()">Comentarios y dudas</button>
     <button class="back-home-btn" onclick="window.location.href='repositorioapprecio.html'">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -181,7 +185,7 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
         <div class="sec-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
-        <div class="sec-count">15 recursos</div>
+        <div class="sec-count">17 recursos</div>
         <div class="sec-title">Comercial</div>
         <div class="sec-items">
           <div class="sec-item"><span class="sec-item-dot"></span>Recursos comerciales</div>
@@ -241,11 +245,13 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
         <div class="sec-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
         </div>
-        <div class="sec-count">2 decks</div>
+        <div class="sec-count">4 decks</div>
         <div class="sec-title">Presentaciones y materiales</div>
         <div class="sec-items">
           <div class="sec-item"><span class="sec-item-dot"></span>Deck Apprecio Beat</div>
           <div class="sec-item"><span class="sec-item-dot"></span>Deck Beat Performance</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Deck Dcanje Beat (México)</div>
+          <div class="sec-item"><span class="sec-item-dot"></span>Deck Beat Performance (México)</div>
         </div>
         <div class="sec-cta">Ver materiales <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
@@ -350,22 +356,47 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 
     <!-- PRESENTACIONES Y MATERIALES -->
     <div id="sec-proceso" class="sec-proceso" style="display:none">
-      <div class="cards-grid-2">
-        <a class="doc-card" href="https://docs.google.com/presentation/d/1-tg4Ty3rC6_w-c2LCRd_oeoOqLdeGnS0yHSXQPMSWF4/edit?usp=drive_link" target="_blank">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="card-cat">Deck</div>
-          <div class="card-title">Deck Apprecio Beat</div>
-          <div class="card-desc">Deck oficial de Apprecio Beat para presentar a prospectos y clientes.</div>
-          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
-        </a>
-        <a class="doc-card" href="https://docs.google.com/presentation/d/18LOgz9otHoQFVTd91h5A9DqeYfQpHeQ7zD8LUmvu1-M/edit?usp=drive_link" target="_blank">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="card-cat">Deck</div>
-          <div class="card-title">Deck Beat Performance</div>
-          <div class="card-desc">Deck oficial de Apprecio Beat Performance para presentar a prospectos y clientes.</div>
-          <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
-        </a>
+
+      <div class="group-block">
+        <div class="group-label">General</div>
+        <div class="cards-grid-2">
+          <a class="doc-card" href="https://docs.google.com/presentation/d/1-tg4Ty3rC6_w-c2LCRd_oeoOqLdeGnS0yHSXQPMSWF4/edit?usp=drive_link" target="_blank">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="card-cat">Deck</div>
+            <div class="card-title">Deck Apprecio Beat</div>
+            <div class="card-desc">Deck oficial de Apprecio Beat para presentar a prospectos y clientes.</div>
+            <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+          <a class="doc-card" href="https://docs.google.com/presentation/d/18LOgz9otHoQFVTd91h5A9DqeYfQpHeQ7zD8LUmvu1-M/edit?usp=drive_link" target="_blank">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="card-cat">Deck</div>
+            <div class="card-title">Deck Beat Performance</div>
+            <div class="card-desc">Deck oficial de Beat Performance para presentar a prospectos y clientes.</div>
+            <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+        </div>
       </div>
+
+      <div class="group-block">
+        <div class="group-label">México · Dcanje</div>
+        <div class="cards-grid-2">
+          <a class="doc-card" href="https://docs.google.com/presentation/d/1SQPHw3rYtagTwH63qJRlfS3VQiXCVz1JICfjORBY3vY/edit?slide=id.g3e78374a586_2_58#slide=id.g3e78374a586_2_58" target="_blank">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="card-cat">Deck · México</div>
+            <div class="card-title">Deck Dcanje Beat · México</div>
+            <div class="card-desc">Deck oficial de Dcanje Beat para presentar a prospectos y clientes en México.</div>
+            <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+          <a class="doc-card" href="https://docs.google.com/presentation/d/18LOgz9otHoQFVTd91h5A9DqeYfQpHeQ7zD8LUmvu1-M/edit?slide=id.g3a895f237db_0_0#slide=id.g3a895f237db_0_0" target="_blank">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6C5FBF" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="card-cat">Deck · México</div>
+            <div class="card-title">Deck Beat Performance · México</div>
+            <div class="card-desc">Deck oficial de Beat Performance para presentar a prospectos y clientes en México.</div>
+            <div class="card-link">Abrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+        </div>
+      </div>
+
     </div>
 
     <!-- GENERA -->
@@ -545,13 +576,8 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
     window.scrollTo(0, 0);
   }
 
-  function openLanding() {
-    showOnly('landing-view');
-  }
-
-  function openManagement() {
-    openSection('management');
-  }
+  function openLanding() { showOnly('landing-view'); }
+  function openManagement() { openSection('management'); }
 
   function openSection(id) {
     showOnly('section-view');
@@ -564,25 +590,14 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
   }
 
   function goBack() {
-    if (currentBackTo === 'landing') {
-      showOnly('landing-view');
-    } else {
-      showOnly('root-view');
-    }
+    if (currentBackTo === 'landing') showOnly('landing-view');
+    else showOnly('root-view');
   }
 
-  function goRoot() {
-    showOnly('root-view');
-  }
+  function goRoot() { showOnly('root-view'); }
 
-  function openModal() {
-    document.getElementById('feedback-modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('feedback-modal').classList.remove('open');
-  }
-
+  function openModal() { document.getElementById('feedback-modal').classList.add('open'); }
+  function closeModal() { document.getElementById('feedback-modal').classList.remove('open'); }
   function closeModalOutside(e) {
     if (e.target === document.getElementById('feedback-modal')) closeModal();
   }
