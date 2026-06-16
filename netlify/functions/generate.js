@@ -2,7 +2,7 @@ const DIIO_CLIENT_ID = '5b4df826-ec35-4d96-9dd3-90311504ef71';
 const DIIO_CLIENT_SECRET = '871714aa-995e-4da8-9d5a-754c32caa303';
 const DIIO_REFRESH_TOKEN = '1104ade4-ca47-45a7-816b-21f55975460d';
 const DIIO_BASE = 'https://apprecio.diio.com/api/external';
-const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
+const ANTHROPIC_KEY = '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';
 
 async function getDiioToken() {
   const res = await fetch(`${DIIO_BASE}/refresh_token`, {
@@ -78,6 +78,7 @@ exports.handler = async function(event) {
         if (tRes.ok) {
           const tData = await tRes.json();
           if (Array.isArray(tData.transcript)) {
+            // El transcript es un array de {speaker, text} — concatenar todo el texto
             transcriptText = tData.transcript.map(t => `${t.speaker}: ${t.text}`).join('\n').slice(0, 8000);
           } else {
             transcriptText = tData.transcript || tData.text || tData.content || '';
@@ -85,24 +86,22 @@ exports.handler = async function(event) {
         }
       }
 
-      console.log('Transcript ID:', m.last_transcript_id);
-      console.log('Transcript length:', transcriptText.length);
-
       const sellers = (m.attendees?.sellers || []).map(p => p.name || p.email).join(', ');
       const customers = (m.attendees?.customers || []).map(p => p.name || p.email).join(', ');
 
+      // Extraer todo el contenido disponible de Diio
       const summary = m.summary || m.description || m.analysis || m.notes || '';
       const painPoints = Array.isArray(m.pain_points) ? m.pain_points.map(p => typeof p === 'string' ? p : p.text || p.content || JSON.stringify(p)).join('\n') : '';
       const keyNotes = Array.isArray(m.key_notes) ? m.key_notes.map(n => typeof n === 'string' ? n : n.text || n.content || JSON.stringify(n)).join('\n') : '';
       const commitments = Array.isArray(m.commitments) ? m.commitments.map(c => typeof c === 'string' ? c : c.text || c.description || JSON.stringify(c)).join('\n') : '';
       const specificInfo = Array.isArray(m.specific_info) ? m.specific_info.map(i => typeof i === 'string' ? i : i.text || i.content || JSON.stringify(i)).join('\n') : '';
+      // Agregar campos extra que pueda tener Diio
       const extraFields = ['insights', 'objections', 'next_steps', 'topics', 'highlights'].map(k => m[k] ? `${k}: ${JSON.stringify(m[k]).slice(0, 500)}` : '').filter(Boolean).join('\n');
 
       console.log('Summary length:', summary.length);
       console.log('PainPoints length:', painPoints.length);
       console.log('KeyNotes length:', keyNotes.length);
       console.log('All meeting keys:', JSON.stringify(Object.keys(m)));
-      console.log('ANTHROPIC_KEY present:', !!ANTHROPIC_KEY);
 
       const extractPrompt = `Analiza esta reunión de ventas de Apprecio y extrae los datos clave.
 
@@ -145,17 +144,14 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-5',
           max_tokens: 1500,
           messages: [{ role: 'user', content: extractPrompt }]
         })
       });
 
-      console.log('Claude status:', claudeRes.status);
       const claudeData = await claudeRes.json();
-      console.log('Claude response type:', claudeData.type);
       const text = claudeData.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
-      console.log('Claude text length:', text.length);
       const match = text.match(/\{[\s\S]*\}/);
       if (!match) throw new Error('No se pudo parsear respuesta de Claude');
       const extracted = JSON.parse(match[0]);
@@ -236,7 +232,7 @@ SOLO puedes usar los nombres EXACTOS de esta lista numerada. Cualquier otro nomb
 16. Centro de evidencia
 17. Ligas
 
-ERRORES PROHIBIDOS:
+ERRORES PROHIBIDOS — si te viene a la mente alguno de estos, reemplázalo por el correcto:
 - "Aceleradores" → se llama "Retos / Scorecards"
 - "Reconocimientos Automáticos" → se llama "Eventos automáticos" o "Reconocimientos personalizados"
 - "Sistema de Puntos" → se llama "Puntos y gamificación"
@@ -246,41 +242,67 @@ ERRORES PROHIBIDOS:
 - "Integración API" → NO EXISTE como módulo
 - "Automatización Always On" → NO EXISTE como módulo
 
+Si un dolor del cliente no se resuelve con un módulo de la lista, NO lo incluyas. Una propuesta de 4 módulos reales es mejor que una de 7 con módulos inventados.
+
 ## RESTRICCIONES — NUNCA VIOLAR:
-1. Spot Rewards ≠ aceleradores ni campañas. Los aceleradores van en RETOS.
-2. Insignias → sin lógica automática.
-3. Ligas → no están 100% activas. Marcarlas como en desarrollo.
-4. Puntos económicos → inviables en programas multi-país. ${esMultipais ? 'ESTE CLIENTE OPERA EN MÚLTIPLES PAÍSES — no proponer puntos económicos.' : ''}
-5. Catálogo de Apprecio → no diferenciable por nivel.
-6. Notificaciones push creadas por admin → no disponibles.
-7. "Para Ti" → sección automática del Home, no módulo separado.
-8. Dashboard → panel de admin, no módulo de la app.
-9. Nombre correcto: "Eventos automáticos" — nunca "Hitos automatizados".
-10. Cualquier funcionalidad no confirmada → marcar: (inferencia — verificar con producto)
+1. **Spot Rewards ≠ aceleradores ni campañas.** Los aceleradores de corto plazo (48-72h con KPI) van en RETOS.
+2. **Insignias → sin lógica automática.** Si se quiere premiar al que más recibe, es manual.
+3. **Ligas → no están 100% activas.** Marcarlas como en desarrollo si aparecen.
+4. **Puntos económicos → inviables en programas multi-país** con distintas monedas. ${esMultipais ? 'ESTE CLIENTE OPERA EN MÚLTIPLES PAÍSES — no proponer puntos económicos. Usar puntos de reconocimiento.' : ''}
+5. **Catálogo de Apprecio → no diferenciable por nivel.** Work Life podría serlo pero es inferencia — marcarlo.
+6. **Notificaciones push creadas por admin → no disponibles.** Las automáticas del sistema sí.
+7. **"Para Ti" → sección automática del Home,** no módulo separado. No nombrarlo como módulo.
+8. **Dashboard → panel de admin,** no módulo de la app del colaborador.
+9. **Nombre correcto: "Eventos automáticos"** — nunca "Hitos automatizados".
+10. **Cualquier funcionalidad no confirmada → marcar:** *(inferencia — verificar con producto)*
 
 ## INSTRUCCIONES DE GENERACIÓN
+
 Tipo de documento: ${tipoDoc}
 ${esExploracion
-  ? '→ Es una EXPLORACIÓN: usa lenguaje como "podría configurarse", "se podría crear", "permitiría".'
-  : '→ Es una MANTENCIÓN/SEGUIMIENTO: usa lenguaje imperativo: "crear", "configurar", "activar".'
+  ? '→ Es una EXPLORACIÓN: las acciones deben ser propuestas hipotéticas de cómo podría verse el programa. Usa lenguaje como "podría configurarse", "se podría crear", "permitiría".'
+  : '→ Es una MANTENCIÓN/SEGUIMIENTO: las acciones deben ser concretas y accionables — lo que el KAM debe crear HOY en la plataforma. Usa lenguaje imperativo: "crear", "configurar", "activar".'
 }
+
+Selecciona SOLO los módulos realmente relevantes para este cliente según sus dolores y contexto. No incluyas módulos por incluir.
+Justifica cada módulo conectando directamente con un dolor o necesidad identificada en la reunión.
+La configuración sugerida debe ser específica y realista — no genérica.
+Los pasos de demo deben narrar un flujo coherente que muestre el valor de Beat para este cliente específico.
+
+## EDICIÓN A SUGERIR
+- Sugiere **Apprecio Beat** si los dolores se resuelven con los módulos base.
+- Sugiere **Beat Performance** si el cliente menciona: metas comerciales, KPIs, desempeño de vendedores, formación, aceleradores, cumplimiento de objetivos, o si tiene fuerza de ventas.
 
 Devuelve SOLO este JSON (sin backticks, sin texto adicional):
 {
   "tipo_doc": "${tipoDoc}",
-  "edition": "Apprecio Beat o Beat Performance",
-  "necesidades": ["necesidad 1", "necesidad 2", "necesidad 3", "necesidad 4"],
+  "edition": "Apprecio Beat o Beat Performance (elige según los dolores del cliente)",
+  "necesidades": [
+    "necesidad concreta 1 basada en la reunión",
+    "necesidad concreta 2",
+    "necesidad concreta 3",
+    "necesidad concreta 4"
+  ],
   "modulos_base": [
     {
-      "modulo": "nombre exacto",
-      "por_que": "justificación conectada al dolor del cliente",
-      "accion": "${esExploracion ? 'descripción hipotética' : 'acción concreta'}",
-      "configuracion": "configuración específica para este cliente"
+      "modulo": "nombre exacto del módulo (ej: Reconocimientos personalizados)",
+      "por_que": "justificación conectada directamente a un dolor o necesidad de este cliente — nunca genérica",
+      "accion": "${esExploracion ? 'descripción hipotética de la acción: qué se podría configurar y cómo se vería' : 'acción concreta que el KAM debe crear en la plataforma'}",
+      "configuracion": "configuración específica y realista para este cliente (límites, tipos de puntos, aprobaciones, etc.)"
     }
   ],
   "modulos_performance": [],
-  "pasos_demo": ["paso 1", "paso 2", "paso 3", "paso 4", "paso 5"]
-}`;
+  "pasos_demo": [
+    "paso 1 — qué mostrar primero y por qué conecta con el cliente",
+    "paso 2",
+    "paso 3",
+    "paso 4",
+    "paso 5"
+  ]
+}
+
+modulos_performance: incluir SOLO si se sugiere edición Beat Performance, sino array vacío [].
+Para módulos con inferencias o funcionalidades no confirmadas, agregar al final del campo correspondiente: (inferencia — verificar con producto)`;
 
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -290,7 +312,7 @@ Devuelve SOLO este JSON (sin backticks, sin texto adicional):
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-5',
           max_tokens: 2500,
           messages: [{ role: 'user', content: prompt }]
         })
