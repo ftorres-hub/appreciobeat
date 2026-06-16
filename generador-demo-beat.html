@@ -486,7 +486,7 @@ async function generarPropuesta() {
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 40000);
+    const timeout = setTimeout(() => controller.abort(), 90000);
 
     const workerRes = await fetch('https://apprecio-generar.ftorres.workers.dev/', {
       method: 'POST',
