@@ -57,12 +57,13 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 
 /* ── LANDING ── */
 #landing-view { display: block; }
-.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .prod-card { border-radius: 14px; padding: 32px 26px 26px; cursor: pointer; transition: opacity 0.15s, transform 0.15s; position: relative; overflow: hidden; display: block; text-decoration: none; }
 .prod-card:hover { opacity: 0.93; transform: translateY(-3px); }
 .prod-card.p-beat    { background: #FA345E; }
 .prod-card.p-rewards { background: #B2A8E7; }
 .prod-card.p-gc      { background: #45C1AD; }
+.prod-card.p-dash    { background: #146787; }
 .prod-card::after { content: ''; position: absolute; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.06); bottom: -40px; right: -30px; }
 .prod-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
 .prod-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
@@ -179,6 +180,16 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
           <div class="prod-name">Apprecio Beat</div>
           <div class="prod-desc">Recursos comerciales, demos, pricing y generadores de propuesta para la plataforma de colaboradores.</div>
           <div class="prod-cta">Abrir portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+
+        <a class="prod-card p-dash" href="https://script.google.com/a/macros/apprecio.com/s/AKfycbx_F00iWb1VcHVtFbBSuNzR0Zrv2UVwKlb2YhluV0D9_ESqXdFfNXDVeCXjLhKyqctI/exec" target="_blank">
+          <div class="prod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="22" height="22"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          </div>
+          <div class="prod-label">Comercial</div>
+          <div class="prod-name">Dashboard Comercial</div>
+          <div class="prod-desc">Salud de clientes, performance comercial, reuniones y clasificación. Métricas clave para el equipo KAM.</div>
+          <div class="prod-cta">Abrir dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
         </a>
 
         <div class="prod-card p-rewards" onclick="openSection('rewards')">
@@ -325,14 +336,8 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
     goBack();
   }
 
-  function openModal() {
-    document.getElementById('feedback-modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('feedback-modal').classList.remove('open');
-  }
-
+  function openModal() { document.getElementById('feedback-modal').classList.add('open'); }
+  function closeModal() { document.getElementById('feedback-modal').classList.remove('open'); }
   function closeModalOutside(e) {
     if (e.target === document.getElementById('feedback-modal')) closeModal();
   }
