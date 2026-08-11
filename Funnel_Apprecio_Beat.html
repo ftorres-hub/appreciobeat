@@ -27,165 +27,56 @@ html,body{
   break-after:page;
 }
 .page:last-child{ page-break-after:auto; break-after:auto; }
-
-/* ── TOPBAR ── */
-.topbar{
-  height:6px;
-  background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%);
-  flex-shrink:0;
-}
-
-/* ── HEADER ── */
-.pg-header{
-  background:#FA345E;
-  padding:18px 20px 16px;
-  position:relative;
-  overflow:hidden;
-  flex-shrink:0;
-}
-.pg-header-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
-.orn{
-  position:absolute; z-index:1; opacity:0.12;
-  background:#FFFFFF; border-radius:3px;
-}
+.topbar{ height:6px; background:linear-gradient(90deg,#FA345E 0%,#B2A8E7 55%,#45C1AD 100%); flex-shrink:0; }
+.pg-header{ background:#FA345E; padding:18px 20px 16px; position:relative; overflow:hidden; flex-shrink:0; }
+.pg-header-inner{ display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+.orn{ position:absolute; z-index:1; opacity:0.12; background:#FFFFFF; border-radius:3px; }
 .orn-1{ width:48px; height:48px; top:-14px; right:180px; }
 .orn-2{ width:24px; height:24px; top:34px; right:158px; }
 .orn-3{ width:32px; height:32px; bottom:-10px; right:90px; }
 .orn-4{ width:16px; height:64px; top:0; right:64px; }
-.pg-tag{
-  font-size:9px; font-weight:700; letter-spacing:1.8px;
-  text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px;
-}
+.pg-tag{ font-size:9px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:5px; }
 .pg-title{ font-size:22px; font-weight:900; color:#FFFFFF; line-height:1.15; }
-.pg-sub{
-  font-size:10.5px; color:rgba(255,255,255,0.82);
-  margin-top:5px; line-height:1.55; max-width:80%;
-}
-.pg-badge{
-  background:rgba(255,255,255,0.15);
-  border:1.5px solid rgba(255,255,255,0.3);
-  border-radius:12px; padding:10px 16px;
-  text-align:center; white-space:nowrap; flex-shrink:0;
-}
+.pg-sub{ font-size:10.5px; color:rgba(255,255,255,0.82); margin-top:5px; line-height:1.55; max-width:80%; }
+.pg-badge{ background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3); border-radius:12px; padding:10px 16px; text-align:center; white-space:nowrap; flex-shrink:0; }
 .pg-badge .val{ font-size:13px; font-weight:900; color:#FFFFFF; display:block; line-height:1.3; }
 .pg-badge .lbl{ font-size:8.5px; font-weight:600; color:rgba(255,255,255,0.75); display:block; margin-top:2px; }
-
-/* ── CUERPO ── */
-.pg-body{
-  flex:1;
-  padding:14px 20px 12px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* ── INTRO BOX ── */
-.intro-box{
-  background:#FFE6E8;
-  border-left:4px solid #FA345E;
-  border-radius:0 10px 10px 0;
-  padding:10px 13px;
-  font-size:10.5px; line-height:1.68; color:#1B1B1B;
-}
+.pg-body{ flex:1; padding:14px 20px 12px; display:flex; flex-direction:column; gap:10px; }
+.intro-box{ background:#FFE6E8; border-left:4px solid #FA345E; border-radius:0 10px 10px 0; padding:10px 13px; font-size:10.5px; line-height:1.68; color:#1B1B1B; }
 .intro-box strong{ color:#FA345E; }
-
-/* ── LEYENDA ── */
-.legend{
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px;
-}
-.legend-card{
-  border:1px solid #EEE; border-radius:11px;
-  padding:10px 11px; background:#FAFAFA;
-}
+.legend{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; }
+.legend-card{ border:1px solid #EEE; border-radius:11px; padding:10px 11px; background:#FAFAFA; }
 .legend-card h3{ font-size:10px; font-weight:800; color:#45C1AD; margin-bottom:4px; }
 .legend-card p{ font-size:9.5px; line-height:1.55; color:#4A4A4A; }
-
-/* ── STAGE ── */
-.stage{
-  border:1px solid #EEE; border-radius:12px;
-  overflow:hidden; background:#FFFFFF;
-  page-break-inside:avoid; break-inside:avoid;
-}
-.stage-head{
-  padding:10px 13px;
-  display:flex; justify-content:space-between;
-  align-items:center; gap:10px;
-  background:linear-gradient(90deg,#FFE6E8 0%,#FFFFFF 100%);
-  border-bottom:1px solid #F0D3D8;
-}
-.stage.perf .stage-head{
-  background:linear-gradient(90deg,#E8F9F6 0%,#FFFFFF 100%);
-  border-bottom-color:#C8F0E8;
-}
-.stage.lost .stage-head{
-  background:linear-gradient(90deg,#F4F4F4 0%,#FFFFFF 100%);
-  border-bottom-color:#E5E5E5;
-}
-.stage-title{
-  font-size:11px; font-weight:900; color:#1B1B1B; line-height:1.3;
-}
-.stage-tag{
-  flex-shrink:0; padding:4px 10px;
-  border-radius:999px; background:#FA345E;
-  color:#FFFFFF; font-size:10px; font-weight:800;
-  white-space:nowrap;
-}
+.stage{ border:1px solid #EEE; border-radius:12px; overflow:hidden; background:#FFFFFF; page-break-inside:avoid; break-inside:avoid; }
+.stage-head{ padding:10px 13px; display:flex; justify-content:space-between; align-items:center; gap:10px; background:linear-gradient(90deg,#FFE6E8 0%,#FFFFFF 100%); border-bottom:1px solid #F0D3D8; }
+.stage.perf .stage-head{ background:linear-gradient(90deg,#E8F9F6 0%,#FFFFFF 100%); border-bottom-color:#C8F0E8; }
+.stage.lost .stage-head{ background:linear-gradient(90deg,#F4F4F4 0%,#FFFFFF 100%); border-bottom-color:#E5E5E5; }
+.stage-title{ font-size:11px; font-weight:900; color:#1B1B1B; line-height:1.3; }
+.stage-tag{ flex-shrink:0; padding:4px 10px; border-radius:999px; background:#FA345E; color:#FFFFFF; font-size:10px; font-weight:800; white-space:nowrap; }
 .stage.perf .stage-tag{ background:#45C1AD; }
 .stage.lost .stage-tag{ background:#1B1B1B; }
-
 .stage-body{ padding:10px 13px; display:flex; flex-direction:column; gap:8px; }
-
-/* ── BLOQUES INTERNOS ── */
-.lbl{
-  display:inline-block; margin-bottom:4px;
-  font-size:8.5px; font-weight:800; letter-spacing:0.6px;
-  text-transform:uppercase; color:#45C1AD;
-}
+.lbl{ display:inline-block; margin-bottom:4px; font-size:8.5px; font-weight:800; letter-spacing:0.6px; text-transform:uppercase; color:#45C1AD; }
 .txt{ font-size:9.5px; line-height:1.65; color:#2F2F2F; }
 .txt ul{ padding-left:13px; margin-top:3px; }
 .txt li{ font-size:9.5px; line-height:1.55; color:#2F2F2F; margin-bottom:3px; }
-
-.note{
-  padding:8px 11px;
-  background:#F8F6FF; border-left:4px solid #B2A8E7;
-  border-radius:0 8px 8px 0;
-  font-size:9.5px; line-height:1.65; color:#454545;
-}
-
+.note{ padding:8px 11px; background:#F8F6FF; border-left:4px solid #B2A8E7; border-radius:0 8px 8px 0; font-size:9.5px; line-height:1.65; color:#454545; }
+.note.green{ background:#F4FBF9; border-left-color:#45C1AD; }
 .gate-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.gate{
-  background:#FAFAFA; border:1px solid #EEE;
-  border-radius:9px; padding:8px 10px;
-}
+.gate{ background:#FAFAFA; border:1px solid #EEE; border-radius:9px; padding:8px 10px; }
 .gate strong{ display:block; font-size:9px; color:#FA345E; font-weight:800; margin-bottom:3px; }
 .gate span{ display:block; font-size:9px; line-height:1.5; color:#4A4A4A; }
-
-.participants{
-  display:inline-block; padding:5px 10px;
-  background:#F7F8FA; border:1px solid #E6E6E6;
-  border-radius:8px; font-size:9px; font-weight:700; color:#1B1B1B;
-}
-
-/* ── FOOTER ── */
-.pg-footer{
-  padding:7px 20px;
-  border-top:1px solid #F0F0F0;
-  display:flex; justify-content:space-between;
-  font-size:9px; color:#B0BEC8; font-weight:500;
-  flex-shrink:0;
-}
+.participants{ display:inline-block; padding:5px 10px; background:#F7F8FA; border:1px solid #E6E6E6; border-radius:8px; font-size:9px; font-weight:700; color:#1B1B1B; }
+.source-table{ width:100%; border-collapse:collapse; font-size:9px; margin:5px 0; }
+.source-table th{ background:#B2A8E7; color:#1B1B1B; text-align:left; padding:5px 8px; font-weight:800; font-size:8.5px; }
+.source-table th:first-child{ border-radius:6px 0 0 0; }
+.source-table th:last-child{ border-radius:0 6px 0 0; }
+.source-table td{ border-bottom:1px solid #F0F0F0; padding:5px 8px; vertical-align:top; line-height:1.5; color:#374151; background:#FFFFFF; }
+.source-table tr:nth-child(even) td{ background:#FAFAFA; }
+.pg-footer{ padding:7px 20px; border-top:1px solid #F0F0F0; display:flex; justify-content:space-between; font-size:9px; color:#B0BEC8; font-weight:500; flex-shrink:0; }
 .pg-footer span:first-child{ color:#FA345E; font-weight:700; }
-
-@media print{
-  body{ background:#fff; }
-  .page{ margin:0; width:100%; }
-}
+@media print{ body{ background:#fff; } .page{ margin:0; width:100%; } }
 </style>
 </head>
 <body>
@@ -211,18 +102,16 @@ html,body{
 
   <div class="pg-body">
 
-    <div class="intro-box">
-      <strong>Rewards abre la puerta; Apprecio Beat permite quedarnos dentro.</strong> El objetivo es convertir señales transaccionales, iniciativas de reconocimiento o necesidades de engagement en un programa recurrente de cultura, puntos, recompensas y medición. Cuando el dolor incluye KPIs, entrenamientos, retos o ligas, la oportunidad debe evaluarse como <strong>Beat Performance</strong>.
-    </div>
+
 
     <div class="legend">
       <div class="legend-card">
         <h3>Apprecio Beat</h3>
-        <p>Cultura visible, reconocimiento, puntos, recompensas, comunicación, participación y engagement.</p>
+        <p>Cultura visible, reconocimiento, puntos, recompensas, comunicación, participación y engagement. Para organizaciones que quieren un sistema recurrente de cultura interna.</p>
       </div>
       <div class="legend-card">
         <h3>Beat Performance</h3>
-        <p>Desempeño, scorecards, retos, entrenamientos, evidencia, rankings y metas conectadas a incentivos.</p>
+        <p>Desempeño, scorecards, retos, entrenamientos, evidencia, rankings y metas conectadas a incentivos. Producto distinto, para un objetivo y un comprador diferentes a Apprecio Beat.</p>
       </div>
       <div class="legend-card">
         <h3>Control comercial</h3>
@@ -233,20 +122,30 @@ html,body{
     <!-- ETAPA 0 -->
     <div class="stage">
       <div class="stage-head">
-        <div class="stage-title">ETAPA 0 · SEÑAL BEAT / INSIGHT REWARDS</div>
+        <div class="stage-title">ETAPA 0 · IDENTIFICACIÓN DE OPORTUNIDAD</div>
         <div class="stage-tag">5%</div>
       </div>
       <div class="stage-body">
         <div>
           <div class="lbl">Objetivo</div>
-          <div class="txt">Detectar señales tempranas de que un cliente o prospecto podría evolucionar hacia Apprecio Beat. La señal puede venir desde reuniones de Rewards, uso transaccional de puntos, campañas internas, necesidad de reconocimiento, baja participación o intención de ordenar beneficios e incentivos.</div>
+          <div class="txt">Identificar el origen de la oportunidad y registrarla en el pipeline. Una oportunidad puede llegar desde distintas fuentes — en todos los casos debe quedar registrada con fuente de origen, tipo sugerido y AQS preliminar.</div>
+        </div>
+        <div>
+          <div class="lbl">Fuentes de entrada</div>
+          <table class="source-table">
+            <tr><th style="width:30%;">Fuente</th><th style="width:35%;">Origen</th><th>Quién registra</th></tr>
+            <tr><td><strong>Lead inbound de marketing</strong></td><td>Campañas de ads, contenido o formularios donde el prospecto llega por iniciativa propia.</td><td>BDM o KAM asignado.</td></tr>
+            <tr><td><strong>Outbound frío</strong></td><td>Secuencias de prospección a empresas que no son clientes de Apprecio.</td><td>BDM responsable de la secuencia.</td></tr>
+            <tr><td><strong>Detección desde Diio</strong></td><td>El sistema detecta señales de interés en reuniones o interacciones con clientes existentes.</td><td>KAM o el sistema automáticamente.</td></tr>
+            <tr><td><strong>Cliente Rewards activo</strong></td><td>KAM detecta potencial de expansión en un cliente que ya compra puntos.</td><td>KAM responsable de la cuenta.</td></tr>
+            <tr><td><strong>Solicitud directa del cliente</strong></td><td>El cliente actual manifiesta interés o pide información por iniciativa propia.</td><td>KAM o BDM según la cuenta.</td></tr>
+          </table>
         </div>
         <div>
           <div class="lbl">Hitos</div>
           <div class="txt"><ul>
-            <li>El sistema detecta automáticamente señales de cultura, engagement, reconocimiento, recompensas o desempeño en reuniones registradas.</li>
-            <li>Se registra una oportunidad preliminar con tipo sugerido: <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
-            <li>Se calcula un AQS preliminar y se define si corresponde activar contacto comercial o mantener nurture.</li>
+            <li>Oportunidad registrada en HubSpot con fuente de origen y tipo sugerido: <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
+            <li>Decisión inicial: activar contacto comercial o mantener en nurture según Tier y señales disponibles.</li>
           </ul></div>
         </div>
         <div>
@@ -273,13 +172,19 @@ html,body{
           <div class="txt"><ul>
             <li>Reunión exploratoria con foco en dolor, población objetivo, presupuesto, sponsor y timing.</li>
             <li>Validación de si Apprecio Beat se presenta como continuidad natural de Rewards o como nueva iniciativa SaaS.</li>
-            <li>Actualización del AQS preliminar con evidencia de Fit, Intent, Viabilidad y Patrocinio.</li>
             <li>Identificación de edición sugerida: <strong>Apprecio Beat</strong> o <strong>Beat Performance</strong>.</li>
+            <li>El KAM o BDM solicita la propuesta automatizada. La propuesta y el AQS se generan según uno de estos tres escenarios:
+              <ul style="margin-top:4px;">
+                <li><strong>Reunión registrada en Diio:</strong> la propuesta se genera automáticamente con los datos de la reunión y el AQS se calcula desde ahí.</li>
+                <li><strong>Reunión realizada pero no registrada en Diio:</strong> el KAM o BDM ingresa los datos manualmente para generar la propuesta y el AQS.</li>
+                <li><strong>Cliente pide propuesta sin reunión previa:</strong> el KAM o BDM ingresa los datos disponibles y el AQS se calcula con esa información.</li>
+              </ul>
+            </li>
           </ul></div>
         </div>
         <div>
           <div class="lbl">Gate de salida</div>
-          <div class="txt">Dolor validado, sponsor o champion identificado, AQS suficiente para avanzar y decision date tentativa.</div>
+          <div class="txt">Dolor validado, sponsor o champion identificado, AQS actualizado en HubSpot y decision date tentativa. El PM debe revisar el AQS antes de autorizar avance a Etapa 2 o Etapa 3.</div>
         </div>
         <div><div class="lbl">Participantes</div><br/><span class="participants">KAM / BDM y Product Manager</span></div>
       </div>
@@ -292,7 +197,7 @@ html,body{
         <div class="stage-tag">30%</div>
       </div>
       <div class="stage-body">
-        <div class="note">Esta etapa se activa cuando el cliente solicita una propuesta, muestra interés concreto o el equipo comercial valida que existe una oportunidad real para convertir el dolor en un programa recurrente.</div>
+        <div class="note">Esta etapa se activa cuando el AQS ha sido revisado y validado por el PM, y el cliente solicita una propuesta o el equipo comercial confirma que existe una oportunidad real para convertir el dolor en un programa recurrente.</div>
         <div>
           <div class="lbl">Objetivo</div>
           <div class="txt">Construir una propuesta clara de Apprecio Beat con edición recomendada, población objetivo, módulos principales, modelo de puntos, alcance de implementación, pricing y siguiente paso comercial. La propuesta debe evitar prometer personalizaciones no validadas y conectar el valor del programa con resultados observables.</div>
@@ -303,7 +208,7 @@ html,body{
             <li>El comercial completa el formulario de solicitud de propuesta personalizada.</li>
             <li>Producto valida alcance, edición, módulos incluidos y add-ons solicitados.</li>
             <li>Se define pricing, alcance de puntos y condiciones comerciales.</li>
-            <li>Se agenda reunión de presentación con sponsor o buyer persona relevante.</li>
+            <li>Se agenda reunión de presentación con sponsor o buyer relevante.</li>
           </ul></div>
         </div>
         <div class="gate-grid">
@@ -357,18 +262,18 @@ html,body{
         <div class="stage-tag">40%</div>
       </div>
       <div class="stage-body">
-        <div class="note">Etapa opcional pero recomendada cuando el sponsor necesita ver el flujo antes de decidir, cuando aparece un buyer persona senior o cuando la oportunidad requiere validar una hipótesis de valor con evidencia visual.</div>
+        <div class="note green">La demo requiere AQS ≥ 70 o que la cuenta sea Tier A+. El PM revisa el AQS en HubSpot y autoriza la demo antes de agendarla — si el puntaje no lo justifica, devuelve al KAM con indicación de qué madurar primero.</div>
         <div>
           <div class="lbl">Objetivo</div>
-          <div class="txt">Ejecutar una demo guiada por hipótesis, no un recorrido completo del producto. La demo debe enfocarse en el dolor principal: cultura visible, reconocimiento, puntos, recompensas, participación o performance. Una reunión debe tener una hipótesis dominante y una demo principal.</div>
+          <div class="txt">Ejecutar una demo guiada por hipótesis, no un recorrido completo del producto. La demo debe enfocarse en el dolor principal: cultura visible, reconocimiento, puntos, recompensas, participación o desempeño. Una reunión debe tener una hipótesis dominante y una demo principal.</div>
         </div>
         <div>
           <div class="lbl">Hitos</div>
           <div class="txt"><ul>
-            <li>Comercial solicita demo a Producto con contexto, dolor principal y buyer persona.</li>
-            <li>Producto selecciona la narrativa: Apprecio Beat o Beat Performance.</li>
-            <li>Demo de 12 minutos con apertura, momento WOW, flujo principal, gobernanza, prueba concreta y cierre.</li>
-            <li>Se registra feedback, objeciones, próximos pasos y nivel de sponsor.</li>
+            <li>KAM solicita demo al PM con contexto, dolor principal, buyer persona y AQS actualizado.</li>
+            <li>PM revisa AQS, valida edición y autoriza la demo o solicita ajuste previo.</li>
+            <li>Demo de 12 minutos con apertura, momento WOW, flujo principal, gobernanza, evidencia y cierre.</li>
+            <li>Se registra en Diio: feedback, objeciones, próximos pasos y nivel de sponsor.</li>
           </ul></div>
         </div>
         <div>
@@ -473,11 +378,12 @@ html,body{
             <li>Reorganización interna, bajo sponsor o ausencia de decision date.</li>
             <li>Necesidad real todavía inmadura o solo transaccional.</li>
             <li>El cliente elige otra solución o decide mantener Rewards sin evolucionar a Apprecio Beat.</li>
+            <li>AQS insuficiente y sin condiciones para madurar en el corto plazo.</li>
           </ul></div>
         </div>
         <div>
           <div class="lbl">Acción esperada</div>
-          <div class="txt">Registrar motivo de pérdida, aprendizaje comercial, posibilidad de recontacto y trigger futuro de reactivación.</div>
+          <div class="txt">Registrar motivo de pérdida, aprendizaje comercial, posibilidad de recontacto y trigger futuro de reactivación en HubSpot.</div>
         </div>
       </div>
     </div>

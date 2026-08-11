@@ -323,10 +323,18 @@ tr:nth-child(even) td{ background:#FAFAFA; }
     <div style="display:flex;flex-direction:column;gap:8px;">
       <div class="step s1">
         <div class="step-num">Paso 1</div>
-        <h3>AQS sugerido post reunión de exploración</h3>
-        <p><strong>Disparador:</strong> reunión de exploración, upsell desde Rewards o levantamiento con cliente registrado en Diio.</p>
-        <p><strong>Proceso:</strong> el sistema analiza automáticamente las señales de la reunión y evalúa cinco factores: Fit Beat, Intent, Expansión SaaS, Viabilidad operativa y Patrocinio.</p>
-        <p><strong>Resultado:</strong> AQS sugerido con recomendación inicial de edición — Apprecio Beat, Beat Performance, educación o nurture.</p>
+        <h3>Identificación de la oportunidad y activación del AQS</h3>
+        <p><strong>Disparador:</strong> una oportunidad puede originarse desde distintas fuentes. El AQS se activa en cualquiera de estos casos:</p>
+        <table style="margin:6px 0 8px;">
+          <tr><th style="width:28%;">Fuente</th><th style="width:30%;">Origen</th><th>Quién activa el AQS</th></tr>
+          <tr><td><strong>Lead inbound de marketing</strong></td><td>Campañas de ads, contenido o formularios donde el prospecto llega por iniciativa propia.</td><td>BDM o KAM asignado al lead.</td></tr>
+          <tr><td><strong>Outbound frío</strong></td><td>Secuencias de prospección a empresas que no son clientes de Apprecio.</td><td>BDM responsable de la secuencia.</td></tr>
+          <tr><td><strong>Detección desde Diio</strong></td><td>El sistema detecta señales de interés en reuniones o interacciones con clientes existentes.</td><td>KAM o el sistema automáticamente.</td></tr>
+          <tr><td><strong>Cliente Rewards activo</strong></td><td>KAM o comercial detecta potencial de expansión en un cliente que ya compra puntos.</td><td>KAM responsable de la cuenta.</td></tr>
+          <tr><td><strong>Solicitud directa del cliente</strong></td><td>El cliente actual manifiesta interés o pide información por iniciativa propia.</td><td>KAM o BDM según la cuenta.</td></tr>
+        </table>
+        <p><strong>Proceso:</strong> el AQS puede completarse de dos formas — de forma automática cuando la propuesta se genera desde un resumen de Diio, donde el sistema detecta las señales de la reunión y sugiere un puntaje inicial; o de forma manual cuando el KAM o BDM completa los factores directamente al solicitar la propuesta, basándose en la información disponible de la oportunidad.</p>
+        <p><strong>Resultado:</strong> AQS inicial con recomendación de edición — Apprecio Beat, Beat Performance, educación o nurture.</p>
       </div>
 
       <div class="step s2">
@@ -339,9 +347,12 @@ tr:nth-child(even) td{ background:#FAFAFA; }
 
       <div class="step s3">
         <div class="step-num">Paso 3</div>
-        <h3>AQS validado al solicitar propuesta o demo avanzada</h3>
-        <p>El score se vuelve más confiable cuando el cliente entrega información concreta: población objetivo, problema a resolver, sponsor, timing, presupuesto estimado y módulos esperados. Se valida si hay programa recurrente o solo campaña puntual, si existen responsables internos, si hay decision date identificable y si la oportunidad amerita acompañamiento PM o senior.</p>
-        <p><strong>Resultado:</strong> AQS validado final registrado en HubSpot con edición recomendada, razón de avance y próximos pasos.</p>
+        <h3>Validación de AQS para autorizar demo</h3>
+        <p><strong>Disparador:</strong> el cliente o el KAM solicita una demo de Apprecio Beat o Beat Performance.</p>
+        <p><strong>Condición de avance:</strong> la demo solo se autoriza si el AQS es <strong>≥ 70</strong>, o si la cuenta es <strong>Tier A+</strong>. Fuera de esas condiciones, la oportunidad debe madurarse antes de avanzar.</p>
+        <p><strong>Quién revisa:</strong> el PM revisa el AQS registrado en HubSpot y decide si autoriza la demo o devuelve al KAM con indicación de qué madurar primero.</p>
+        <p><strong>Corrección del AQS:</strong> si el PM detecta que el puntaje no refleja bien la oportunidad, lo ajusta factor por factor con una justificación breve en HubSpot antes de dar el visto bueno.</p>
+        <p><strong>Resultado:</strong> demo autorizada con AQS validado, edición confirmada y próximos pasos registrados en HubSpot — o devolución al KAM con indicación clara de qué debe mejorar antes de poder avanzar.</p>
       </div>
     </div>
 
@@ -531,8 +542,8 @@ tr:nth-child(even) td{ background:#FAFAFA; }
       <table>
         <tr><th style="width:26%;">Ruta</th><th>Criterio de recomendación</th></tr>
         <tr><td><strong>Apprecio Beat</strong></td><td>Recomendar cuando el dolor principal sea cultura visible, reconocimiento entre pares o managers, hitos, encuestas, recompensas, feed social, engagement o fidelización de colaboradores.</td></tr>
-        <tr><td><strong>Beat Performance</strong></td><td>Recomendar cuando además existan metas, KPIs, entrenamientos, evidencia, scorecards, ligas o cumplimiento medible — y el buyer sea un área comercial u operativa, no solo personas o cultura.</td></tr>
-        <tr><td><strong>Rewards → Apprecio Beat</strong></td><td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, interés en gestionar colaboradores o querer medir impacto más allá de redenciones puntuales.</td></tr>
+        <tr><td><strong>Beat Performance</strong></td><td>Recomendar cuando el dolor principal sea desempeño, metas, KPIs, entrenamientos, evidencia, scorecards o cumplimiento medible — y el buyer sea un área comercial u operativa, no solo personas o cultura.</td></tr>
+        <tr><td><strong>Expansión desde Rewards</strong></td><td>Recomendar cuando un cliente de Rewards muestre recurrencia, necesidad de permanencia, interés en gestionar colaboradores o querer medir impacto más allá de redenciones puntuales. También aplica cuando el KAM o comercial identifica proactivamente este potencial en la cuenta.</td></tr>
         <tr><td><strong>Nurture / educación</strong></td><td>Usar cuando el cliente solo busca una entrega puntual, no tiene sponsor, no tiene timing claro o aún no reconoce el problema como un programa recurrente.</td></tr>
       </table>
     </div>
