@@ -38,9 +38,10 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
 .portal-hero { margin-bottom: 36px; }
 .portal-hero h1 { font-size: 22px; font-weight: 800; color: #1B1B1B; }
 
-/* ── LANDING PRINCIPAL — 2 tarjetas ── */
+/* ── LANDING PRINCIPAL ── */
 #root-view { display: block; }
-.root-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+/* Management oculto temporalmente: 1 columna. Al reactivarlo, volver a repeat(2, 1fr) */
+.root-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .root-card { border-radius: 12px; padding: 28px 24px 22px; cursor: pointer; transition: opacity 0.15s, transform 0.12s; }
 .root-card:hover { opacity: 0.92; transform: translateY(-2px); }
 .root-card.r-red  { background: #FA345E; }
@@ -177,7 +178,7 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
     <h1>Recursos comerciales · Apprecio Beat</h1>
   </div>
 
-  <!-- ROOT: 2 tarjetas principales -->
+  <!-- ROOT: tarjetas principales -->
   <div id="root-view">
     <div class="root-grid">
 
@@ -195,7 +196,8 @@ body { font-family: 'Montserrat', sans-serif; background: #F2F2F2; color: #1B1B1
         <div class="sec-cta">Ver recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
 
-      <div class="root-card r-blue" onclick="openManagement()">
+      <!-- MANAGEMENT oculto temporalmente: para mostrarlo, borrar style="display:none" -->
+      <div class="root-card r-blue" onclick="openManagement()" style="display:none">
         <div class="sec-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         </div>
